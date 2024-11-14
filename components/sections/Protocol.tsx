@@ -3,21 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { SectionLabel } from "./SectionLabel";
-
-const protocols = [
-  {
-    id: 1,
-    name: "Uniswap",
-    logo: "/svg/uniswap.svg",
-    description: "Decentralized trading protocol",
-  },
-  {
-    id: 2,
-    name: "Aave",
-    logo: "/svg/aave.svg",
-    description: "Decentralized lending protocol",
-  },
-];
+import { protocols } from "@/utils/mock";
 
 export const Protocol = () => {
   const containerVariants = {

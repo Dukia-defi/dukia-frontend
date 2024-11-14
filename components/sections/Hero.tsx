@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Button } from "../ui/button";
 
 export const Hero = () => {
   const fadeInUp = {
@@ -49,9 +50,8 @@ export const Hero = () => {
       initial="initial"
       animate="animate"
       variants={staggerChildren}
-      className="relative min-h-[90vh] flex items-center py-8 lg:py-20 overflow-hidden bg-gradient-to-b from-black via-purple-950/20 to-black"
+      className="relative min-h-[90vh] flex items-center py-20 overflow-hidden bg-gradient-to-b from-black via-purple-950/20 to-black"
     >
-      {/* Background decorative elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-700 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
         <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -62,7 +62,7 @@ export const Hero = () => {
         <div className="flex flex-col lg:flex-row items-center gap-12">
           <motion.div className="lg:w-2/3 flex flex-col justify-center items-center lg:items-start">
             <motion.div
-              className="flex items-center gap-3 mb-8"
+              className="flex items-center gap-3 mb-3 lg:mb-8"
               variants={fadeInUp}
             >
               <motion.div
@@ -71,10 +71,10 @@ export const Hero = () => {
               >
                 <Image
                   src="/svg/acc.svg"
-                  width={80}
+                  width={0}
                   height={0}
                   alt="deFi"
-                  className="h-auto"
+                  className="w-[60px] lg:w-[80px] h-auto"
                 />
               </motion.div>
               <motion.span
@@ -89,10 +89,10 @@ export const Hero = () => {
               >
                 <Image
                   src="/svg/acc.svg"
-                  width={80}
+                  width={0}
                   height={0}
                   alt="deFi"
-                  className="h-auto"
+                  className="w-[60px] lg:w-[80px] h-auto"
                 />
               </motion.div>
             </motion.div>
@@ -121,14 +121,14 @@ export const Hero = () => {
               informed decisions in the DeFi space.
             </motion.p>
 
-            <motion.div variants={fadeInUp}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-purple-700 via-purple-400 to-purple-700 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
-              >
+            <motion.div
+              variants={fadeInUp}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button variant="custom" size="lg">
                 Get Started
-              </motion.button>
+              </Button>
             </motion.div>
           </motion.div>
 

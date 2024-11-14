@@ -1,13 +1,30 @@
+"use client";
+
 import React from "react";
+import { motion } from "framer-motion";
 
 interface ISectionLabel {
   title: string;
 }
 
 export const SectionLabel = (props: ISectionLabel) => {
+  const itemVariants = {
+    hidden: { y: 30, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        type: "spring",
+        stiffness: 100,
+      },
+    },
+  };
   return (
-    <h3 className="text-5xl font-bold bg-gradient-to-r from-purple-700 via-purple-300 to-purple-700 bg-clip-text text-transparent">
+    <motion.h3
+      variants={itemVariants}
+      className="text-5xl font-bold bg-gradient-to-r from-purple-700 via-purple-300 to-purple-700 bg-clip-text text-transparent"
+    >
       {props.title}
-    </h3>
+    </motion.h3>
   );
 };

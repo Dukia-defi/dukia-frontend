@@ -1,4 +1,4 @@
-import { Header, Hero, Protocol } from "@/components/sections";
+import { FeaturedNetwork, Header, Hero, Protocol } from "@/components/sections";
 
 export default function Home() {
   return (
@@ -6,6 +6,7 @@ export default function Home() {
       <Header />
       <Hero />
       <Protocol />
+      <FeaturedNetwork />
     </div>
   );
 }

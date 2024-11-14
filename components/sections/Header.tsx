@@ -4,19 +4,25 @@ import React from "react";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
+import { Button } from "../ui/button";
 
 export const Header = () => {
   return (
     <div className="flex items-center justify-between fixed z-50 w-[92%] backdrop-blur-md">
-      <Image src="/svg/logo.svg" width={177} height={75} alt="Dukia deFi" />
+      <Image
+        src="/svg/logo.svg"
+        width={0}
+        height={0}
+        alt="Dukia deFi"
+        className="w-[140px] h-auto lg:w-[177px] lg:h-auto"
+        priority
+      />
 
-      <motion.button
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-        className="px-8 py-2 border-[3px] border-purple-1 bg-gradient-to-r from-purple-700 via-purple-400 to-purple-700 rounded-lg font-semibold hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300"
-      >
-        Go To App
-      </motion.button>
+      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+        <Button variant="custom" size="lg">
+          Go To App
+        </Button>
+      </motion.div>
     </div>
   );
 };
