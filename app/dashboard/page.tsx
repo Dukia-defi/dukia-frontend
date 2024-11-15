@@ -1,11 +1,11 @@
 export default function DashboardPage() {
   return (
-    <main>
+    <>
       <section>
         <div>
-          <p>Hellow world</p>
+          <p>Hello world</p>
         </div>
       </section>
-    </main>
+    </>
   );
 }
