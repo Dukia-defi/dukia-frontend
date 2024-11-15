@@ -8,7 +8,7 @@ import { Button } from "../ui/button";
 
 export const Header = () => {
   return (
-    <div className="flex items-center justify-between fixed z-50 w-[92%] backdrop-blur-md">
+    <div className="flex items-center justify-between fixed z-50 w-[92%] backdrop-blur-md mx-3 lg:mx-16">
       <Image
         src="/svg/logo.svg"
         width={0}
