@@ -9,6 +9,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        figTree: ["Figtree", "sans-serif"],
+      },
       colors: {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
@@ -54,6 +57,7 @@ export default {
         "purple-2": "hsl(var(--purple-2))",
         "black-bg": "hsl(var(--black-bg))",
         "black-1": "hsl(var(--black-1))",
+        "purple-main": "#AE00FF",
       },
       borderRadius: {
         lg: "var(--radius)",
