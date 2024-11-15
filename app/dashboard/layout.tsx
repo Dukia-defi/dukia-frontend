@@ -1,5 +1,5 @@
 import { DashboardSidebar } from "@/components/dashboard/dashboard-sidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 export default function DashboardLayout({
   children,
@@ -9,8 +9,8 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main>
-        <SidebarTrigger />
+      <main className="container mx-auto min-h-screen w-9/12 pt-7">
+        {/* <SidebarTrigger className="absolute" /> */}
         {children}
       </main>
     </SidebarProvider>
