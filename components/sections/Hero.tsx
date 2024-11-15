@@ -53,7 +53,7 @@ export const Hero = () => {
       className="relative min-h-[90vh] flex items-center py-20 overflow-hidden bg-gradient-to-b from-black via-purple-950/20 to-black"
     >
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-700 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-main rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
         <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
@@ -79,7 +79,7 @@ export const Hero = () => {
               </motion.div>
               <motion.span
                 variants={fadeInUp}
-                className="text-xl lg:text-3xl font-bold uppercase bg-gradient-to-r from-purple-700 to-purple-200 bg-clip-text text-transparent"
+                className="text-xl lg:text-3xl font-bold uppercase bg-gradient-to-r from-purple-main to-purple-200 bg-clip-text text-transparent"
               >
                 The First
               </motion.span>
@@ -101,7 +101,7 @@ export const Hero = () => {
               variants={fadeInUp}
               className="text-5xl lg:text-6xl text-center lg:text-start font-bold leading-tight mb-6"
             >
-              <span className="bg-gradient-to-r from-purple-700 via-pink-200 to-purple-600 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-purple-main via-pink-200 to-purple-main bg-clip-text text-transparent">
                 Centralized Asset Management
               </span>
               <br />

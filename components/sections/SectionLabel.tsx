@@ -22,7 +22,7 @@ export const SectionLabel = (props: ISectionLabel) => {
   return (
     <motion.h3
       variants={itemVariants}
-      className="text-5xl font-bold bg-gradient-to-r from-purple-700 via-purple-300 to-purple-700 bg-clip-text text-transparent"
+      className="text-5xl font-bold bg-gradient-to-r from-purple-main via-purple-300 to-purple-main bg-clip-text text-transparent"
     >
       {props.title}
     </motion.h3>
