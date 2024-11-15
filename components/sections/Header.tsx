@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
-import { Button } from "../ui/button";
+import { buttonVariants } from "../ui/button";
+import Link from "next/link";
 
 export const Header = () => {
   return (
@@ -19,9 +20,12 @@ export const Header = () => {
       />
 
       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-        <Button variant="custom" size="lg">
+        <Link
+          href={"/dashboard"}
+          className={buttonVariants({ variant: "custom", size: "lg" })}
+        >
           Go To App
-        </Button>
+        </Link>
       </motion.div>
     </div>
   );
