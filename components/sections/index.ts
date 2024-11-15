@@ -4,3 +4,6 @@ export { SectionLabel } from "./SectionLabel";
 export { Protocol } from "./Protocol";
 export { FeaturedNetwork } from "./FeaturedNetwork";
 export { AppFeatures } from "./AppFeatures";
+export { Performance } from "./Performance";
+export { Subscribe } from "./Subscribe";
+export { Footer } from "./Footer";

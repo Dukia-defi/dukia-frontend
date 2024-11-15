@@ -1,9 +1,12 @@
 import {
   AppFeatures,
   FeaturedNetwork,
+  Footer,
   Header,
   Hero,
+  Performance,
   Protocol,
+  Subscribe,
 } from "@/components/sections";
 
 export default function Home() {
@@ -14,6 +17,9 @@ export default function Home() {
       <Protocol />
       <FeaturedNetwork />
       <AppFeatures />
+      <Performance />
+      <Subscribe />
+      <Footer />
     </div>
   );
 }
