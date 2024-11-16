@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { ThirdwebProvider } from "thirdweb/react";
 import WalletProvider from "@/context/wallet";
 
 export const metadata: Metadata = {
@@ -15,7 +16,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`bg-black-bg font-figTree text-white antialiased`}>
-        <WalletProvider>{children}</WalletProvider>
+        <ThirdwebProvider>
+          <WalletProvider>{children}</WalletProvider>
+        </ThirdwebProvider>
       </body>
     </html>
   );
