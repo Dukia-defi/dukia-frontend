@@ -1,3 +1,5 @@
+import { Github, Twitter } from "lucide-react";
+
 export const protocols = [
   {
     id: 1,
@@ -32,4 +34,32 @@ export const networks = [
     logo: "/svg/arbitrum.svg",
     bgGradient: "from-sky-500/20 to-sky-900/20",
   },
+];
+
+export const performance = [
+  {
+    value: "1k+",
+    label: "Positions Automated",
+    gradient: "from-purple-900/20",
+  },
+  {
+    value: "$31M+",
+    label: "Total Pool Supply",
+    gradient: "from-indigo-900/20",
+  },
+  {
+    value: "$10k+",
+    label: "ETH Amounted",
+    gradient: "from-sky-900/20",
+  },
+];
+
+export const footerLinks = {
+  "DukiaDEFI PROTOCOLS": ["Aave", "Uniswap"],
+  "DukiaDEFI NETWORK": ["Ethereum", "Lisk", "Sepolia (Testnet)"],
+};
+
+export const socialLinks = [
+  { icon: Twitter, href: "#", label: "Twitter/X" },
+  { icon: Github, href: "#", label: "GitHub" },
 ];
