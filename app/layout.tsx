@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import WalletProvider from "@/context/wallet";
 
 export const metadata: Metadata = {
   title: "Dukia deFi",
@@ -13,8 +14,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`font-figTree antialiased bg-black-bg text-white`}>
-        {children}
+      <body className={`bg-black-bg font-figTree text-white antialiased`}>
+        <WalletProvider>{children}</WalletProvider>
       </body>
     </html>
   );

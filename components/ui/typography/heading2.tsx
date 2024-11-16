@@ -6,7 +6,10 @@ interface Props extends React.HTMLAttributes<HTMLHeadingElement> {
 
 const Heading2 = ({ children, className, ...props }: Props) => {
   return (
-    <h2 className={cn("text-4xl font-bold lg:text-6xl", className)} {...props}>
+    <h2
+      className={cn("text-3xl font-semibold lg:text-4xl", className)}
+      {...props}
+    >
       {children}
     </h2>
   );

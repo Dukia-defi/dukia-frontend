@@ -6,7 +6,7 @@ interface Props extends React.HTMLAttributes<HTMLParagraphElement> {
 
 const Paragraph = ({ children, className, ...props }: Props) => {
   return (
-    <p className={cn("text-4xl font-bold lg:text-6xl", className)} {...props}>
+    <p className={cn("text-lg font-normal", className)} {...props}>
       {children}
     </p>
   );
