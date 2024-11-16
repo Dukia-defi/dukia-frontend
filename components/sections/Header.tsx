@@ -4,7 +4,8 @@ import React from "react";
 import Image from "next/image";
 
 import { motion } from "framer-motion";
-import { Button } from "../ui/button";
+import { ConnectButton } from "thirdweb/react";
+import { client } from "@/app/client";
 
 export const Header = () => {
   return (
@@ -19,9 +20,14 @@ export const Header = () => {
       />
 
       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-        <Button variant="custom" size="lg">
-          Go To App
-        </Button>
+        <ConnectButton
+          client={client}
+          connectButton={{
+            className:
+              "!px-8 !py-3 !border-[3px] !text-base !border-purple-1 !bg-gradient-to-r !from-purple-main !via-purple-400 !to-purple-main !rounded-lg !font-bold !hover:shadow-lg !hover:shadow-purple-500/25 !transition-all !duration-300 !text-white",
+            label: "Go To App",
+          }}
+        />
       </motion.div>
     </div>
   );
