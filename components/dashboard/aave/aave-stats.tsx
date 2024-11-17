@@ -36,16 +36,16 @@ export const AaveStats = ({
           </StatTooltip>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-3">
           {/* Supply Stats */}
-          <div className="space-y-6">
+          <div className="flex flex-col justify-between space-y-6">
             <StatCard
               title="Supply Balance"
               value={`$${supplyBalance.toLocaleString()}`}
               tooltipContent="Total value of supplied assets"
             />
 
-            <div className="rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60">
+            <div className="flex flex-1 flex-col justify-around rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60">
               <StatTooltip content="Distribution of supplied assets">
                 <h3 className="mb-3 flex items-center gap-2 text-gray-400">
                   <InfoIcon className="h-4 w-4" />
@@ -60,14 +60,14 @@ export const AaveStats = ({
           </div>
 
           {/* Borrow Stats */}
-          <div className="space-y-6">
+          <div className="flex flex-col justify-between space-y-6">
             <StatCard
               title="Borrow Balance"
               value={`$${borrowBalance.toLocaleString()}`}
               tooltipContent="Total value of borrowed assets"
             />
 
-            <div className="rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60">
+            <div className="flex flex-1 flex-col justify-around rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60">
               <StatTooltip content="Percentage of your total borrow limit being used">
                 <h3 className="mb-3 flex items-center gap-2 text-gray-400">
                   <InfoIcon className="h-4 w-4" />
@@ -88,7 +88,7 @@ export const AaveStats = ({
           </div>
 
           {/* Safety Stats */}
-          <div className="space-y-6">
+          <div className="flex flex-col justify-between space-y-6">
             <StatCard
               title="Safety ratio (min 100%)"
               value={`${safetyRatio}%`}
@@ -98,7 +98,7 @@ export const AaveStats = ({
               }
             />
 
-            <div className="rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60">
+            <div className="flex flex-1 flex-col rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60">
               <StatTooltip content="Maximum amount you can borrow based on your collateral">
                 <div className="mb-2 flex items-center gap-2">
                   <InfoIcon className="h-4 w-4 text-gray-400" />
