@@ -38,7 +38,13 @@ export function ItemWrapper({
       <Paragraph className="text-sm font-light capitalize text-green-1 lg:text-sm">
         {title}
       </Paragraph>
-      <Paragraph>{percent ? `${value} %` : `$${value}`}</Paragraph>
+      <Paragraph>
+        {percent
+          ? `${value} %`
+          : typeof value === "string"
+            ? `${value}`
+            : `$${value}`}
+      </Paragraph>
     </div>
   );
 }
