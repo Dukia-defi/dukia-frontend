@@ -7,16 +7,7 @@ import { motion } from "framer-motion";
 import { InfoIcon } from "lucide-react";
 import { ProgressBar, StatCard, StatTooltip } from "@/components/common";
 
-export const AaveStats = ({
-  netApy = 0,
-  supplyBalance = 0,
-  supplyComposition = 82,
-  borrowBalance = 0,
-  borrowPowerUsed = 20,
-  safetyRatio = 0,
-  borrowLimit = 0,
-  leftToBorrow = 0,
-}) => {
+export const DefiStats = (props: IDefiStats) => {
   return (
     <Card className="w-full border-purple-500/10 bg-gray-900/50 backdrop-blur-sm">
       <CardContent className="p-6">
@@ -30,7 +21,7 @@ export const AaveStats = ({
               <InfoIcon className="h-4 w-4 text-gray-400" />
               <span className="text-gray-400">Net APY:</span>
               <span className="text-xl font-medium text-purple-400">
-                {netApy}%
+                {props.netApy}%
               </span>
             </div>
           </StatTooltip>
@@ -41,7 +32,7 @@ export const AaveStats = ({
           <div className="flex flex-col justify-between space-y-6">
             <StatCard
               title="Supply Balance"
-              value={`$${supplyBalance.toLocaleString()}`}
+              value={`$${props.supplyBalance?.toLocaleString()}`}
               tooltipContent="Total value of supplied assets"
             />
 
@@ -53,7 +44,7 @@ export const AaveStats = ({
                 </h3>
               </StatTooltip>
               <ProgressBar
-                value={supplyComposition}
+                value={props.supplyComposition}
                 gradient="bg-gradient-to-r from-purple-500 to-purple-400 rounded-full"
               />
             </div>
@@ -63,7 +54,7 @@ export const AaveStats = ({
           <div className="flex flex-col justify-between space-y-6">
             <StatCard
               title="Borrow Balance"
-              value={`$${borrowBalance.toLocaleString()}`}
+              value={`$${props.borrowBalance?.toLocaleString()}`}
               tooltipContent="Total value of borrowed assets"
             />
 
@@ -80,7 +71,7 @@ export const AaveStats = ({
                   <span>100%</span>
                 </div>
                 <ProgressBar
-                  value={borrowPowerUsed}
+                  value={props.borrowPowerUsed}
                   gradient="bg-gradient-to-r from-green-500 to-green-400 rounded-full"
                 />
               </div>
@@ -91,10 +82,10 @@ export const AaveStats = ({
           <div className="flex flex-col justify-between space-y-6">
             <StatCard
               title="Safety ratio (min 100%)"
-              value={`${safetyRatio}%`}
+              value={`${props.safetyRatio}%`}
               tooltipContent="Collateral value relative to borrowed value. Higher is safer."
               valueColor={
-                safetyRatio >= 100 ? "text-green-400" : "text-red-400"
+                props.safetyRatio >= 100 ? "text-green-400" : "text-red-400"
               }
             />
 
@@ -106,12 +97,12 @@ export const AaveStats = ({
                 </div>
               </StatTooltip>
               <span className="text-3xl font-medium text-white">
-                ${borrowLimit.toLocaleString()}
+                ${props.borrowLimit?.toLocaleString()}
               </span>
               <div className="mt-2 flex items-center gap-2 text-sm">
                 <span className="text-gray-400">Left to Borrow:</span>
                 <span className="text-purple-400">
-                  ${leftToBorrow.toLocaleString()}
+                  ${props.leftToBorrow?.toLocaleString()}
                 </span>
               </div>
             </div>

@@ -8,11 +8,6 @@ interface IWallet extends IPortfolioDetails {
   balance: number;
 }
 
-// interface IWallet {
-//   isConnected: boolean;
-// more will be added
-// }
-
 interface IPortfolioDetails {
   networth: number;
   supplied: number;
@@ -39,4 +34,30 @@ interface IStatCard {
 interface IStatTooltip {
   content: string;
   children: React.ReactNode;
+}
+interface IAaveAnalytics {
+  asset: string;
+  totalSupplied: string;
+  supplyApy: string;
+  totalBorrowed: string;
+  variableApy: string;
+}
+
+interface IUniswapAnalytics {
+  pool: string;
+  tvl: string;
+  apr: string;
+  dailyVolume: string;
+  monthlyVolume: string;
+}
+
+interface IDefiStats {
+  netApy: number;
+  supplyBalance: number;
+  supplyComposition: number;
+  borrowBalance: number;
+  borrowPowerUsed: number;
+  safetyRatio: number;
+  borrowLimit: number;
+  leftToBorrow: number;
 }

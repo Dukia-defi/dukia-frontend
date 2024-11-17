@@ -82,3 +82,5 @@ export const defiTabs = [
     description: "Borrow assets against your collateral",
   },
 ];
+
+export const tokens = ["ETH", "WBTC", "WETH", "USDT", "USDC", "AAVE", "DAI"];

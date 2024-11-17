@@ -2,10 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-
 import { motion } from "framer-motion";
-import { ConnectButton } from "thirdweb/react";
-import { client } from "@/app/client";
 import { buttonVariants } from "../ui/button";
 import Link from "next/link";
 
@@ -28,15 +25,6 @@ export const Header = () => {
         >
           Go To App
         </Link>
-        {/* 
-        <ConnectButton
-          client={client}
-          connectButton={{
-            className:
-              "!px-8 !py-3 !border-[3px] !text-base !border-purple-1 !bg-gradient-to-r !from-purple-main !via-purple-400 !to-purple-main !rounded-lg !font-bold !hover:shadow-lg !hover:shadow-purple-500/25 !transition-all !duration-300 !text-white",
-            label: "Go To App",
-          }}
-        /> */}
       </motion.div>
     </div>
   );
