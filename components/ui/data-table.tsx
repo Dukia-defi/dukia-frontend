@@ -20,17 +20,20 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import Heading2 from "./typography/heading2";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
   filterBy: string;
+  tableTitle: string;
 }
 
 export function DataTable<TData, TValue>({
   columns,
   data,
   filterBy,
+  tableTitle,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -51,7 +54,8 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-end py-4">
+      <div className="flex items-center justify-between py-4">
+        <Heading2 className="text-2xl lg:text-2xl">{tableTitle}</Heading2>
         <Input
           placeholder={`Search ${filterBy}`}
           value={(table.getColumn(filterBy)?.getFilterValue() as string) ?? ""}
@@ -94,7 +98,7 @@ export function DataTable<TData, TValue>({
                   className="border-gray-500"
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id} className="py-5">
+                    <TableCell key={cell.id} className="py-4">
                       {flexRender(
                         cell.column.columnDef.cell,
                         cell.getContext(),
