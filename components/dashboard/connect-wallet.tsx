@@ -26,6 +26,15 @@ export function ConnectWallet({ connectFn }: Props) {
             Connect Wallet
           </Button>
 
+          {/* <ConnectButton
+          client={client}
+          connectButton={{
+            className:
+              "!px-8 !py-3 !border-[3px] !text-base !border-purple-1 !bg-gradient-to-r !from-purple-main !via-purple-400 !to-purple-main !rounded-lg !font-bold !hover:shadow-lg !hover:shadow-purple-500/25 !transition-all !duration-300 !text-white",
+            label: "Connect Wallet",
+          }}
+        /> */}
+
           <Separator />
 
           <Paragraph className="text-base text-green-1 lg:text-base">
