@@ -63,3 +63,24 @@ export const socialLinks = [
   { icon: Twitter, href: "#", label: "Twitter/X" },
   { icon: Github, href: "#", label: "GitHub" },
 ];
+
+export const defiTabs = [
+  { id: "repay", label: "REPAY", description: "Repay your borrowed assets" },
+  {
+    id: "supply",
+    label: "SUPPLY",
+    description: "Deposit the selected asset into Aave v3",
+  },
+  {
+    id: "withdraw",
+    label: "WITHDRAW",
+    description: "Withdraw selected asset from Aave",
+  },
+  {
+    id: "borrow",
+    label: "BORROW",
+    description: "Borrow assets against your collateral",
+  },
+];
+
+export const tokens = ["ETH", "WBTC", "WETH", "USDT", "USDC", "AAVE", "DAI"];
