@@ -20,3 +20,23 @@ interface IPortfolioDetails {
   staked: number;
   borrowed: number;
 }
+
+interface IProgressBar {
+  value: number;
+  gradient: string;
+  max?: number;
+}
+
+interface IStatCard {
+  title: string;
+  value: string | number;
+  tooltipContent: string;
+  valueColor?: string;
+  className?: string;
+  icon?: Icon;
+}
+
+interface IStatTooltip {
+  content: string;
+  children: React.ReactNode;
+}

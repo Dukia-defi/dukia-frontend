@@ -15,7 +15,7 @@ export default function DashboardLayout({
   return (
     <SidebarProvider>
       <DashboardSidebar />
-      <main className="container mx-auto min-h-screen w-8/12 pt-7">
+      <main className="container mx-auto min-h-screen w-8/12 pt-7 font-figTree">
         {/* <SidebarTrigger className="absolute" /> */}
         {children}
       </main>
