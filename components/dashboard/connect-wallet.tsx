@@ -1,48 +1,35 @@
-import { Button } from "../ui/button";
+"use client";
+
+import { motion } from "framer-motion";
+import { ConnectButton } from "../common";
 import { Separator } from "../ui/separator";
-import Heading2 from "../ui/typography/heading2";
-import Paragraph from "../ui/typography/paragraph";
 
-interface Props {
-  connectFn: () => void;
-}
-
-export function ConnectWallet({ connectFn }: Props) {
+export function ConnectWallet() {
   return (
-    <section className="text-center">
-      <div className="mx-auto mt-14 w-1/2 space-y-20 bg-purple-2 py-14">
+    <motion.section
+      initial={{ opacity: 0, scale: 0.95 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.3 }}
+      className="text-center"
+    >
+      <motion.div
+        className="mx-auto mt-14 w-1/2 space-y-20 rounded-xl bg-purple-2 py-14"
+        whileHover={{ boxShadow: "0 4px 15px rgba(124, 58, 237, 0.1)" }}
+      >
         <div className="space-y-10">
-          <Heading2>Connect Wallet</Heading2>
-
-          <Paragraph>Access all your defi positions.</Paragraph>
+          <h2 className="text-3xl font-bold">Connect Wallet</h2>
+          <p className="text-gray-300">Access all your DeFi positions.</p>
         </div>
 
         <div className="space-y-5">
-          <Button
-            size={"lg"}
-            className="rounded-none hover:bg-black-1"
-            onClick={connectFn}
-          >
-            Connect Wallet
-          </Button>
-
-          {/* <ConnectButton
-          client={client}
-          connectButton={{
-            className:
-              "!px-8 !py-3 !border-[3px] !text-base !border-purple-1 !bg-gradient-to-r !from-purple-main !via-purple-400 !to-purple-main !rounded-lg !font-bold !hover:shadow-lg !hover:shadow-purple-500/25 !transition-all !duration-300 !text-white",
-            label: "Connect Wallet",
-          }}
-        /> */}
-
+          <ConnectButton />
           <Separator />
-
-          <Paragraph className="text-base text-green-1 lg:text-base">
-            Manage positions accross several defi protocols from different
+          <p className="text-base text-green-1 lg:text-base">
+            Manage positions across several DeFi protocols from different
             chains, all on Dukia, powered by Lisk.
-          </Paragraph>
+          </p>
         </div>
-      </div>
-    </section>
+      </motion.div>
+    </motion.section>
   );
 }

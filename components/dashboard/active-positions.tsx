@@ -1,22 +1,24 @@
 "use client";
 
+import { motion } from "framer-motion";
 import Heading3 from "../ui/typography/heading3";
 import { useWallet } from "@/context/wallet";
 import { AavePortfolioSummary } from "./aave/aave-portfolio-summary";
 import { UniswapPortfolioSummary } from "./uniswap/uniswap-portfolio-summary";
+import Image from "next/image";
 
 export function ActivePositions() {
-  const { network, networkOptions, setNetwork } = useWallet();
+  const { network, networkOptions, setNetwork, isConnected } = useWallet();
 
-  const handleOptionClick = (selectedOption: string) =>
-    setNetwork(selectedOption);
-
-  //   const isActivePosition = true;
-
-  //todo export network and options from wallet context
+  const handleOptionClick = (selectedNetwork: INetwork) =>
+    setNetwork(selectedNetwork);
 
   return (
-    <section className="mx-auto mt-14 w-10/12 space-y-4 rounded-md bg-gray-800">
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mx-auto mt-14 w-10/12 space-y-4 rounded-md bg-gray-800"
+    >
       <div className="flex items-center justify-between rounded-t-md bg-gray-700 px-8 py-4">
         <Heading3 className="lg:text-xl">Active Positions</Heading3>
 
@@ -28,20 +30,18 @@ export function ActivePositions() {
       </div>
 
       <div className="p-3">
-        {/* {isActivePosition ? ( */}
-        <div className="space-y-3">
-          <AavePortfolioSummary />
-
-          <UniswapPortfolioSummary />
-        </div>
-        {/* ) : (
-          <Paragraph className="text-left text-white">
-             This address has no active positions
-           </Paragraph>
-         )}
-        {/* create a bar for uniswap, aave */}
+        {isConnected ? (
+          <div className="space-y-3">
+            <AavePortfolioSummary />
+            <UniswapPortfolioSummary />
+          </div>
+        ) : (
+          <p className="text-left text-white">
+            Connect your wallet to view active positions
+          </p>
+        )}
       </div>
-    </section>
+    </motion.section>
   );
 }
 
@@ -50,21 +50,30 @@ function ChainFilter({
   currentOption,
   changeOptionFn,
 }: {
-  options: string[];
-  currentOption: string;
-  changeOptionFn: (option: string) => void;
+  options: INetwork[];
+  currentOption: INetwork;
+  changeOptionFn: (option: INetwork) => void;
 }) {
   return (
     <div className="flex items-center space-x-2 rounded-md bg-black-bg px-2 py-1">
-      {options.map((option) => (
-        <div
-          key={option}
+      {options?.map((option) => (
+        <motion.div
+          key={option.id}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
           onClick={() => changeOptionFn(option)}
-          className={`${option === currentOption && "bg-gray-800"} rounded-md px-2 py-1 text-lg uppercase hover:cursor-pointer hover:bg-gray-600`}
+          className={` ${option.id === currentOption.id ? "bg-gray-800" : ""} flex items-center gap-2 rounded-md px-2 py-1 text-lg uppercase hover:cursor-pointer hover:bg-gray-600`}
           role="button"
         >
-          {option}
-        </div>
+          <Image
+            src={option.icon}
+            width={0}
+            height={0}
+            alt={`${option.name} icon`}
+            className="h-5 w-5"
+          />
+          {option.name}
+        </motion.div>
       ))}
     </div>
   );

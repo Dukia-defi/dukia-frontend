@@ -38,17 +38,7 @@ export function PortfolioSummary({ data }: Props) {
   );
 }
 
-function ItemWrapper({
-  title,
-  value,
-  color,
-  main = false,
-}: {
-  title: string;
-  value: number;
-  main?: boolean;
-  color: string;
-}) {
+function ItemWrapper({ title, value, color, main = false }: IItemWrapper) {
   return (
     <div className="gap-4">
       <Paragraph className="text-sm font-light capitalize text-green-1 lg:text-sm">

@@ -62,6 +62,51 @@ interface IAaveStats {
   leftToBorrow: number;
 }
 
+interface IConnectButton {
+  label?: string;
+}
+interface IWallet {
+  address: string;
+  balance: number;
+  networth: number;
+  borrowed: number;
+  staked: number;
+  supplied: number;
+  claimable: number;
+}
+
+interface INetwork {
+  id: string;
+  name: string;
+  icon: string;
+}
+
+interface IWalletContext {
+  wallet: IWallet;
+  isConnecting: boolean;
+  isConnected: boolean;
+  network: INetwork;
+  setNetwork: (network: INetwork) => void;
+  networkOptions: INetwork[];
+}
+
+interface IItemWrapper {
+  title: string;
+  value: number;
+  main?: boolean;
+  color: string;
+}
+
+interface IDashHeader {
+  title: React.ReactNode;
+}
+
+interface INetworkSelector {
+  current: INetwork;
+  options: INetwork[];
+  onChange: (network: INetwork) => void;
+}
+
 interface IUniswapStats {
   liquityProvided: number;
   poolsProvided: number;

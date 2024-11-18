@@ -30,7 +30,7 @@ export function DashboardSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
-              className="rounded nodata-[state=open]:bg-transparent data-[state=open]:text-sidebar-accent-foreground"
+              className="nodata-[state=open]:bg-transparent rounded data-[state=open]:text-sidebar-accent-foreground"
               asChild
             >
               <Logo />
@@ -39,7 +39,7 @@ export function DashboardSidebar() {
         </SidebarMenu>
       </SidebarHeader>
 
-      <SidebarContent className="bg-purple-2 text-white border-r-0">
+      <SidebarContent className="border-r-0 bg-purple-2 text-white">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -49,7 +49,7 @@ export function DashboardSidebar() {
                   className={isActive("/dashboard") ? "bg-green-1" : ""}
                 >
                   <Link href="/dashboard">
-                    <Icons.portfolioIcon />
+                    <Icons.PortfolioIcon />
                     <span>Portfolio</span>
                   </Link>
                 </SidebarMenuButton>
