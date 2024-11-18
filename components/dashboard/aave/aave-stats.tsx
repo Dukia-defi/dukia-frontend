@@ -2,12 +2,11 @@
 
 import React from "react";
 import { Card, CardContent } from "@/components/ui/card";
-
 import { motion } from "framer-motion";
 import { InfoIcon } from "lucide-react";
 import { ProgressBar, StatCard, StatTooltip } from "@/components/common";
 
-export const DefiStats = (props: IDefiStats) => {
+export const AaveStats = (props: IAaveStats) => {
   return (
     <Card className="w-full border-purple-500/10 bg-gray-900/50 backdrop-blur-sm">
       <CardContent className="p-6">

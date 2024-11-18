@@ -1,6 +1,5 @@
 "use client";
 
-import { DefiInterface, DefiStats } from "@/components/dashboard";
 import { SectionLabel } from "@/components/sections";
 import Image from "next/image";
 import { aave_analytics_columns } from "@/components/dashboard/aave/aave-analytics-columns";
@@ -10,11 +9,13 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AnimatePresence } from "framer-motion";
 import { ConnectWallet } from "@/components/dashboard/connect-wallet";
 import { useWallet } from "@/context/wallet";
+import { AaveStats } from "@/components/dashboard/aave/aave-stats";
+import { AaveInteractionInterface } from "@/components/dashboard/aave/aave-interaction-interface";
 
 export default function AavePage() {
   const { isConnected } = useWallet();
 
-  const props: IDefiStats = {
+  const props: IAaveStats = {
     netApy: 0,
     supplyBalance: 0,
     supplyComposition: 82,
@@ -40,8 +41,8 @@ export default function AavePage() {
           <ConnectWallet />
         ) : (
           <>
-            <DefiStats {...props} />
-            <DefiInterface />
+            <AaveStats {...props} />
+            <AaveInteractionInterface />
             <DataTable
               columns={aave_analytics_columns}
               data={dummy_aave_analytics_data}
