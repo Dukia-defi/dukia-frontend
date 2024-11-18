@@ -1,5 +1,5 @@
-import { DefiStats } from "@/components/dashboard";
 import { uniswap_analytics_columns } from "@/components/dashboard/uniswap/uniswap-analytics-column";
+import { UniswapDefiStats } from "@/components/dashboard/uniswap/uniswap-defi-stats";
 import { UniswapInteractionInterface } from "@/components/dashboard/uniswap/uniswap-interaction-interface";
 import { SectionLabel } from "@/components/sections";
 import { DataTable } from "@/components/ui/data-table";
@@ -7,16 +7,13 @@ import { dummy_uniswap_analytics_data } from "@/lib/data";
 import Image from "next/image";
 
 export default function UniswapPage() {
-  const props: IDefiStats = {
+  const props: IUniswapStats = {
     netApy: 0,
-    supplyBalance: 100,
-    supplyComposition: 27,
-    borrowBalance: 0,
-    borrowPowerUsed: 40,
-    safetyRatio: 0,
-    borrowLimit: 0,
-    leftToBorrow: 0,
+    liquityProvided: 100,
+    poolsProvided: 4,
+    profit: 20,
   };
+
   return (
     <section className="mb-40">
       <div className="mb-6 flex flex-col items-start">
@@ -24,7 +21,7 @@ export default function UniswapPage() {
         <SectionLabel title="Uniswap" className="text-3xl" />
       </div>
 
-      <DefiStats {...props} />
+      <UniswapDefiStats {...props} />
 
       <UniswapInteractionInterface />
 

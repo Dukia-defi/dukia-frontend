@@ -46,6 +46,7 @@ export const DefiInteractionInterface = ({
     <div className="mx-auto my-5 w-full max-w-6xl p-4">
       {/* Tabs */}
       <div
+        // className={`mb-6 grid grid-cols-2 gap-2 md:grid-cols-4`}
         className={`mb-6 grid grid-cols-2 gap-2 md:grid-cols-${tabs.length}`}
       >
         {tabs.map((tab) => (

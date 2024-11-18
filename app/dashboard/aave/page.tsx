@@ -1,13 +1,13 @@
-import { DefiStats } from "@/components/dashboard";
 import { SectionLabel } from "@/components/sections";
 import Image from "next/image";
 import { aave_analytics_columns } from "@/components/dashboard/aave/aave-analytics-columns";
 import { DataTable } from "@/components/ui/data-table";
 import { dummy_aave_analytics_data } from "@/lib/data";
 import { AaveInteractionInterface } from "@/components/dashboard/aave/aave-interaction-interface";
+import { AaveStats } from "@/components/dashboard/aave/aave-stats";
 
 export default function AavePage() {
-  const props: IDefiStats = {
+  const props: IAaveStats = {
     netApy: 0,
     supplyBalance: 0,
     supplyComposition: 82,
@@ -24,7 +24,7 @@ export default function AavePage() {
         <SectionLabel title="Aave" className="text-3xl" />
       </div>
 
-      <DefiStats {...props} />
+      <AaveStats {...props} />
 
       <AaveInteractionInterface />
 
