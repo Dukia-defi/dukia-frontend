@@ -11,7 +11,7 @@ export function SortableTableHeader({ sortFn, title }: Props) {
     <Button
       variant="ghost"
       onClick={sortFn}
-      className="px-0 hover:bg-transparent"
+      className="rounded-none bg-transparent px-0 hover:bg-transparent"
     >
       {title}
       <ChevronsUpDown className="ml-2 h-4 w-4" />

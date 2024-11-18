@@ -61,3 +61,15 @@ interface IDefiStats {
   borrowLimit: number;
   leftToBorrow: number;
 }
+
+interface IUniswapStats {
+  liquityProvided: number;
+  poolsProvided: number;
+  profit: number;
+}
+
+interface IDefiTabs {
+  id: string;
+  label: string;
+  description: string;
+}

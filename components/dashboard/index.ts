@@ -1,2 +1,2 @@
-export { DefiInterface } from "./defi-interface";
+export { DefiInteractionInterface } from "./defi-interaction-interface";
 export { DefiStats } from "./defi-stats";

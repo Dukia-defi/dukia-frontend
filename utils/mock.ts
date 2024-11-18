@@ -64,23 +64,50 @@ export const socialLinks = [
   { icon: Github, href: "#", label: "GitHub" },
 ];
 
-export const defiTabs = [
-  { id: "repay", label: "REPAY", description: "Repay your borrowed assets" },
+export const aaveTabs: IDefiTabs[] = [
   {
     id: "supply",
     label: "SUPPLY",
     description: "Deposit the selected asset into Aave v3",
   },
   {
-    id: "withdraw",
-    label: "WITHDRAW",
-    description: "Withdraw selected asset from Aave",
-  },
-  {
     id: "borrow",
     label: "BORROW",
     description: "Borrow assets against your collateral",
   },
+  { id: "repay", label: "REPAY", description: "Repay your borrowed assets" },
+  {
+    id: "withdraw",
+    label: "WITHDRAW",
+    description: "Withdraw selected asset from Aave",
+  },
 ];
 
-export const tokens = ["ETH", "WBTC", "WETH", "USDT", "USDC", "AAVE", "DAI"];
+export const uniswapTabs: IDefiTabs[] = [
+  {
+    id: "swap",
+    label: "SWAP",
+    description: "Swap token pairs",
+  },
+  {
+    id: "add liquidity",
+    label: "ADD LIQUIDITY",
+    description: "Add your liquidity to a token pair pool",
+  },
+  {
+    id: "remove liquidity",
+    label: "REMOVE LIQUIDITY",
+    description: "Remove your liquidity from a token pair pool",
+  },
+];
+
+export const tokens = [
+  "ETH",
+  "WBTC",
+  "WETH",
+  "USDT",
+  "USDC",
+  "AAVE",
+  "DAI",
+  "LINK",
+];

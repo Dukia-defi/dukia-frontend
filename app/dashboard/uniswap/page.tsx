@@ -1,5 +1,6 @@
-import { DefiInterface, DefiStats } from "@/components/dashboard";
+import { DefiStats } from "@/components/dashboard";
 import { uniswap_analytics_columns } from "@/components/dashboard/uniswap/uniswap-analytics-column";
+import { UniswapInteractionInterface } from "@/components/dashboard/uniswap/uniswap-interaction-interface";
 import { SectionLabel } from "@/components/sections";
 import { DataTable } from "@/components/ui/data-table";
 import { dummy_uniswap_analytics_data } from "@/lib/data";
@@ -17,13 +18,16 @@ export default function UniswapPage() {
     leftToBorrow: 0,
   };
   return (
-    <section>
+    <section className="mb-40">
       <div className="mb-6 flex flex-col items-start">
         <Image src="/svg/uniswap.svg" width={50} height={30} alt="uniswap" />
         <SectionLabel title="Uniswap" className="text-3xl" />
       </div>
+
       <DefiStats {...props} />
-      <DefiInterface />
+
+      <UniswapInteractionInterface />
+
       <DataTable
         columns={uniswap_analytics_columns}
         data={dummy_uniswap_analytics_data}
