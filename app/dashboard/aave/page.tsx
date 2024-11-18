@@ -1,3 +1,5 @@
+"use client";
+
 import { SectionLabel } from "@/components/sections";
 import Image from "next/image";
 import { aave_analytics_columns } from "@/components/dashboard/aave/aave-analytics-columns";

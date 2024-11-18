@@ -99,30 +99,6 @@ export const uniswapTabs: IDefiTabs[] = [
     label: "REMOVE LIQUIDITY",
     description: "Remove your liquidity from a token pair pool",
   },
-  { id: "repay", label: "REPAY", description: "Repay your borrowed assets" },
-  {
-    id: "withdraw",
-    label: "WITHDRAW",
-    description: "Withdraw selected asset",
-  },
-];
-
-export const uniswapTabs: IDefiTabs[] = [
-  {
-    id: "swap",
-    label: "SWAP",
-    description: "Swap token pairs",
-  },
-  {
-    id: "add liquidity",
-    label: "ADD LIQUIDITY",
-    description: "Add your liquidity to a token pair pool",
-  },
-  {
-    id: "remove liquidity",
-    label: "REMOVE LIQUIDITY",
-    description: "Remove your liquidity from a token pair pool",
-  },
 ];
 
 export const tokens = [
