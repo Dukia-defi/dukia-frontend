@@ -1,49 +1,78 @@
 "use client";
 
+import { client } from "@/app/client";
+import { createContext, useContext, useState, useEffect } from "react";
 import {
-  Dispatch,
-  SetStateAction,
-  createContext,
-  useContext,
-  useState,
-} from "react";
+  useActiveAccount,
+  useWalletBalance,
+  useActiveWalletChain,
+  useActiveWalletConnectionStatus,
+} from "thirdweb/react";
 
 const initialWalletState: IWallet = {
   address: "",
   balance: 0,
-  networth: 1000,
-  borrowed: 200,
-  staked: 500,
-  supplied: 600,
-  claimable: 100,
+  networth: 0,
+  borrowed: 0,
+  staked: 0,
+  supplied: 0,
+  claimable: 0,
 };
 
-interface WalletContextProps {
-  wallet: IWallet;
-  setWallet: Dispatch<SetStateAction<IWallet>>;
-  network: string;
-  setNetwork: Dispatch<SetStateAction<string>>;
-  networkOptions: string[];
-}
+const networkOptions: INetwork[] = [
+  { id: "ethereum", name: "Ethereum", icon: "/svg/ethereum.svg" },
+  { id: "lisk", name: "Lisk", icon: "/svg/lisk.svg" },
+  { id: "arbitrum", name: "Arbitrum", icon: "/svg/arbitrum.svg" },
+];
 
-const WalletContext = createContext<WalletContextProps>({
-  wallet: initialWalletState,
-  setWallet: () => {},
-  network: "",
-  setNetwork: () => {},
-  networkOptions: [],
-});
+const WalletContext = createContext<IWalletContext>({} as IWalletContext);
 
-const WalletProvider = ({ children }: { children: React.ReactNode }) => {
+export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
   const [wallet, setWallet] = useState<IWallet>(initialWalletState);
-  const [network, setNetwork] = useState<string>("ethereum");
-  const networkOptions: string[] = ["ethereum", "lisk", "arbitrum"];
+  const [network, setNetwork] = useState<INetwork>(networkOptions[0]);
 
-  //todo implement changing of data being fetched based on selected network
+  const account = useActiveAccount();
+  const status = useActiveWalletConnectionStatus();
+
+  const activeChain = useActiveWalletChain();
+  const address = account?.address ?? undefined;
+
+  const { data } = useWalletBalance({
+    chain: activeChain,
+    address,
+    client: client,
+  });
+
+  const balance = data?.displayValue;
+
+  useEffect(() => {
+    if (address && status === "connected") {
+      // todo: Update wallet state with real data
+      setWallet((prev) => ({
+        ...prev,
+        address,
+        balance: balance ? parseFloat(balance) : 0,
+        networth: 1000,
+        borrowed: 200,
+        staked: 500,
+        supplied: 600,
+        claimable: 100,
+      }));
+    } else {
+      setWallet(initialWalletState);
+    }
+  }, [address, status, balance]);
 
   return (
     <WalletContext.Provider
-      value={{ wallet, setWallet, network, setNetwork, networkOptions }}
+      value={{
+        wallet,
+        isConnecting: status === "connecting",
+        isConnected: status === "connected",
+        network,
+        setNetwork,
+        networkOptions,
+      }}
     >
       {children}
     </WalletContext.Provider>
@@ -51,5 +80,3 @@ const WalletProvider = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const useWallet = () => useContext(WalletContext);
-
-export default WalletProvider;

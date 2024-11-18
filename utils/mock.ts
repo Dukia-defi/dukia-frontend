@@ -69,12 +69,12 @@ export const defiTabs = [
   {
     id: "supply",
     label: "SUPPLY",
-    description: "Deposit the selected asset into Aave v3",
+    description: "Deposit the selected asset",
   },
   {
     id: "withdraw",
     label: "WITHDRAW",
-    description: "Withdraw selected asset from Aave",
+    description: "Withdraw selected asset",
   },
   {
     id: "borrow",

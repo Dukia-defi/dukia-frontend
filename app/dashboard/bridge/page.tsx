@@ -1,10 +1,16 @@
+import { DashboardHeader } from "@/components/dashboard/dashboard-header";
+
 export default function BridgePage() {
   return (
     <>
       <section>
-        <div>
-          <p>Bridge world</p>
-        </div>
+        <DashboardHeader
+          title={
+            <div>
+              <p>Bridge world</p>
+            </div>
+          }
+        />
       </section>
     </>
   );

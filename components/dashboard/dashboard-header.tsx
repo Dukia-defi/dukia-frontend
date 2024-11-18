@@ -1,32 +1,30 @@
-import { Icons } from "../icons";
-import { Button } from "../ui/button";
-import Heading1 from "../ui/typography/heading1";
-import Paragraph from "../ui/typography/paragraph";
+"use client";
+import { ConnectButton } from "../common";
+import { motion } from "framer-motion";
+import NetworkSelector from "./network-selector";
+import { useWallet } from "@/context/wallet";
 
-interface Props {
-  address: string;
-  balance: number;
-  connectFn: () => void;
-}
+export function DashboardHeader(props: IDashHeader) {
+  const { isConnected, network, networkOptions, setNetwork } = useWallet();
 
-export function DashboardHeader({ address, balance, connectFn }: Props) {
   return (
-    <header className="mb-10 flex items-center justify-between">
-      <div className="flex items-center gap-2">
-        <div className="rounded-md bg-purple-2 p-2">
-          <Icons.portfolioIcon />
-        </div>
-        <Heading1>Portfolio</Heading1>
-      </div>
+    <motion.header
+      initial={{ opacity: 0, y: -20 }}
+      animate={{ opacity: 1, y: 0 }}
+      className="mb-10 flex items-center justify-between"
+    >
+      {props.title}
 
-      {address !== "" && (
-        <div className="flex items-center gap-4">
-          <Paragraph>{balance} ETH</Paragraph>
-          <Button onClick={connectFn} className="hover:bg-black-1">
-            {address}
-          </Button>
-        </div>
-      )}
-    </header>
+      <div className="flex items-center gap-4">
+        {isConnected && (
+          <NetworkSelector
+            current={network}
+            options={networkOptions}
+            onChange={setNetwork}
+          />
+        )}
+        <ConnectButton />
+      </div>
+    </motion.header>
   );
 }

@@ -116,7 +116,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  portfolioIcon: ({ ...props }: IconProps) => (
+  PortfolioIcon: ({ ...props }: IconProps) => (
     <svg
       {...props}
       width="41"
