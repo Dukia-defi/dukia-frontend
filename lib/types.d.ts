@@ -51,7 +51,7 @@ interface IUniswapAnalytics {
   monthlyVolume: string;
 }
 
-interface IDefiStats {
+interface IAaveStats {
   netApy: number;
   supplyBalance: number;
   supplyComposition: number;
@@ -105,4 +105,17 @@ interface INetworkSelector {
   current: INetwork;
   options: INetwork[];
   onChange: (network: INetwork) => void;
+}
+
+interface IUniswapStats {
+  liquityProvided: number;
+  poolsProvided: number;
+  profit: number;
+  netApy: number;
+}
+
+interface IDefiTabs {
+  id: string;
+  label: string;
+  description: string;
 }
