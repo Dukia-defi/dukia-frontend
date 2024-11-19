@@ -41,7 +41,7 @@ export const Protocol = () => {
   };
 
   return (
-    <section className="py-20 bg-gradient-to-b from-black to-purple-950">
+    <section className="bg-gradient-to-b from-black to-purple-950 py-20">
       <motion.div
         initial="hidden"
         whileInView="visible"
@@ -49,20 +49,20 @@ export const Protocol = () => {
         variants={containerVariants}
         className="container mx-auto px-4"
       >
-        <motion.div className="text-center mb-16" variants={titleVariants}>
-          <SectionLabel title="Protocol Supported" />
-          <p className="mt-4 text-gray-400 text-lg">
-            Seamlessly interact with leading DeFi protocols
+        <motion.div className="mb-16 text-center" variants={titleVariants}>
+          <SectionLabel title="Protocols Supported" />
+          <p className="mt-4 text-lg text-gray-400">
+            Seamlessly interact with your favorite DeFi protocols
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+        <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
           {protocols.map((protocol) => (
             <motion.div
               key={protocol.id}
               variants={itemVariants}
               whileHover={{ scale: 1.05 }}
-              className="flex flex-col items-center justify-end p-8 rounded-2xl bg-gradient-to-br from-gray-900 to-black border border-purple-900/20 backdrop-blur-sm shadow-xl"
+              className="flex flex-col items-center justify-end rounded-2xl border border-purple-900/20 bg-gradient-to-br from-gray-900 to-black p-8 shadow-xl backdrop-blur-sm"
             >
               <motion.div
                 whileHover={{ rotate: [0, -10, 10, 0] }}
@@ -77,10 +77,10 @@ export const Protocol = () => {
                   className="h-auto"
                 />
               </motion.div>
-              <h4 className="text-2xl font-semibold text-white mb-2">
+              <h4 className="mb-2 text-2xl font-semibold text-white">
                 {protocol.name}
               </h4>
-              <p className="text-gray-400 text-center">
+              <p className="text-center text-gray-400">
                 {protocol.description}
               </p>
             </motion.div>

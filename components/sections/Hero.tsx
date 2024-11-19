@@ -50,75 +50,76 @@ export const Hero = () => {
       initial="initial"
       animate="animate"
       variants={staggerChildren}
-      className="relative min-h-[90vh] flex items-center py-20 overflow-hidden bg-gradient-to-b from-black via-purple-950/20 to-black"
+      className="relative flex min-h-[90vh] items-center overflow-hidden bg-gradient-to-b from-black via-purple-950/20 to-black py-20"
     >
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-purple-main rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-cyan-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="animate-blob absolute -left-4 top-0 h-72 w-72 rounded-full bg-purple-main opacity-20 mix-blend-multiply blur-xl filter"></div>
+        <div className="animate-blob animation-delay-2000 absolute -right-4 top-0 h-72 w-72 rounded-full bg-cyan-500 opacity-20 mix-blend-multiply blur-xl filter"></div>
+        <div className="animate-blob animation-delay-4000 absolute -bottom-8 left-20 h-72 w-72 rounded-full bg-purple-500 opacity-20 mix-blend-multiply blur-xl filter"></div>
       </div>
 
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-12">
-          <motion.div className="lg:w-2/3 flex flex-col justify-center items-center lg:items-start">
+      <div className="container relative z-10 mx-auto px-4">
+        <div className="flex flex-col items-center gap-12 lg:flex-row">
+          <motion.div className="flex flex-col items-center justify-center lg:w-2/3 lg:items-start">
             <motion.div
-              className="flex items-center gap-3 mb-3 lg:mb-8"
+              className="mb-3 flex items-center gap-3 lg:mb-8"
               variants={fadeInUp}
             >
               <motion.div
                 variants={logoRotate}
-                className="bg-gradient-to-br from-purple-500/20 to-transparent p-3 rounded-xl backdrop-blur-sm"
+                className="rounded-xl bg-gradient-to-br from-purple-500/20 to-transparent p-3 backdrop-blur-sm"
               >
                 <Image
                   src="/svg/acc.svg"
                   width={0}
                   height={0}
                   alt="deFi"
-                  className="w-[60px] lg:w-[80px] h-auto"
+                  className="h-auto w-[60px] lg:w-[80px]"
                 />
               </motion.div>
               <motion.span
                 variants={fadeInUp}
-                className="text-xl lg:text-3xl font-bold uppercase bg-gradient-to-r from-purple-main to-purple-200 bg-clip-text text-transparent"
+                className="bg-gradient-to-r from-purple-main to-purple-200 bg-clip-text text-xl font-bold uppercase text-transparent lg:text-3xl"
               >
                 The First
               </motion.span>
               <motion.div
                 variants={logoRotate}
-                className="bg-gradient-to-br from-purple-500/20 to-transparent p-3 rounded-xl backdrop-blur-sm"
+                className="rounded-xl bg-gradient-to-br from-purple-500/20 to-transparent p-3 backdrop-blur-sm"
               >
                 <Image
                   src="/svg/acc.svg"
                   width={0}
                   height={0}
                   alt="deFi"
-                  className="w-[60px] lg:w-[80px] h-auto"
+                  className="h-auto w-[60px] lg:w-[80px]"
                 />
               </motion.div>
             </motion.div>
 
             <motion.h1
               variants={fadeInUp}
-              className="text-5xl lg:text-6xl text-center lg:text-start font-bold leading-tight mb-6"
+              className="mb-6 text-center text-5xl font-bold leading-tight lg:text-start lg:text-6xl"
             >
               <span className="bg-gradient-to-r from-purple-main via-pink-200 to-purple-main bg-clip-text text-transparent">
-                Centralized Asset Management
+                Connected DeFi Ecosystem
               </span>
               <br />
-              <span className="text-gray-200">
-                Across Multiple Decentralized Protocols
-              </span>
+              <span className="text-gray-200">For DeFi Users on Lisk</span>
             </motion.h1>
 
             <motion.p
               variants={fadeInUp}
-              className="text-xl text-gray-400 leading-relaxed mb-8 max-w-2xl text-center lg:text-left"
+              className="mb-8 max-w-2xl text-center text-xl leading-relaxed text-gray-400 lg:text-left"
             >
-              Dukia DeFi provides users with the ability to deposit funds and
-              seamlessly open, manage, and close positions across a variety of
-              DeFi protocols. The platform also includes detailed analytics,
-              offering insights into different asset tokens, helping users make
-              informed decisions in the DeFi space.
+              Dukia DeFi gives you access to all your favorite DeFi protocols,
+              allowing you to seemlessly view and manage your positions accross
+              different chains, while you enjoy the speed and low transaction
+              costs of Lisk. Dukia DeFi also gives you more power as a DeFi user
+              by giving you detailed analytics, offering insights into different
+              asset markets, to help you make informed decisions. And after
+              making your decision, Dukia DeFi gives you access to leverage,
+              allowing you make more profit on DeFi investments.
             </motion.p>
 
             <motion.div
@@ -133,10 +134,10 @@ export const Hero = () => {
           </motion.div>
 
           <motion.div
-            className="lg:w-1/3 relative"
+            className="relative lg:w-1/3"
             variants={heroImageVariants}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full filter blur-3xl opacity-20"></div>
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-3xl filter"></div>
             <div className="relative">
               <Image
                 src="/svg/hero.svg"

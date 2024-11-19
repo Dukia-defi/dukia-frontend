@@ -7,9 +7,9 @@ import Link from "next/link";
 
 export const Footer = () => {
   return (
-    <footer className="bg-black-bg border-t border-purple-2 backdrop-blur-lg">
+    <footer className="border-t border-purple-2 bg-black-bg backdrop-blur-lg">
       <div className="container mx-auto px-4 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-3">
           {/* Logo and description */}
           <div className="space-y-6">
             <Image
@@ -17,21 +17,20 @@ export const Footer = () => {
               width={0}
               height={0}
               alt="Dukia deFi"
-              className="w-[120px] h-auto lg:w-[150px] lg:h-auto"
+              className="h-auto w-[120px] lg:h-auto lg:w-[150px]"
               priority
             />
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Dukia DeFi is a Decentralized Asset Management Platform that
-              provides users with the ability to deposit funds and seamlessly
-              open, manage, and close positions across a variety of DeFi
-              protocols.
+            <p className="text-sm leading-relaxed text-gray-400">
+              Dukia DeFi is a Decentralized Asset Management Platform that gives
+              users the tools to seamlessly interact with DeFi protocols on
+              different networks and make more profit from their investments.
             </p>
             <div className="flex items-center space-x-4">
               {socialLinks.map(({ icon: Icon, href, label }) => (
                 <Link
                   key={label}
                   href={href}
-                  className="text-gray-400 hover:text-purple-1 transition-colors"
+                  className="text-gray-400 transition-colors hover:text-purple-1"
                   aria-label={label}
                 >
                   <Icon className="h-5 w-5" />
@@ -43,13 +42,13 @@ export const Footer = () => {
           {/* Links sections */}
           {Object.entries(footerLinks).map(([title, links]) => (
             <div key={title}>
-              <h3 className="font-semibold mb-4">{title}</h3>
+              <h3 className="mb-4 font-semibold">{title}</h3>
               <ul className="space-y-3">
                 {links.map((link) => (
                   <li key={link}>
                     <Link
                       href="#"
-                      className="text-gray-400 hover:text-purple-1 transition-colors text-sm"
+                      className="text-sm text-gray-400 transition-colors hover:text-purple-1"
                     >
                       {link}
                     </Link>

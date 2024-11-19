@@ -19,7 +19,7 @@ export const AppFeatures = () => {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative overflow-hidden py-24">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-900 to-black opacity-20 blur-3xl"></div>
 
       <motion.div
@@ -27,36 +27,35 @@ export const AppFeatures = () => {
         whileInView="animate"
         viewport={{ once: true, margin: "-100px" }}
         variants={staggerChildren}
-        className="container mx-auto px-4 relative z-10"
+        className="container relative z-10 mx-auto px-4"
       >
-        <div className="text-center mb-16">
-          <motion.h2 variants={fadeInUp} className="text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r  from-purple-main via-purple-300 to-purple-main bg-clip-text text-transparent">
-              Everything you need
-            </span>
+        <div className="mb-16 text-center">
+          <motion.h2 variants={fadeInUp} className="mb-4 text-5xl font-bold">
+            Everything you need
             <br />
-            in one App and more
+            <span className="bg-gradient-to-r from-purple-main via-purple-300 to-purple-main bg-clip-text text-transparent">
+              to be a true Power DeFi user
+            </span>
           </motion.h2>
           <motion.p
             variants={fadeInUp}
-            className="text-gray-400 text-lg max-w-2xl mx-auto"
+            className="mx-auto max-w-3xl text-lg text-gray-400"
           >
-            DeFi investments on this platform are managed across multiple
-            protocols, allowing users to open, manage, and adjust positions with
-            their own funds.
+            Dukia DeFi isn't just a platform; it's a gateway to a more
+            connected, efficient DeFi ecosystem.
           </motion.p>
         </div>
 
         <motion.div
           variants={staggerChildren}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
+          className="grid grid-cols-1 gap-8 md:grid-cols-3"
         >
           <motion.div
             variants={fadeInUp}
-            className="p-8 rounded-2xl bg-gradient-to-br from-purple-900/20 to-black/20 border border-purple-900/10 backdrop-blur-sm"
+            className="rounded-2xl border border-purple-900/10 bg-gradient-to-br from-purple-900/20 to-black/20 p-8 backdrop-blur-sm"
           >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-full bg-purple-500/20 backdrop-blur-sm">
+            <div className="mb-4 flex items-center gap-4">
+              <div className="rounded-full bg-purple-500/20 p-3 backdrop-blur-sm">
                 <Image
                   src="/svg/lending.svg"
                   width={40}
@@ -64,41 +63,23 @@ export const AppFeatures = () => {
                   alt="lending"
                 />
               </div>
-              <h3 className="text-2xl font-semibold">Lending and Borrowing</h3>
+              <h3 className="text-2xl font-semibold">
+                Cross-Chain + Layer-2 Scaling
+              </h3>
             </div>
             <p className="text-gray-400">
-              Leverage integrated lending protocols to earn interest on your
-              deposits or use your assets as collateral to borrow other tokens.
+              Leverage the power of cross-chain interactions to access DeFi
+              platforms on supported chains, while enjoying Lisk's speed and low
+              transaction costs.
             </p>
           </motion.div>
 
           <motion.div
             variants={fadeInUp}
-            className="p-8 rounded-2xl bg-gradient-to-br from-indigo-900/20 to-black/20 border border-indigo-900/10 backdrop-blur-sm"
+            className="rounded-2xl border border-sky-900/10 bg-gradient-to-br from-sky-900/20 to-black/20 p-8 backdrop-blur-sm"
           >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-full bg-indigo-500/20 backdrop-blur-sm">
-                <Image
-                  src="/svg/withdraw.svg"
-                  width={40}
-                  height={40}
-                  alt="withdraw"
-                />
-              </div>
-              <h3 className="text-2xl font-semibold">Withdrawal of Assets</h3>
-            </div>
-            <p className="text-gray-400">
-              Different protocols offer varying assets and interest rates,
-              allowing you to choose options that best fit your strategy.
-            </p>
-          </motion.div>
-
-          <motion.div
-            variants={fadeInUp}
-            className="p-8 rounded-2xl bg-gradient-to-br from-sky-900/20 to-black/20 border border-sky-900/10 backdrop-blur-sm"
-          >
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 rounded-full bg-sky-500/20 backdrop-blur-sm">
+            <div className="mb-4 flex items-center gap-4">
+              <div className="rounded-full bg-sky-500/20 p-3 backdrop-blur-sm">
                 <Image
                   src="/svg/liquidity.svg"
                   width={40}
@@ -106,14 +87,37 @@ export const AppFeatures = () => {
                   alt="liquidity"
                 />
               </div>
+              <h3 className="text-2xl font-semibold">Pro Asset Management</h3>
+            </div>
+            <p className="text-gray-400">
+              Monitor and manage your assets across multiple protocols on one
+              unified platform, make better decisions with our market analysis
+              tools, simplifying the complexity of decentralized finance.
+            </p>
+          </motion.div>
+
+          <motion.div
+            variants={fadeInUp}
+            className="rounded-2xl border border-indigo-900/10 bg-gradient-to-br from-indigo-900/20 to-black/20 p-8 backdrop-blur-sm"
+          >
+            <div className="mb-4 flex items-center gap-4">
+              <div className="rounded-full bg-indigo-500/20 p-3 backdrop-blur-sm">
+                <Image
+                  src="/svg/withdraw.svg"
+                  width={40}
+                  height={40}
+                  alt="withdraw"
+                />
+              </div>
               <h3 className="text-2xl font-semibold">
-                Providing and Swapping Liquidity
+                Access to More Liquidity
               </h3>
             </div>
             <p className="text-gray-400">
-              Provide liquidity or swap tokens with full flexibility: set up
-              instant token swaps, limit orders, or dollar-cost averaging (DCA)
-              strategies.
+              Seamlessly bridge tokens between chains, enabling smooth asset
+              transfers and liquidity movement. And whether you're buying or
+              supplying assets, Dukia wallet provides leverage to maximize your
+              positions and amplify your strategies.
             </p>
           </motion.div>
         </motion.div>

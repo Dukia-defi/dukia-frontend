@@ -5,7 +5,7 @@ export const protocols = [
     id: 1,
     name: "Uniswap",
     logo: "/svg/uniswap.svg",
-    description: "Decentralized trading protocol",
+    description: "Decentralized swapping protocol",
   },
   {
     id: 2,
@@ -55,8 +55,8 @@ export const performance = [
 ];
 
 export const footerLinks = {
-  "DukiaDEFI PROTOCOLS": ["Aave", "Uniswap"],
-  "DukiaDEFI NETWORK": ["Ethereum", "Lisk", "Sepolia (Testnet)"],
+  "Dukia DeFi Protocols": ["Aave", "Uniswap"],
+  "Dukia DeFi Networks": ["Ethereum", "Lisk", "Arbitrum"],
 };
 
 export const socialLinks = [
