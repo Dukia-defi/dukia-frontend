@@ -4,7 +4,6 @@ import {
   Footer,
   Header,
   Hero,
-  Performance,
   Protocol,
   Subscribe,
 } from "@/components/sections";

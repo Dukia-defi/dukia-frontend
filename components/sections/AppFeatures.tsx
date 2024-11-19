@@ -41,7 +41,7 @@ export const AppFeatures = () => {
             variants={fadeInUp}
             className="mx-auto max-w-3xl text-lg text-gray-400"
           >
-            Dukia DeFi isn't just a platform; it's a gateway to a more
+            Dukia DeFi isn’t just a platform; it’s a gateway to a more
             connected, efficient DeFi ecosystem.
           </motion.p>
         </div>
@@ -69,7 +69,7 @@ export const AppFeatures = () => {
             </div>
             <p className="text-gray-400">
               Leverage the power of cross-chain interactions to access DeFi
-              platforms on supported chains, while enjoying Lisk's speed and low
+              platforms on supported chains, while enjoying Lisk’s speed and low
               transaction costs.
             </p>
           </motion.div>
@@ -115,7 +115,7 @@ export const AppFeatures = () => {
             </div>
             <p className="text-gray-400">
               Seamlessly bridge tokens between chains, enabling smooth asset
-              transfers and liquidity movement. And whether you're buying or
+              transfers and liquidity movement. And whether you’re buying or
               supplying assets, Dukia wallet provides leverage to maximize your
               positions and amplify your strategies.
             </p>
