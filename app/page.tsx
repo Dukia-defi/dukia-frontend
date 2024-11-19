@@ -11,13 +11,13 @@ import {
 
 export default function Home() {
   return (
-    <div className=" my-2  lg:my-14 max-w-screen overflow-x-hidden">
+    <div className="max-w-screen my-2 overflow-x-hidden lg:my-14">
       <Header />
       <Hero />
       <Protocol />
       <FeaturedNetwork />
       <AppFeatures />
-      <Performance />
+      {/* <Performance /> */}
       <Subscribe />
       <Footer />
     </div>
