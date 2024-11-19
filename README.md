@@ -1,36 +1,105 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Dukia DeFi
 
-## Getting Started
+![Dukia DeFi](https://dukia-defi.onrender.com/svg/logo.svg)
 
-First, run the development server:
+## The First Connected DeFi Ecosystem for DeFi Users on Lisk
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Dukia DeFi is a comprehensive Decentralized Asset Management Platform that enables users to seamlessly interact with DeFi protocols across different networks while enjoying the speed and cost-effectiveness of the Lisk ecosystem.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌟 Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Cross-Chain + Layer-2 Scaling
+- Leverage cross-chain interactions to access DeFi platforms on supported chains
+- Benefit from Lisk's speed and low transaction costs
+- Seamless integration across multiple blockchain networks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Pro Asset Management
+- Monitor and manage assets across multiple protocols
+- Unified platform for all DeFi interactions
+- Advanced market analysis tools
+- Simplified decentralized finance management
 
-## Learn More
+### Enhanced Liquidity Access
+- Bridge tokens between chains
+- Smooth asset transfers
+- Leverage maximization options
+- Position amplification strategies
 
-To learn more about Next.js, take a look at the following resources:
+## 💼 Portfolio Dashboard
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The dashboard provides a comprehensive overview of your DeFi positions:
+- Net Worth tracking
+- Supplied assets
+- Claimable rewards
+- Staked positions
+- Borrowed assets
+- Active positions across protocols
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🔗 Supported Protocols
 
-## Deploy on Vercel
+### Decentralized Exchanges
+- Uniswap (Decentralized swapping protocol)
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Lending Platforms
+- Aave (Decentralized lending protocol)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 🌐 Supported Networks
+
+- Ethereum
+- Lisk
+- Arbitrum
+
+## 💰 Asset Management Features
+
+- Real-time portfolio tracking
+- Cross-chain asset transfers
+- Risk management tools
+- Performance analytics
+- APY comparison tools
+
+## 🚀 Getting Started
+
+1. Visit the Dukia DeFi platform
+2. Click "Go To App" to access the portfolio dashboard
+3. Connect your wallet
+4. Start managing your DeFi positions across multiple protocols
+
+## 💻 Technical Requirements
+
+- Web3-compatible browser
+- Crypto wallet (supporting Ethereum, Lisk, and Arbitrum networks)
+- Required network tokens for gas fees
+
+## 🔒 Security
+
+- Non-custodial platform
+- Smart contract security
+- User-controlled assets
+- Transparent operations
+
+## 📊 Analytics
+
+- Portfolio performance metrics
+- Market analysis tools
+- Asset price tracking
+- Yield optimization suggestions
+
+## 📱 User Interface
+
+- Intuitive dashboard
+- Real-time updates
+- Mobile-responsive design
+- Dark mode interface
+
+
+## ⚠️ Disclaimer
+
+Dukia DeFi is a platform for accessing decentralized finance protocols. Users are responsible for understanding the risks involved in DeFi investments. Always conduct your own research before making investment decisions.
+
+## 📄 License
+
+--
+
+---
+
+For more information, visit [Dukia DeFi](https://dukia-defi.onrender.com)
