@@ -23,7 +23,7 @@ export default function UniswapPage() {
   };
 
   return (
-    <section>
+    <section className="mb-40">
       <DashboardHeader
         title={
           <div className="mb-6 flex flex-col items-start">
@@ -44,7 +44,9 @@ export default function UniswapPage() {
         ) : (
           <>
             <UniswapDefiStats {...props} />
+
             <UniswapInteractionInterface />
+
             <DataTable
               columns={uniswap_analytics_columns}
               data={dummy_uniswap_analytics_data}

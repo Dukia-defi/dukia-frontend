@@ -8,14 +8,11 @@ export default function BridgePage() {
       <DashboardHeader
         title={
           <div>
-            <p>Bridge world</p>
+            <Heading1>Swap tokens from a one chain to another</Heading1>
+            <Paragraph>Coming soon</Paragraph>
           </div>
         }
       />
-      <div>
-        <Heading1>Swap tokens from a one chain to another</Heading1>
-        <Paragraph>Coming soon</Paragraph>
-      </div>
     </section>
   );
 }

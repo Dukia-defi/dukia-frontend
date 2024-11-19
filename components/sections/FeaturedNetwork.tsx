@@ -31,9 +31,9 @@ export const FeaturedNetwork = () => {
   };
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative overflow-hidden py-24">
       <div className="absolute inset-0">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-gradient-to-r from-purple-500/30 to-pink-500/30 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-purple-500/30 to-pink-500/30 opacity-20 blur-3xl"></div>
       </div>
 
       <motion.div
@@ -41,22 +41,22 @@ export const FeaturedNetwork = () => {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={containerVariants}
-        className="container mx-auto px-4 relative z-10"
+        className="container relative z-10 mx-auto px-4"
       >
-        <div className="text-center mb-16">
-          <SectionLabel title="Featured Network" />
+        <div className="mb-16 text-center">
+          <SectionLabel title="Featured Networks" />
           <motion.p
             variants={itemVariants}
-            className="text-gray-400 text-lg max-w-2xl mx-auto"
+            className="mx-auto max-w-3xl text-lg text-gray-400"
           >
             Seamlessly interact with multiple blockchain networks through our
-            unified interface
+            unified interface on Lisk
           </motion.p>
         </div>
 
         <motion.div
           variants={containerVariants}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16"
+          className="mb-16 grid grid-cols-1 gap-6 md:grid-cols-3"
         >
           {networks.map((network) => (
             <motion.div
@@ -66,16 +66,16 @@ export const FeaturedNetwork = () => {
                 scale: 1.02,
                 transition: { duration: 0.2 },
               }}
-              className={`relative group rounded-2xl bg-gradient-to-br ${network.bgGradient} p-8 border border-white/10 backdrop-blur-sm`}
+              className={`group relative rounded-2xl bg-gradient-to-br ${network.bgGradient} border border-white/10 p-8 backdrop-blur-sm`}
             >
-              <div className="absolute inset-0 rounded-2xl bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute inset-0 rounded-2xl bg-white/5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
 
               <div className="relative z-10">
                 <div className="flex flex-col items-center text-center">
                   <motion.div
                     whileHover={{ rotate: [0, -10, 10, 0] }}
                     transition={{ duration: 0.5 }}
-                    className="mb-6 p-4 rounded-full bg-black/30 backdrop-blur-sm"
+                    className="mb-6 rounded-full bg-black/30 p-4 backdrop-blur-sm"
                   >
                     <Image
                       src={network.logo}
@@ -85,7 +85,7 @@ export const FeaturedNetwork = () => {
                       className="h-auto"
                     />
                   </motion.div>
-                  <h3 className="text-2xl font-semibold mb-2">
+                  <h3 className="mb-2 text-2xl font-semibold">
                     {network.name}
                   </h3>
                 </div>
@@ -99,7 +99,7 @@ export const FeaturedNetwork = () => {
             href="/"
             className="group inline-flex items-center gap-3 text-lg"
           >
-            <span className="text-xl">Explore Asset management pool</span>
+            <span className="text-xl">Explore the different Asset Markets</span>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button variant="custom">Go To App</Button>
             </motion.div>

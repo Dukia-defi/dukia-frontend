@@ -9,8 +9,8 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AnimatePresence } from "framer-motion";
 import { ConnectWallet } from "@/components/dashboard/connect-wallet";
 import { useWallet } from "@/context/wallet";
-import { AaveStats } from "@/components/dashboard/aave/aave-stats";
 import { AaveInteractionInterface } from "@/components/dashboard/aave/aave-interaction-interface";
+import { AaveStats } from "@/components/dashboard/aave/aave-stats";
 
 export default function AavePage() {
   const { isConnected } = useWallet();
@@ -26,7 +26,7 @@ export default function AavePage() {
     leftToBorrow: 0,
   };
   return (
-    <section>
+    <section className="mb-40">
       <DashboardHeader
         title={
           <div className="mb-6 flex flex-col items-start">
@@ -42,7 +42,9 @@ export default function AavePage() {
         ) : (
           <>
             <AaveStats {...props} />
+
             <AaveInteractionInterface />
+
             <DataTable
               columns={aave_analytics_columns}
               data={dummy_aave_analytics_data}
