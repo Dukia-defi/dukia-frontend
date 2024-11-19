@@ -26,7 +26,7 @@ export default function NetworkSelector({
           height={0}
           className="h-5 w-5"
         />
-        <span>{current.name}</span>
+        <span className="hidden md:block">{current.name}</span>
       </motion.button>
 
       <AnimatePresence>
@@ -35,7 +35,7 @@ export default function NetworkSelector({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            className="absolute top-full z-50 mt-2 w-full rounded-lg bg-purple-2 p-2"
+            className="absolute top-full z-50 mt-2 w-max rounded-lg bg-purple-2 p-2"
           >
             {options.map((option) => (
               <motion.button

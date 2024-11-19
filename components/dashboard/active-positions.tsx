@@ -17,10 +17,10 @@ export function ActivePositions() {
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mx-auto mt-14 w-10/12 space-y-4 rounded-md bg-gray-800"
+      className="mx-auto mt-14 w-full space-y-4 rounded-md bg-gray-800 lg:w-10/12"
     >
       <div className="flex items-center justify-between rounded-t-md bg-gray-700 px-8 py-4">
-        <Heading3 className="lg:text-xl">Active Positions</Heading3>
+        <Heading3 className="text-xl">Active Positions</Heading3>
 
         <ChainFilter
           options={networkOptions}
@@ -72,7 +72,7 @@ function ChainFilter({
             alt={`${option.name} icon`}
             className="h-5 w-5"
           />
-          {option.name}
+          <span className="hidden md:block">{option.name}</span>
         </motion.div>
       ))}
     </div>

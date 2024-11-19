@@ -18,7 +18,7 @@ export default function DashboardLayout({
     <ThirdwebProvider>
       <SidebarProvider>
         <DashboardSidebar />
-        <main className="container mx-auto min-h-screen w-8/12 pt-7 font-figTree">
+        <main className="container min-h-screen w-full px-4 pt-7 font-figTree md:px-10">
           <WalletProvider>
             {/* <SidebarTrigger className="absolute" /> */}
             {children}

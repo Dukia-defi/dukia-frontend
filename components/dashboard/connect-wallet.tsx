@@ -13,7 +13,7 @@ export function ConnectWallet() {
       className="text-center"
     >
       <motion.div
-        className="mx-auto mt-14 w-1/2 space-y-20 rounded-xl bg-purple-2 py-14"
+        className="mt-14 w-full space-y-20 rounded-xl bg-purple-2 py-14 lg:mx-auto lg:w-1/2"
         whileHover={{ boxShadow: "0 4px 15px rgba(124, 58, 237, 0.1)" }}
       >
         <div className="space-y-10">

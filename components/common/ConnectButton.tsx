@@ -5,7 +5,7 @@ import { createWallet } from "thirdweb/wallets";
 import React from "react";
 
 export const ConnectButton = (props: IConnectButton) => {
-  const wallets = [createWallet("io.metamask")];
+  const wallets = [createWallet("io.metamask"), createWallet("io.rabby")];
 
   return (
     <ConnectionButton
