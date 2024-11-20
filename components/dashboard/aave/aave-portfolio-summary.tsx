@@ -8,11 +8,11 @@ export function AavePortfolioSummary() {
       href={"/dashboard/aave"}
       className="flex rounded-md bg-gray-700 hover:bg-gray-600"
     >
-      <div className="rounded-l-md bg-green-1 px-3 py-6">
+      <div className="flex items-center justify-center rounded-l-md bg-green-1 px-3 py-6">
         <Icons.aaveIcon />
       </div>
 
-      <div className="flex w-full items-center justify-between px-3 py-4">
+      <div className="flex w-full flex-col items-start justify-between px-3 py-4 md:flex-row md:items-center">
         <ItemWrapper title="Aave V3 Position" value="Account" />
         <ItemWrapper title="Collateral" value={0} />
         <ItemWrapper title="Debt" value={0} />

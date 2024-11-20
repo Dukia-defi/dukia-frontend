@@ -6,7 +6,7 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { PortfolioOverview } from "@/components/dashboard/portfolio-overview";
 import { useWallet } from "@/context/wallet";
 import { Icons } from "@/components/icons";
-import Heading1 from "@/components/ui/typography/heading1";
+import { SectionLabel } from "@/components/sections";
 
 export default function DashboardPage() {
   const { isConnected } = useWallet();
@@ -18,11 +18,11 @@ export default function DashboardPage() {
           <div className="flex items-center gap-2">
             <motion.div
               whileHover={{ scale: 1.05 }}
-              className="rounded-md bg-purple-2 p-2"
+              className="hidden rounded-md bg-purple-2 p-2 md:block"
             >
               <Icons.PortfolioIcon />
             </motion.div>
-            <Heading1>Portfolio</Heading1>
+            <SectionLabel title="Portfolio" className="text-2xl md:text-3xl" />
           </div>
         }
       />
