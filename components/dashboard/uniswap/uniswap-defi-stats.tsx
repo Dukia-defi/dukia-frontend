@@ -38,7 +38,7 @@ export const UniswapDefiStats = (props: IUniswapStats) => {
           <div>
             <StatCard
               title="Pools Provided"
-              value={`$${props.poolsProvided?.toLocaleString()}`}
+              value={`${props.poolsProvided?.toLocaleString()}`}
               tooltipContent="All pools with liquidity from you"
             />
           </div>
