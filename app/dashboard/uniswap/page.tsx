@@ -32,8 +32,9 @@ export default function UniswapPage() {
               width={50}
               height={30}
               alt="uniswap"
+              className="hidden md:block"
             />
-            <SectionLabel title="Uniswap" className="text-3xl" />
+            <SectionLabel title="Uniswap" className="text-2xl md:text-3xl" />
           </div>
         }
       />

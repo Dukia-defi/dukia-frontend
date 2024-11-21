@@ -45,8 +45,13 @@ export function DashboardSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
+                  variant="custom"
                   asChild
-                  className={isActive("/dashboard") ? "bg-green-1" : ""}
+                  className={
+                    isActive("/dashboard")
+                      ? "border border-purple-1 bg-purple-600/20"
+                      : ""
+                  }
                 >
                   <Link href="/dashboard">
                     <Icons.PortfolioIcon />
@@ -65,8 +70,13 @@ export function DashboardSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
+                  variant="custom"
                   asChild
-                  className={isActive("/dashboard/aave") ? "bg-green-1" : ""}
+                  className={
+                    isActive("/dashboard/aave")
+                      ? "border border-purple-1 bg-purple-600/20"
+                      : ""
+                  }
                 >
                   <Link href="/dashboard/aave">
                     <Icons.aaveIcon />
@@ -76,8 +86,13 @@ export function DashboardSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton
+                  variant="custom"
                   asChild
-                  className={isActive("/dashboard/uniswap") ? "bg-green-1" : ""}
+                  className={
+                    isActive("/dashboard/uniswap")
+                      ? "border border-purple-1 bg-purple-600/20"
+                      : ""
+                  }
                 >
                   <Link href="/dashboard/uniswap">
                     <Icons.uniswapIcon />
@@ -96,8 +111,13 @@ export function DashboardSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
+                  variant="custom"
                   asChild
-                  className={isActive("/dashboard/bridge") ? "bg-green-1" : ""}
+                  className={
+                    isActive("/dashboard/bridge")
+                      ? "border border-purple-1 bg-purple-600/20"
+                      : ""
+                  }
                 >
                   <Link href="/dashboard/bridge">
                     <Infinity />

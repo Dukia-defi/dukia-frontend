@@ -30,8 +30,14 @@ export default function AavePage() {
       <DashboardHeader
         title={
           <div className="mb-6 flex flex-col items-start">
-            <Image src="/svg/aave.svg" width={70} height={40} alt="aave" />
-            <SectionLabel title="Aave" className="text-3xl" />
+            <Image
+              src="/svg/aave.svg"
+              width={70}
+              height={40}
+              alt="aave"
+              className="hidden md:block"
+            />
+            <SectionLabel title="Aave" className="text-2xl md:text-3xl" />
           </div>
         }
       />

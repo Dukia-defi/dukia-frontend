@@ -4,17 +4,15 @@ import Paragraph from "@/components/ui/typography/paragraph";
 
 export default function BridgePage() {
   return (
-    <>
-      <section>
-        <DashboardHeader
-          title={
-            <div>
-              <Heading1>Swap tokens from a one chain to another</Heading1>
-              <Paragraph>Coming soon</Paragraph>
-            </div>
-          }
-        />
-      </section>
-    </>
+    <section>
+      <DashboardHeader
+        title={
+          <div>
+            <Heading1>Swap tokens from a one chain to another</Heading1>
+            <Paragraph>Coming soon</Paragraph>
+          </div>
+        }
+      />
+    </section>
   );
 }
