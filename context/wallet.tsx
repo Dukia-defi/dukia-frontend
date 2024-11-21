@@ -17,6 +17,7 @@ const initialWalletState: IWallet = {
   staked: 0,
   supplied: 0,
   claimable: 0,
+  chain: 0,
 };
 
 const networkOptions: INetwork[] = [
@@ -72,6 +73,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         network,
         setNetwork,
         networkOptions,
+        activeChain,
       }}
     >
       {children}
