@@ -119,3 +119,5 @@ interface IDefiTabs {
   label: string;
   description: string;
 }
+
+type TContractEvent = `event ${string}`;
