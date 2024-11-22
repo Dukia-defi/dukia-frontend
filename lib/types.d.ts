@@ -1,3 +1,5 @@
+import { token_addresses } from "./addresses";
+
 interface ISidebarItem {
   title: string;
   url: string;
@@ -88,6 +90,13 @@ interface IWalletContext {
   network: INetwork;
   setNetwork: (network: INetwork) => void;
   networkOptions: INetwork[];
+  chain:
+    | Readonly<
+        ChainOptions & {
+          rpc: string;
+        }
+      >
+    | undefined;
 }
 
 interface IItemWrapper {
@@ -121,3 +130,7 @@ interface IDefiTabs {
 }
 
 type TContractEvent = `event ${string}`;
+
+type TChainName = keyof typeof token_addresses;
+type TTokenName = keyof (typeof token_addresses)[TChainName];
+type TChainIdToNameMap = Record<number, TChainName>;
