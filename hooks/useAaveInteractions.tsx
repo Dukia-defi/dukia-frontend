@@ -1,7 +1,7 @@
 import { client } from "@/app/client";
 import { defineChain, getContract, prepareContractCall } from "thirdweb";
 import { useSendTransaction } from "thirdweb/react";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { deployed_contracts } from "@/lib/addresses";
 
 const { sepolia } = deployed_contracts;
@@ -17,6 +17,7 @@ export const contract = getContract({
 interface TransactionResult {
   error: Error | null;
   execute: (tokenAddress: string, amount: bigint) => void;
+  isLoading: boolean;
 }
 
 // Main hook that handles all Aave interactions
@@ -27,21 +28,30 @@ export const useAaveInteractions = (): {
   withdraw: TransactionResult;
 } => {
   const { mutate: sendTransaction, error } = useSendTransaction();
+  const [loadingStates, setLoadingStates] = useState({
+    approve: false,
+    supply: false,
+    borrow: false,
+    withdraw: false
+  });
 
   // Approve Contract
   const executeApprove = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    async (tokenAddress: string, amount: bigint) => {
       try {
+        setLoadingStates(prev => ({ ...prev, approve: true }));
         const approveContract = prepareContractCall({
           contract,
           method:
             "function approveContract(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendTransaction(approveContract);
+        await sendTransaction(approveContract);
       } catch (err) {
         console.error("Error in approve:", err);
         throw err;
+      } finally {
+        setLoadingStates(prev => ({ ...prev, approve: false }));
       }
     },
     [sendTransaction],
@@ -49,17 +59,22 @@ export const useAaveInteractions = (): {
 
   // Supply
   const executeSupply = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    async (tokenAddress: string, amount: bigint) => {
       try {
+        setLoadingStates(prev => ({ ...prev, supply: true }));
+        console.log("called", tokenAddress, amount);
         const supplyContract = prepareContractCall({
           contract,
-          method: "function supply(address tokenAddress, uint256 amount)",
+          method: "function supplyToken(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendTransaction(supplyContract);
+        await sendTransaction(supplyContract);
+        console.log("success", supplyContract);
       } catch (err) {
         console.error("Error in supply:", err);
         throw err;
+      } finally {
+        setLoadingStates(prev => ({ ...prev, supply: false }));
       }
     },
     [sendTransaction],
@@ -67,18 +82,21 @@ export const useAaveInteractions = (): {
 
   // Borrow
   const executeBorrow = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    async (tokenAddress: string, amount: bigint) => {
       try {
+        setLoadingStates(prev => ({ ...prev, borrow: true }));
         const borrowContract = prepareContractCall({
           contract,
           method:
             "function borrow(address tokenAddress, uint256 amount, uint256 interestRateMode)",
           params: [tokenAddress, amount, BigInt(2)],
         });
-        sendTransaction(borrowContract);
+        await sendTransaction(borrowContract);
       } catch (err) {
         console.error("Error in borrow:", err);
         throw err;
+      } finally {
+        setLoadingStates(prev => ({ ...prev, borrow: false }));
       }
     },
     [sendTransaction],
@@ -86,17 +104,20 @@ export const useAaveInteractions = (): {
 
   // Withdraw
   const executeWithdraw = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    async (tokenAddress: string, amount: bigint) => {
       try {
+        setLoadingStates(prev => ({ ...prev, withdraw: true }));
         const withdrawContract = prepareContractCall({
           contract,
           method: "function withdraw(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendTransaction(withdrawContract);
+        await sendTransaction(withdrawContract);
       } catch (err) {
         console.error("Error in withdraw:", err);
         throw err;
+      } finally {
+        setLoadingStates(prev => ({ ...prev, withdraw: false }));
       }
     },
     [sendTransaction],
@@ -106,18 +127,22 @@ export const useAaveInteractions = (): {
     approveContract: {
       error,
       execute: executeApprove,
+      isLoading: loadingStates.approve
     },
     supply: {
       error,
       execute: executeSupply,
+      isLoading: loadingStates.supply
     },
     borrow: {
       error,
       execute: executeBorrow,
+      isLoading: loadingStates.borrow
     },
     withdraw: {
       error,
       execute: executeWithdraw,
+      isLoading: loadingStates.withdraw
     },
   };
 };

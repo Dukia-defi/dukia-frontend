@@ -12,27 +12,27 @@ export const deployed_contracts = {
 
 export const token_addresses = {
   sepolia: {
-    USDC: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
-    USDT: "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0",
-    DAI: "0x3e622317f8C93f7328350cF0B56d9eD4C620C5d6",
-    LINK: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
+    usdc: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
+    usdt: "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0",
+    dai: "0x3e622317f8C93f7328350cF0B56d9eD4C620C5d6",
+    link: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
   },
   lisk: {
-    USDC: "",
-    USDT: "",
-    DAI: "",
-    LINK: "",
+    usdc: "",
+    usdt: "",
+    dai: "",
+    link: "",
   },
   arbitrum: {
-    USDC: "",
-    USDT: "",
-    DAI: "",
-    LINK: "",
+    usdc: "",
+    usdt: "",
+    dai: "",
+    link: "",
   },
   optimism: {
-    USDC: "",
-    USDT: "",
-    DAI: "",
-    LINK: "",
+    usdc: "",
+    usdt: "",
+    dai: "",
+    link: "",
   },
 };

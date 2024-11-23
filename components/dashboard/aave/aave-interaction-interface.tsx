@@ -19,14 +19,14 @@ export default function AaveInteractionInterface() {
 
   const { sepolia } = token_addresses;
 
-  const handleSupply = () => {
+  const handleSupply = async() => {
     if (!amount) return;
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
 
     try {
-      approveContract.execute(tokenAddress, amountInWei);
+      await approveContract.execute(tokenAddress, amountInWei);
       supply.execute(tokenAddress, amountInWei);
     } catch (error) {
       console.error("Supply failed:", error);
@@ -46,8 +46,7 @@ export default function AaveInteractionInterface() {
             selectedToken={selectedToken}
             tokenChangeHandler={setSelectedToken}
             amount={amount}
-            onAmountChange={setAmount}
-          />
+            onAmountChange={setAmount} value={""}          />
 
           <div className="absolute -bottom-6 right-0 text-sm text-gray-400">
             max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
@@ -59,7 +58,7 @@ export default function AaveInteractionInterface() {
           onClick={handleSupply}
           disabled={!amount || parseFloat(amount) <= 0}
         >
-          {isLoading ? (
+          {supply.isLoading ? (
             <div className="flex items-center gap-2">
               <span>Processing...</span>
               {/* Add a loading spinner component here if you have one */}
