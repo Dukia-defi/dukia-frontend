@@ -3,6 +3,7 @@ import { defineChain, getContract, prepareContractCall } from "thirdweb";
 import { useSendTransaction } from "thirdweb/react";
 import { useCallback } from "react";
 import { deployed_contracts } from "@/lib/addresses";
+// import { useContract } from "./useContract";
 
 const { sepolia } = deployed_contracts;
 
@@ -27,6 +28,7 @@ export const useAaveInteractions = (): {
   withdraw: TransactionResult;
 } => {
   const { mutate: sendTransaction, error } = useSendTransaction();
+  // const { contract} = useContract(deployed_contracts.sepolia.aave);
 
   // Approve Contract
   const executeApprove = useCallback(
@@ -47,13 +49,13 @@ export const useAaveInteractions = (): {
     [sendTransaction],
   );
 
-  // Supply
+  // Supply Token
   const executeSupply = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
         const supplyContract = prepareContractCall({
           contract,
-          method: "function supply(address tokenAddress, uint256 amount)",
+          method: "function supplyToken(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
         sendTransaction(supplyContract);
