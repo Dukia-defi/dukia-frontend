@@ -1,6 +1,5 @@
 "use client";
 
-import { useCallback } from "react";
 import { useReadContract, useSendTransaction } from "thirdweb/react";
 import { useContracts } from "./useContracts";
 import { prepareContractCall } from "thirdweb";

@@ -130,6 +130,7 @@ interface IDefiTabs {
 }
 
 type TContractEvent = `event ${string}`;
+type TBytes = readonly `0x${string}`;
 
 type TChainName = keyof typeof token_addresses;
 type TTokenName = keyof (typeof token_addresses)[TChainName];

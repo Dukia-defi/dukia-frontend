@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { IDefiTabs } from "@/lib/types";
 
 interface Props {
   tabs: IDefiTabs[];

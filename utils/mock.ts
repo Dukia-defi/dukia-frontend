@@ -1,3 +1,4 @@
+import { IDefiTabs } from "@/lib/types";
 import { Github, Twitter } from "lucide-react";
 
 export const protocols = [
@@ -111,3 +112,10 @@ export const tokens = [
   "DAI",
   "LINK",
 ];
+
+export const defiOptions = ["Aave", "Uniswap"];
+
+export const defiActions = {
+  Aave: ["Supply", "Borrow", "Repay", "Withdraw"],
+  Uniswap: ["Swap", "Add liquidity", "Remove liquidity"],
+};

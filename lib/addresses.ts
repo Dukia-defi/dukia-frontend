@@ -2,6 +2,7 @@ export const deployed_contracts = {
   sepolia: {
     ccm: "0x2f43668479e1F2B5955f9C9bf1A93123a6738AF0",
     aave: "0x84D46bA41FC7e1D79fECa0b7b9371eF0790Fe84c",
+    batchExecutor: "0x111196aDC3868c745339F5D5549aB60D56B6c9F0",
   },
   lisk: {
     ccm: "0x6193c44E7C8cE5438FEE9D2e94Ea98369Ef297af",
