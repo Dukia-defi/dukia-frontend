@@ -75,6 +75,7 @@ interface IWallet {
   staked: number;
   supplied: number;
   claimable: number;
+  chain: number;
 }
 
 interface INetwork {

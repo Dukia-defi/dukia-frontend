@@ -1,5 +1,4 @@
 "use client";
-
 import { aaveTabs } from "@/utils/mock";
 import { Button } from "@/components/ui/button";
 import { tokens } from "@/utils/mock";
@@ -7,11 +6,33 @@ import {
   DefiInteractionInterface,
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useAaveSep } from "@/hooks/useAaveSep";
 
-export function AaveInteractionInterface() {
+export default function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("supply");
+  const [supplyAmount, setSupplyAmount] = useState('');
+  const { supplyAsset, txHash, isLoading } = useAaveSep();
+
+  async function handleSupply() {
+    try {
+      console.log("supply called", supplyAmount, selectedToken);
+      const result = await supplyAsset({ 
+        tokenAddress: selectedToken, 
+        amount: BigInt(supplyAmount) 
+      });
+      console.log('Supply transaction:', result);
+    } catch (error) {
+      console.error('Supply error:', error);
+    }
+  }
+
+  useEffect(() => {
+    if (txHash) {
+      console.log("suceess")
+    }
+  }, [txHash]);
 
   return (
     <DefiInteractionInterface
@@ -25,6 +46,8 @@ export function AaveInteractionInterface() {
             tokens={tokens}
             selectedToken={selectedToken}
             tokenChangeHandler={setSelectedToken}
+            onAmountChange={setSupplyAmount}
+            value={supplyAmount}
           />
 
           <div className="absolute -bottom-6 right-0 text-sm text-gray-400">
@@ -34,9 +57,17 @@ export function AaveInteractionInterface() {
 
         <Button
           className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
-          onClick={() => {}} // Todo: Action logic
+          onClick={handleSupply}
+          disabled={!supplyAmount}
         >
-          {activeTab.toUpperCase()}
+          {isLoading ? (
+            <div className="flex items-center gap-2">
+              <span>Processing...</span>
+              {/* Add a loading spinner component here if you have one */}
+            </div>
+          ) : (
+            activeTab.toUpperCase()
+          )}
         </Button>
 
         {/* Additional Info */}

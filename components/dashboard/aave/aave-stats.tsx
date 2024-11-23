@@ -7,6 +7,7 @@ import { InfoIcon } from "lucide-react";
 import { ProgressBar, StatCard, StatTooltip } from "@/components/common";
 import { useAaveSep } from "@/hooks/useAaveSep";
 import { useWallet } from "@/context/wallet";
+import { IAaveStats } from "@/lib/types";
 
 export const AaveStats = (props: IAaveStats) => {
   const { getUserData, supplyAsset } = useAaveSep();
@@ -17,9 +18,11 @@ export const AaveStats = (props: IAaveStats) => {
 
   const { data, isLoading, error } = getUserData(address); //roheemah use this to read data
 
-  function handleSupply() {
-    supplyAsset({ tokenAddress: "", amount: BigInt("1") }); //roheemah use this to send a transaction
-  }
+  console.log("get data", data)
+
+  // function handleSupply() {
+  //   supplyAsset({ tokenAddress: "", amount: BigInt("1") }); //roheemah use this to send a transaction
+  // }
 
   return (
     <Card className="w-full border-purple-500/10 bg-gray-900/50 backdrop-blur-sm">

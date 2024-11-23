@@ -1,19 +1,24 @@
 "use client";
 
-import { useCallback } from "react";
 import { useReadContract, useSendTransaction } from "thirdweb/react";
 import { useContracts } from "./useContracts";
 import { prepareContractCall } from "thirdweb";
 import { deployed_contracts } from "@/lib/addresses";
+import { useState } from "react";
 
 export function useAaveSep() {
   const { aaveSepContract } = useContracts();
+  const { mutate: sendTransaction, data: txHash } = useSendTransaction();
+  const [isLoading, setIsLoading] = useState(false);
+  
+  // Track transaction status
+  // const { status: txStatus, error: txError } = useTransactionStatus(txHash);
 
   const {
     sepolia: { aave: sepAave },
   } = deployed_contracts;
 
-  //get user data
+  // get user data
   const getUserData = (address: string) =>
     useReadContract({
       contract: aaveSepContract,
@@ -21,27 +26,36 @@ export function useAaveSep() {
       params: [address],
     });
 
-  //supply asset
-  const supplyAsset = ({
+  // supply asset
+  const supplyAsset = async ({
     tokenAddress,
     amount,
   }: {
     tokenAddress: string;
     amount: bigint;
   }) => {
-    const { mutate, data: supplyRes } = useSendTransaction();
+    try {
+      setIsLoading(true);
+      const transaction = prepareContractCall({
+        contract: aaveSepContract,
+        method: "function approveAndSupply(address contractAddress, address tokenAddress, uint256 amount)",
+        params: [sepAave, tokenAddress, amount],
+      });
 
-    const transaction = prepareContractCall({
-      contract: aaveSepContract,
-      method:
-        "function approveAndSupply(address contractAddress, address tokenAddress, uint256 amount)",
-      params: [sepAave, tokenAddress, amount],
-    });
-
-    mutate(transaction);
-
-    return { supplyRes };
+      await sendTransaction(transaction);
+      return true;
+    } catch (error) {
+      console.error("Supply transaction failed:", error);
+      return false;
+    } finally {
+      setIsLoading(false);
+    }
   };
 
-  return { getUserData, supplyAsset };
+  return { 
+    getUserData, 
+    supplyAsset, 
+    txHash,
+    isLoading
+  };
 }
