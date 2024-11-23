@@ -1,38 +1,37 @@
 "use client";
-import { aaveTabs } from "@/utils/mock";
+
+import { aaveTabs, tokens } from "@/utils/mock";
 import { Button } from "@/components/ui/button";
-import { tokens } from "@/utils/mock";
 import {
   DefiInteractionInterface,
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
-import { useState, useEffect } from "react";
-import { useAaveSep } from "@/hooks/useAaveSep";
+import { useState } from "react";
+import { useAaveInteractions } from "@/hooks/useAaveInteractions";
+import { token_addresses } from "@/lib/addresses";
 
 export default function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("supply");
-  const [supplyAmount, setSupplyAmount] = useState('');
-  const { supplyAsset, txHash, isLoading } = useAaveSep();
+  const [amount, setAmount] = useState<string>("");
 
-  async function handleSupply() {
+  const { approveContract, supply } = useAaveInteractions();
+
+  const { sepolia } = token_addresses;
+
+  const handleSupply = () => {
+    if (!amount) return;
+
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
+
     try {
-      console.log("supply called", supplyAmount, selectedToken);
-      const result = await supplyAsset({ 
-        tokenAddress: selectedToken, 
-        amount: BigInt(supplyAmount) 
-      });
-      console.log('Supply transaction:', result);
+      approveContract.execute(tokenAddress, amountInWei);
+      supply.execute(tokenAddress, amountInWei);
     } catch (error) {
-      console.error('Supply error:', error);
+      console.error("Supply failed:", error);
     }
-  }
-
-  useEffect(() => {
-    if (txHash) {
-      console.log("suceess")
-    }
-  }, [txHash]);
+  };
 
   return (
     <DefiInteractionInterface
@@ -46,8 +45,8 @@ export default function AaveInteractionInterface() {
             tokens={tokens}
             selectedToken={selectedToken}
             tokenChangeHandler={setSelectedToken}
-            onAmountChange={setSupplyAmount}
-            value={supplyAmount}
+            amount={amount}
+            onAmountChange={setAmount}
           />
 
           <div className="absolute -bottom-6 right-0 text-sm text-gray-400">
@@ -58,7 +57,7 @@ export default function AaveInteractionInterface() {
         <Button
           className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
           onClick={handleSupply}
-          disabled={!supplyAmount}
+          disabled={!amount || parseFloat(amount) <= 0}
         >
           {isLoading ? (
             <div className="flex items-center gap-2">

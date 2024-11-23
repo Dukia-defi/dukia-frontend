@@ -96,21 +96,32 @@ export function InteractionInferaceInput({
   tokens,
   selectedToken,
   tokenChangeHandler,
+  amount,
   onAmountChange,
-  value,
-}: InputProps) {
+}: InputProps & {
+  amount: string;
+  onAmountChange: (value: string) => void;
+}) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numbers and decimals
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      onAmountChange(value);
+    }
+  };
+
   return (
     <div className="flex items-center rounded-lg border border-purple-500/20 bg-gray-800/50 p-3">
       <input
-        type="number"
+        type="text"
         placeholder="0"
-        value={value}
-        className="flex-1 appearance-none border-none bg-transparent text-2xl text-gray-200 placeholder-gray-500 focus:outline-none"
-        onChange={(e: { target: { value: string; }; }) => onAmountChange(e.target.value)}
+        value={amount}
+        onChange={handleInputChange}
+        className="flex-1 bg-transparent text-white outline-none"
       />
 
       <Select defaultValue={selectedToken} onValueChange={tokenChangeHandler}>
-        <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+        <SelectTrigger>
           <SelectValue placeholder="Token" />
         </SelectTrigger>
         <SelectContent>

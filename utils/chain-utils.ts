@@ -41,17 +41,17 @@ export function getChainId(network: INetwork | string | undefined): SupportedCha
 export function getNetworkFromChainId(chainId: number | string): INetwork {
   const entry = Object.entries(NETWORK_TO_CHAIN_ID).find(([_, id]) => id === Number(chainId));
   
-  if (!entry) {
-    throw new Error(`Unsupported chain ID: ${chainId}`);
-  }
+  // if (!entry) {
+  //   throw new Error(`Unsupported chain ID: ${chainId}`);
+  // }
   
-  const [networkId] = entry;
+  const networkId = entry || [];
   
   // Map to network options format
   return {
-    id: networkId,
-    name: networkId.charAt(0).toUpperCase() + networkId.slice(1).replace('_', ' '),
-    icon: `/svg/${networkId.split('_')[0]}.svg`,
+    id: networkId[0] || '',
+    name: networkId[0] ? networkId[0].charAt(0).toUpperCase() + networkId[0].slice(1).replace('_', ' ') : '',
+    icon: networkId[0] ? `/svg/${networkId[0].split('_')[0]}.svg` : '',
   };
 }
 
