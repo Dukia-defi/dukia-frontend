@@ -13,6 +13,8 @@ export function UniswapInteractionInterface() {
   const [selectedAToken, setSelectedAToken] = useState<string>("USDC");
   const [selectedBToken, setSelectedBToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("swap");
+  const [amountA, setAmountA] = useState<number>(0);
+  const [amountB, setAmountB] = useState<number>(0);
 
   return (
     <DefiInteractionInterface
@@ -26,12 +28,16 @@ export function UniswapInteractionInterface() {
             tokens={tokens}
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
+            amount={amountA}
+            handleInput={setAmountA}
           />
 
           <InteractionInferaceInput
             tokens={tokens}
             selectedToken={selectedBToken}
             tokenChangeHandler={setSelectedBToken}
+            amount={amountB}
+            handleInput={setAmountB}
           />
         </div>
 

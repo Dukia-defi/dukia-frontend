@@ -9,6 +9,7 @@ import { SectionLabel } from "@/components/sections";
 import { DataTable } from "@/components/ui/data-table";
 import { useWallet } from "@/context/wallet";
 import { dummy_uniswap_analytics_data } from "@/lib/data";
+import { IUniswapStats } from "@/lib/types";
 import { AnimatePresence } from "framer-motion";
 import Image from "next/image";
 

@@ -12,6 +12,7 @@ import { useState } from "react";
 export function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("supply");
+  const [amount, setAmount] = useState<number>(0);
 
   return (
     <DefiInteractionInterface
@@ -25,6 +26,8 @@ export function AaveInteractionInterface() {
             tokens={tokens}
             selectedToken={selectedToken}
             tokenChangeHandler={setSelectedToken}
+            amount={amount}
+            handleInput={setAmount}
           />
 
           <div className="absolute -bottom-6 right-0 text-sm text-gray-400">
