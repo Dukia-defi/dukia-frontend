@@ -135,3 +135,12 @@ type TBytes = readonly `0x${string}`;
 type TChainName = keyof typeof token_addresses;
 type TTokenName = keyof (typeof token_addresses)[TChainName];
 type TChainIdToNameMap = Record<number, TChainName>;
+
+interface IOrder {
+  action: string;
+  amount: string;
+  defi: string;
+  tokenA: string;
+  tokenB?: string;
+  tokenPair?: boolean;
+}

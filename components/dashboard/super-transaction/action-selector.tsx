@@ -6,6 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { MinusCircle, PlusCircle } from "lucide-react";
 import { Dispatch, SetStateAction } from "react";
 
 interface Props {
@@ -16,6 +17,7 @@ interface Props {
   selectedAction: string;
   actions: string[];
   saveFn: () => void;
+  showInput: boolean;
 }
 
 export function ActionSelector({
@@ -26,11 +28,12 @@ export function ActionSelector({
   actionChangeFn,
   actions,
   saveFn,
+  showInput,
 }: Props) {
   return (
-    <div className="flex items-center">
+    <div className="flex items-center gap-3">
       <Select defaultValue={selectedDefi} onValueChange={defiChangeFn}>
-        <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+        <SelectTrigger className="rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
           <SelectValue placeholder="Choose DeFi protocol" />
         </SelectTrigger>
         <SelectContent>
@@ -43,7 +46,7 @@ export function ActionSelector({
       </Select>
 
       <Select defaultValue={selectedAction} onValueChange={actionChangeFn}>
-        <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+        <SelectTrigger className="rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
           <SelectValue placeholder="Choose Action" />
         </SelectTrigger>
         <SelectContent>
@@ -56,7 +59,12 @@ export function ActionSelector({
       </Select>
 
       <div>
-        <Button onClick={saveFn}>Select</Button>
+        <Button
+          onClick={saveFn}
+          disabled={selectedDefi === "" || selectedAction === ""}
+        >
+          {showInput ? <MinusCircle /> : <PlusCircle />}
+        </Button>
       </div>
     </div>
   );
