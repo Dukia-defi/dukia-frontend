@@ -6,6 +6,7 @@ import { useWallet } from "@/context/wallet";
 import { AavePortfolioSummary } from "./aave/aave-portfolio-summary";
 import { UniswapPortfolioSummary } from "./uniswap/uniswap-portfolio-summary";
 import Image from "next/image";
+import { INetwork } from "@/lib/types";
 
 export function ActivePositions() {
   const { network, networkOptions, setNetwork, isConnected } = useWallet();

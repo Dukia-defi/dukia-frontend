@@ -13,6 +13,7 @@ export function UniswapInteractionInterface() {
   const [selectedAToken, setSelectedAToken] = useState<string>("USDC");
   const [selectedBToken, setSelectedBToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("swap");
+  const [amountA, setAmountA] = useState<string>("");
 
   return (
     <DefiInteractionInterface
@@ -21,17 +22,16 @@ export function UniswapInteractionInterface() {
       tabChangeFn={setActiveTab}
     >
       <div className="space-y-6">
-        <div className="relative space-y-4">
+        <div className="relative">
           <InteractionInferaceInput
             tokens={tokens}
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
-          />
-
-          <InteractionInferaceInput
-            tokens={tokens}
-            selectedToken={selectedBToken}
-            tokenChangeHandler={setSelectedBToken}
+            amount={amountA}
+            handleInput={setAmountA}
+            tokenPair
+            selectedTokenB={selectedBToken}
+            tokenBChangeHandler={setSelectedBToken}
           />
         </div>
 
