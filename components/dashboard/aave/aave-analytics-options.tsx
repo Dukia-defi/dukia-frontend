@@ -6,6 +6,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useWallet } from "@/context/wallet";
 import { useAaveSep } from "@/hooks/useAaveSep";
+import { IAaveAnalytics } from "@/lib/types";
 import { handleSelectedToken } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
 
@@ -18,10 +19,10 @@ export function AaveAnalyticsOptions({ data }: Props) {
 
   const { supplyAsset } = useAaveSep();
 
-  const { activeChain } = useWallet();
+  const { chain } = useWallet();
 
   const selectedToken = handleSelectedToken({
-    chain: activeChain,
+    chain: chain,
     token: asset,
   });
 

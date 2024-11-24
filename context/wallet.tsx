@@ -1,6 +1,7 @@
 "use client";
 
 import { client } from "@/app/client";
+import { INetwork, IWallet, IWalletContext } from "@/lib/types";
 import { createContext, useContext, useState, useEffect } from "react";
 import {
   useActiveAccount,
@@ -17,7 +18,6 @@ const initialWalletState: IWallet = {
   staked: 0,
   supplied: 0,
   claimable: 0,
-  chain: 0,
 };
 
 const networkOptions: INetwork[] = [
@@ -73,7 +73,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         network,
         setNetwork,
         networkOptions,
-        activeChain,
+        chain: activeChain,
       }}
     >
       {children}
