@@ -68,7 +68,7 @@ export const socialLinks = [
 export const aaveTabs: IDefiTabs[] = [
   {
     id: "supply",
-    label: "SUPPLY",
+    label: "APPROVE & SUPPLY",
     description: "Deposit the selected asset into Aave v3",
   },
   {

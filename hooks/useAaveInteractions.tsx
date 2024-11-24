@@ -18,6 +18,7 @@ interface TransactionResult {
   error: Error | null;
   execute: (tokenAddress: string, amount: bigint) => void;
   isLoading: boolean;
+  isPending: boolean;
 }
 
 // Main hook that handles all Aave interactions
@@ -26,13 +27,15 @@ export const useAaveInteractions = (): {
   supply: TransactionResult;
   borrow: TransactionResult;
   withdraw: TransactionResult;
+  repay: TransactionResult;
 } => {
-  const { mutate: sendTransaction, error } = useSendTransaction();
+  const { mutate: sendTransaction, error, isPending } = useSendTransaction();
   const [loadingStates, setLoadingStates] = useState({
     approve: false,
     supply: false,
     borrow: false,
-    withdraw: false
+    withdraw: false,
+    repay: false
   });
 
   // Approve Contract
@@ -123,26 +126,58 @@ export const useAaveInteractions = (): {
     [sendTransaction],
   );
 
+  // Repay
+  const executeRepay = useCallback(
+    async (tokenAddress: string, amount: bigint) => {
+      try {
+        setLoadingStates(prev => ({ ...prev, repay: true }));
+        const repayContract = prepareContractCall({
+          contract,
+          method:
+            "function repay(address tokenAddress, uint256 amount, uint256 interestRateMode)",
+          params: [tokenAddress, amount, BigInt(2)],
+        });
+        await sendTransaction(repayContract);
+      } catch (err) {
+        console.error("Error in repay:", err);
+        throw err;
+      } finally {
+        setLoadingStates(prev => ({ ...prev, repay: false }));
+      }
+    },
+    [sendTransaction],
+  );
+
   return {
     approveContract: {
       error,
       execute: executeApprove,
-      isLoading: loadingStates.approve
+      isLoading: loadingStates.approve,
+      isPending
     },
     supply: {
       error,
       execute: executeSupply,
-      isLoading: loadingStates.supply
+      isLoading: loadingStates.supply,
+      isPending
     },
     borrow: {
       error,
       execute: executeBorrow,
-      isLoading: loadingStates.borrow
+      isLoading: loadingStates.borrow,
+      isPending
     },
     withdraw: {
       error,
       execute: executeWithdraw,
-      isLoading: loadingStates.withdraw
+      isLoading: loadingStates.withdraw,
+      isPending
+    },
+    repay: {
+      error,
+      execute: executeRepay,
+      isLoading: loadingStates.repay,
+      isPending
     },
   };
 };
