@@ -9,8 +9,9 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AnimatePresence } from "framer-motion";
 import { ConnectWallet } from "@/components/dashboard/connect-wallet";
 import { useWallet } from "@/context/wallet";
-import { AaveInteractionInterface } from "@/components/dashboard/aave/aave-interaction-interface";
+import AaveInteractionInterface from "@/components/dashboard/aave/aave-interaction-interface";
 import { AaveStats } from "@/components/dashboard/aave/aave-stats";
+import { IAaveStats } from "@/lib/types";
 
 export default function AavePage() {
   const { isConnected } = useWallet();
