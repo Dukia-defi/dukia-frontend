@@ -6,13 +6,11 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 
-interface Props {
-  data: IUniswapAnalytics;
-}
+// interface Props {
+//   data: IUniswapAnalytics;
+// }
 
-export function UniswapAnalyticsOptions({ data }: Props) {
-  console.log(data.pool);
-
+export function UniswapAnalyticsOptions() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
