@@ -12,7 +12,7 @@ import { useState } from "react";
 export function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("supply");
-  const [amount, setAmount] = useState<number>(0);
+  const [amount, setAmount] = useState<string>("");
 
   return (
     <DefiInteractionInterface

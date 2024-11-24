@@ -21,8 +21,8 @@ interface InputProps {
   tokens: string[];
   selectedToken: string;
   tokenChangeHandler: Dispatch<SetStateAction<string>>;
-  amount: number;
-  handleInput: Dispatch<SetStateAction<number>>;
+  amount: string;
+  handleInput: Dispatch<SetStateAction<string>>;
 }
 
 export const DefiInteractionInterface = ({
@@ -103,9 +103,9 @@ export function InteractionInferaceInput({
     <div className="flex items-center rounded-lg border border-purple-500/20 bg-gray-800/50 p-3">
       <input
         type="number"
-        placeholder="0"
+        placeholder="Amount"
         value={amount}
-        onChange={(e) => handleInput(+e.target.value)}
+        onChange={(e) => handleInput(e.target.value)}
         className="flex-1 appearance-none border-none bg-transparent text-2xl text-gray-200 placeholder-gray-500 focus:outline-none"
       />
 
