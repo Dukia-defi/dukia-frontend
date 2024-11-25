@@ -3,7 +3,6 @@
 import { SortableTableHeader } from "@/components/sortable-table-header";
 import { ColumnDef } from "@tanstack/react-table";
 import { UniswapAnalyticsOptions } from "./uniswap-analytics-options";
-import { IUniswapAnalytics } from "@/lib/types";
 
 export const uniswap_analytics_columns: ColumnDef<IUniswapAnalytics>[] = [
   {
@@ -63,10 +62,11 @@ export const uniswap_analytics_columns: ColumnDef<IUniswapAnalytics>[] = [
   },
   {
     id: "actions",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cell: ({ row }) => {
-      const pool = row.original;
+      // const pool = row.original;
 
-      return <UniswapAnalyticsOptions data={pool} />;
+      return <UniswapAnalyticsOptions />;
     },
   },
 ];

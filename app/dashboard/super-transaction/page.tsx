@@ -7,7 +7,6 @@ import { SuperTransactionOrders } from "@/components/dashboard/super-transaction
 import { SectionLabel } from "@/components/sections";
 import Heading2 from "@/components/ui/typography/heading2";
 import Heading3 from "@/components/ui/typography/heading3";
-import { IOrder } from "@/lib/types";
 import { defiActions, defiOptions } from "@/utils/mock";
 import { useEffect, useState } from "react";
 

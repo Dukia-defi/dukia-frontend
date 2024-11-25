@@ -89,8 +89,7 @@ export const useAaveInteractions = (
       try {
         const approve = prepareContractCall({
           contract,
-          method:
-            "function approveContract(address tokenAddress, uint256 amount)",
+          method: "function approve(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
         sendApproveTransaction(approve);
