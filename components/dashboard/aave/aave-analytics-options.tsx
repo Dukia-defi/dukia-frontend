@@ -20,7 +20,7 @@ interface Props {
 export function AaveAnalyticsOptions({ data }: Props) {
   const { asset } = data;
 
-  const { approveContract, supply } = useAaveInteractions();
+  const { approve, supply } = useAaveInteractions();
 
   const { chain } = useWallet();
 
@@ -29,8 +29,8 @@ export function AaveAnalyticsOptions({ data }: Props) {
   const { sepolia } = token_addresses;
 
   const selectedToken = handleSelectedToken({
-    chain: chain,
-    token: asset,
+    chain: chain || 11155111,
+    token: asset || '',
   });
 
   const handleSupply = async() => {
@@ -40,7 +40,7 @@ export function AaveAnalyticsOptions({ data }: Props) {
     const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
 
     try {
-      await approveContract.execute(tokenAddress, amountInWei);
+      await approve.execute(tokenAddress, amountInWei);
       supply.execute(tokenAddress, amountInWei);
     } catch (error) {
       console.error("Supply failed:", error);

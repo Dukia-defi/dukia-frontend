@@ -1,11 +1,10 @@
 import { client } from "@/app/client";
 import { defineChain, getContract, prepareContractCall } from "thirdweb";
-import { useSendTransaction } from "thirdweb/react";
+import { useSendTransaction, useReadContract } from "thirdweb/react";
 import { useCallback, useState } from "react";
 import { deployed_contracts } from "@/lib/addresses";
 
 const { sepolia } = deployed_contracts;
-
 const CONTRACT_ADDRESS = sepolia.aave;
 
 export const contract = getContract({
@@ -21,15 +20,14 @@ interface TransactionResult {
   isPending: boolean;
 }
 
-// Main hook that handles all Aave interactions
-export const useAaveInteractions = (): {
-  approveContract: TransactionResult;
-  supply: TransactionResult;
-  borrow: TransactionResult;
-  withdraw: TransactionResult;
-  repay: TransactionResult;
-} => {
-  const { mutate: sendTransaction, error, isPending } = useSendTransaction();
+export const useAaveInteractions = () => {
+  // Create separate transaction handlers for each operation
+  const { mutate: sendApproveTransaction, error: approveError, isPending: isApprovePending, isSuccess: isApproveSuccess } = useSendTransaction();
+  const { mutate: sendSupplyTransaction, error: supplyError, isPending: isSupplyPending } = useSendTransaction();
+  const { mutate: sendBorrowTransaction, error: borrowError, isPending: isBorrowPending } = useSendTransaction();
+  const { mutate: sendWithdrawTransaction, error: withdrawError, isPending: isWithdrawPending } = useSendTransaction();
+  const { mutate: sendRepayTransaction, error: repayError, isPending: isRepayPending } = useSendTransaction();
+
   const [loadingStates, setLoadingStates] = useState({
     approve: false,
     supply: false,
@@ -38,18 +36,17 @@ export const useAaveInteractions = (): {
     repay: false
   });
 
-  // Approve Contract
   const executeApprove = useCallback(
     async (tokenAddress: string, amount: bigint) => {
       try {
         setLoadingStates(prev => ({ ...prev, approve: true }));
-        const approveContract = prepareContractCall({
+        const approve = prepareContractCall({
           contract,
-          method:
-            "function approveContract(address tokenAddress, uint256 amount)",
+          method: "function approve(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        await sendTransaction(approveContract);
+        await sendApproveTransaction(approve);
+        console.log("testing", approve)
       } catch (err) {
         console.error("Error in approve:", err);
         throw err;
@@ -57,22 +54,19 @@ export const useAaveInteractions = (): {
         setLoadingStates(prev => ({ ...prev, approve: false }));
       }
     },
-    [sendTransaction],
+    [sendApproveTransaction],
   );
 
-  // Supply
   const executeSupply = useCallback(
     async (tokenAddress: string, amount: bigint) => {
       try {
         setLoadingStates(prev => ({ ...prev, supply: true }));
-        console.log("called", tokenAddress, amount);
         const supplyContract = prepareContractCall({
           contract,
-          method: "function supplyToken(address tokenAddress, uint256 amount)",
+          method: "function supply(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        await sendTransaction(supplyContract);
-        console.log("success", supplyContract);
+        await sendSupplyTransaction(supplyContract);
       } catch (err) {
         console.error("Error in supply:", err);
         throw err;
@@ -80,21 +74,19 @@ export const useAaveInteractions = (): {
         setLoadingStates(prev => ({ ...prev, supply: false }));
       }
     },
-    [sendTransaction],
+    [sendSupplyTransaction],
   );
 
-  // Borrow
   const executeBorrow = useCallback(
     async (tokenAddress: string, amount: bigint) => {
       try {
         setLoadingStates(prev => ({ ...prev, borrow: true }));
         const borrowContract = prepareContractCall({
           contract,
-          method:
-            "function borrow(address tokenAddress, uint256 amount, uint256 interestRateMode)",
+          method: "function borrow(address tokenAddress, uint256 amount, uint256 interestRateMode)",
           params: [tokenAddress, amount, BigInt(2)],
         });
-        await sendTransaction(borrowContract);
+        await sendBorrowTransaction(borrowContract);
       } catch (err) {
         console.error("Error in borrow:", err);
         throw err;
@@ -102,10 +94,9 @@ export const useAaveInteractions = (): {
         setLoadingStates(prev => ({ ...prev, borrow: false }));
       }
     },
-    [sendTransaction],
+    [sendBorrowTransaction],
   );
 
-  // Withdraw
   const executeWithdraw = useCallback(
     async (tokenAddress: string, amount: bigint) => {
       try {
@@ -115,7 +106,7 @@ export const useAaveInteractions = (): {
           method: "function withdraw(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        await sendTransaction(withdrawContract);
+        await sendWithdrawTransaction(withdrawContract);
       } catch (err) {
         console.error("Error in withdraw:", err);
         throw err;
@@ -123,21 +114,19 @@ export const useAaveInteractions = (): {
         setLoadingStates(prev => ({ ...prev, withdraw: false }));
       }
     },
-    [sendTransaction],
+    [sendWithdrawTransaction],
   );
 
-  // Repay
   const executeRepay = useCallback(
     async (tokenAddress: string, amount: bigint) => {
       try {
         setLoadingStates(prev => ({ ...prev, repay: true }));
         const repayContract = prepareContractCall({
           contract,
-          method:
-            "function repay(address tokenAddress, uint256 amount, uint256 interestRateMode)",
+          method: "function repay(address tokenAddress, uint256 amount, uint256 interestRateMode)",
           params: [tokenAddress, amount, BigInt(2)],
         });
-        await sendTransaction(repayContract);
+        await sendRepayTransaction(repayContract);
       } catch (err) {
         console.error("Error in repay:", err);
         throw err;
@@ -145,39 +134,57 @@ export const useAaveInteractions = (): {
         setLoadingStates(prev => ({ ...prev, repay: false }));
       }
     },
-    [sendTransaction],
+    [sendRepayTransaction],
+  );
+  const getUserData = useCallback(
+    async (userAddress: string) => {
+      try {
+        const { data, isLoading, isError, error } = useReadContract({
+          contract,
+          method: "function getUserAccountData(address user)", 
+          params: [userAddress],
+        });
+        return { data, isLoading, isError, error };
+      } catch (err) {
+        console.error("Error in get user data:", err);
+        throw err;
+      }
+    },
+    []
   );
 
   return {
-    approveContract: {
-      error,
+    approve: {
+      error: approveError,
       execute: executeApprove,
       isLoading: loadingStates.approve,
-      isPending
+      isPending: isApprovePending,
+      isSuccess: isApproveSuccess
     },
     supply: {
-      error,
+      error: supplyError,
       execute: executeSupply,
       isLoading: loadingStates.supply,
-      isPending
+      isPending: isSupplyPending
     },
     borrow: {
-      error,
+      error: borrowError,
       execute: executeBorrow,
       isLoading: loadingStates.borrow,
-      isPending
+      isPending: isBorrowPending
     },
     withdraw: {
-      error,
+      error: withdrawError,
       execute: executeWithdraw,
       isLoading: loadingStates.withdraw,
-      isPending
+      isPending: isWithdrawPending
     },
     repay: {
-      error,
+      error: repayError,
       execute: executeRepay,
       isLoading: loadingStates.repay,
-      isPending
+      isPending: isRepayPending
     },
+    getUserData
   };
 };

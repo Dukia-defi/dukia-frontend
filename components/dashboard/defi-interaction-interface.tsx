@@ -121,7 +121,7 @@ export function InteractionInferaceInput({
       />
 
       <Select defaultValue={selectedToken} onValueChange={tokenChangeHandler}>
-        <SelectTrigger>
+        <SelectTrigger className="w-fit">
           <SelectValue placeholder="Token" />
         </SelectTrigger>
         <SelectContent>
