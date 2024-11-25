@@ -9,17 +9,24 @@ import { useAaveSep } from "@/hooks/useAaveSep";
 import { IAaveAnalytics } from "@/lib/types";
 import { getTokenAddress } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
+// import { token_addresses } from "@/lib/addresses";
+// import { useState } from "react";
 
-interface Props {
-  data: IAaveAnalytics;
-}
+// interface Props {
+//   data: IAaveAnalytics;
+// }
 
-export function AaveAnalyticsOptions({ data }: Props) {
-  const { asset } = data;
+export function AaveAnalyticsOptions() {
+  // const { asset } = data;
 
-  const { supplyAsset } = useAaveSep();
+  // const {
+  //   chain,
+  //   wallet: { address },
+  // } = useWallet();
 
-  const { chain } = useWallet();
+  // const { approve, supply } = useAaveInteractions(address);
+
+  // const [amount, setAmount] = useState<string>("");
 
   const selectedToken = getTokenAddress({
     chain: chain,
@@ -38,7 +45,7 @@ export function AaveAnalyticsOptions({ data }: Props) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={handleSupply}>Supply</DropdownMenuItem>
+        <DropdownMenuItem>Supply</DropdownMenuItem>
         <DropdownMenuItem>Borrow</DropdownMenuItem>
         <DropdownMenuItem>Withdraw</DropdownMenuItem>
       </DropdownMenuContent>

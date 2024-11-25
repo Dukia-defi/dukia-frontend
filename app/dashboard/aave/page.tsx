@@ -9,23 +9,12 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header";
 import { AnimatePresence } from "framer-motion";
 import { ConnectWallet } from "@/components/dashboard/connect-wallet";
 import { useWallet } from "@/context/wallet";
-import { AaveInteractionInterface } from "@/components/dashboard/aave/aave-interaction-interface";
+import AaveInteractionInterface from "@/components/dashboard/aave/aave-interaction-interface";
 import { AaveStats } from "@/components/dashboard/aave/aave-stats";
-import { IAaveStats } from "@/lib/types";
 
 export default function AavePage() {
   const { isConnected } = useWallet();
 
-  const props: IAaveStats = {
-    netApy: 0,
-    supplyBalance: 0,
-    supplyComposition: 82,
-    borrowBalance: 0,
-    borrowPowerUsed: 20,
-    safetyRatio: 0,
-    borrowLimit: 0,
-    leftToBorrow: 0,
-  };
   return (
     <section className="mb-40">
       <DashboardHeader
@@ -48,7 +37,7 @@ export default function AavePage() {
           <ConnectWallet />
         ) : (
           <>
-            <AaveStats {...props} />
+            <AaveStats />
 
             <AaveInteractionInterface />
 

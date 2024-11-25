@@ -30,6 +30,7 @@ export function getTokenAddress({
   token: string;
 }): string | undefined {
   const selectedChain = chainIdToName[chain];
+  console.log("chain", selectedChain);
 
   if (!selectedChain) {
     console.error(`Unsupported chain ID: ${chain}`);
@@ -37,6 +38,8 @@ export function getTokenAddress({
   }
 
   const chainTokens = token_addresses[selectedChain];
+  console.log("chainTokens", chainTokens, token);
+  console.log("chain in chainTokens", token in chainTokens);
   if (!(token in chainTokens)) {
     console.error(`Token '${token}' not found on chain '${selectedChain}'`);
     return undefined;

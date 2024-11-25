@@ -1,7 +1,6 @@
 "use client";
 
 import { client } from "@/app/client";
-import { INetwork, IWallet, IWalletContext } from "@/lib/types";
 import { createContext, useContext, useState, useEffect } from "react";
 import {
   useActiveAccount,
@@ -9,6 +8,11 @@ import {
   useActiveWalletChain,
   useActiveWalletConnectionStatus,
 } from "thirdweb/react";
+import {
+  getChainId,
+  getNetworkFromChainId,
+  CHAIN_IDS,
+} from "@/utils/chain-utils";
 
 const initialWalletState: IWallet = {
   address: "",
@@ -18,11 +22,14 @@ const initialWalletState: IWallet = {
   staked: 0,
   supplied: 0,
   claimable: 0,
+  chain: CHAIN_IDS.ETHEREUM, // Default to Ethereum
 };
 
 const networkOptions: INetwork[] = [
   { id: "ethereum", name: "Ethereum", icon: "/svg/ethereum.svg" },
+  { id: "sepolia", name: "Sepolia", icon: "/svg/ethereum.svg" },
   { id: "lisk", name: "Lisk", icon: "/svg/lisk.svg" },
+  { id: "lisk_sepolia", name: "Lisk Sepolia", icon: "/svg/lisk.svg" },
   { id: "arbitrum", name: "Arbitrum", icon: "/svg/arbitrum.svg" },
 ];
 
@@ -34,9 +41,21 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
 
   const account = useActiveAccount();
   const status = useActiveWalletConnectionStatus();
-
   const activeChain = useActiveWalletChain();
   const address = account?.address ?? undefined;
+
+  // Update network when chain changes
+  useEffect(() => {
+    if (activeChain) {
+      try {
+        const networkDetails = getNetworkFromChainId(activeChain.id);
+        setNetwork(networkDetails);
+      } catch (error) {
+        console.error("Unsupported chain:", error);
+        // Optionally handle unsupported chains (e.g., switch to default network)
+      }
+    }
+  }, [activeChain]);
 
   const { data } = useWalletBalance({
     chain: activeChain,
@@ -48,8 +67,8 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (address && status === "connected") {
-      // todo: Update wallet state with real data
-      setWallet((prev) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setWallet((prev: any) => ({
         ...prev,
         address,
         balance: balance ? parseFloat(balance) : 0,
@@ -58,11 +77,12 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         staked: 500,
         supplied: 600,
         claimable: 100,
+        chain: activeChain ? getChainId(network) : CHAIN_IDS.ETHEREUM,
       }));
     } else {
       setWallet(initialWalletState);
     }
-  }, [address, status, balance]);
+  }, [address, status, balance, network, activeChain]);
 
   return (
     <WalletContext.Provider
@@ -73,7 +93,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         network,
         setNetwork,
         networkOptions,
-        chain: activeChain,
+        chain: activeChain ? getChainId(network) : CHAIN_IDS.ETHEREUM,
       }}
     >
       {children}

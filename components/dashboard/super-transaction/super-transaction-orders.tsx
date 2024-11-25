@@ -1,5 +1,4 @@
 import Paragraph from "@/components/ui/typography/paragraph";
-import { IOrder } from "@/lib/types";
 import { ActionItem } from "./action-item";
 import { Button } from "@/components/ui/button";
 

@@ -25,6 +25,8 @@ export function useContracts() {
     chain: sepolia,
   });
 
+  // console.log("ave", sepAave)
+
   const aaveSepContract = getContract({
     client,
     address: sepAave,

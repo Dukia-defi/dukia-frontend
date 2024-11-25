@@ -1,4 +1,3 @@
-import { IItemWrapper, IPortfolioDetails } from "@/lib/types";
 import Heading3 from "../ui/typography/heading3";
 import Paragraph from "../ui/typography/paragraph";
 

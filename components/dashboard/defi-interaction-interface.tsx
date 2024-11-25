@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { IDefiTabs } from "@/lib/types";
 
 interface Props {
   tabs: IDefiTabs[];
@@ -21,8 +20,10 @@ interface InputProps {
   tokens: string[];
   selectedToken: string;
   tokenChangeHandler: Dispatch<SetStateAction<string>>;
+  onAmountChange: (amount: string) => void;
+  value?: string; // Add value prop
   amount: string;
-  handleInput: Dispatch<SetStateAction<string>>;
+  handleInput?: Dispatch<SetStateAction<string>>;
   tokenPair?: boolean;
   selectedTokenB?: string;
   tokenBChangeHandler?: Dispatch<SetStateAction<string>>;
@@ -100,18 +101,29 @@ export function InteractionInferaceInput({
   selectedToken,
   tokenChangeHandler,
   amount,
-  handleInput,
-  tokenPair = false,
+  onAmountChange,
+  tokenPair,
   selectedTokenB,
   tokenBChangeHandler,
-}: InputProps) {
+}: InputProps & {
+  amount: string;
+  onAmountChange: (value: string) => void;
+}) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numbers and decimals
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      onAmountChange(value);
+    }
+  };
+
   return (
     <div className="flex items-center rounded-lg border border-purple-500/20 bg-gray-800/50 p-3">
       <input
-        type="number"
-        placeholder="Amount"
+        type="text"
+        placeholder="0"
         value={amount}
-        onChange={(e) => handleInput(e.target.value)}
+        onChange={handleInputChange}
         className="flex-1 appearance-none border-none bg-transparent text-2xl text-gray-200 placeholder-gray-500 focus:outline-none"
       />
 
