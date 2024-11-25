@@ -4,6 +4,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { IUniswapAnalytics } from "@/lib/types";
 import { MoreVertical } from "lucide-react";
 
 interface Props {
