@@ -15,7 +15,7 @@ export const StatCard = ({
     initial={{ opacity: 0, y: 20 }}
     animate={{ opacity: 1, y: 0 }}
     transition={{ duration: 0.3 }}
-    className={`rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60 ${className}`}
+    className={`rounded-lg border border-purple-500/10 bg-gray-800/40 p-4 transition-colors duration-200 hover:bg-gray-800/60 ${className} overflow-x-hidden break-normal`}
   >
     <StatTooltip content={tooltipContent}>
       <div className="mb-2 flex items-center gap-2">
@@ -23,6 +23,6 @@ export const StatCard = ({
         <span className="text-gray-400">{title}</span>
       </div>
     </StatTooltip>
-    <span className={`text-3xl font-medium ${valueColor}`}>{value}</span>
+    <span className={`text-2xl font-medium ${valueColor}`}>{value}</span>
   </motion.div>
 );

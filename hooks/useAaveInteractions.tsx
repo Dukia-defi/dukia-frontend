@@ -3,6 +3,7 @@ import { defineChain, getContract, prepareContractCall } from "thirdweb";
 import { useReadContract, useSendTransaction } from "thirdweb/react";
 import { useCallback } from "react";
 import { deployed_contracts } from "@/lib/addresses";
+import { useToast } from "@/hooks/use-toast";
 
 const { sepolia } = deployed_contracts;
 const CONTRACT_ADDRESS = sepolia.aave;
@@ -44,6 +45,7 @@ export const useAaveInteractions = (
     error: Error | null;
   };
 } => {
+  const { toast } = useToast();
   const {
     mutate: sendApproveTransaction,
     error: approveError,
@@ -51,7 +53,7 @@ export const useAaveInteractions = (
     isSuccess: isApproveSuccess,
   } = useSendTransaction();
   const {
-    mutate: sendSupplyTransaction,
+    mutateAsync: sendSupplyTransaction,
     error: supplyError,
     isPending: isSupplyPending,
   } = useSendTransaction();
@@ -95,6 +97,11 @@ export const useAaveInteractions = (
         sendApproveTransaction(approve);
       } catch (err) {
         console.error("Error in approve:", err);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: `Error in approve: ${err}`,
+        });
         throw err;
       }
     },
@@ -103,16 +110,21 @@ export const useAaveInteractions = (
 
   // Supply Token
   const executeSupply = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    async (tokenAddress: string, amount: bigint) => {
       try {
         const supplyContract = prepareContractCall({
           contract,
           method: "function supply(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendSupplyTransaction(supplyContract);
+        await sendSupplyTransaction(supplyContract);
       } catch (err) {
         console.error("Error in supply:", err);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: `Error in supply: ${err}`,
+        });
         throw err;
       }
     },
@@ -131,7 +143,12 @@ export const useAaveInteractions = (
         });
         sendBorrowTransaction(borrowContract);
       } catch (err) {
-        console.error("Error in borrow:", err);
+        // console.error("Error in borrow:", err);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: `Error in borrow: ${err}`,
+        });
         throw err;
       }
     },
