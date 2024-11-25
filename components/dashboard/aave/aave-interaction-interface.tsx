@@ -7,7 +7,7 @@ import {
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
 import { useState } from "react";
-import { useAaveInteractions } from "@/hooks/useAaveInteractions";
+import { contract, useAaveInteractions } from "@/hooks/useAaveInteractions";
 import { token_addresses } from "@/lib/addresses";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -17,6 +17,8 @@ import {
   ToastProvider,
 } from "@/components/ui/toast";
 import { useWallet } from "@/context/wallet";
+import { useSendTransaction } from "thirdweb/react";
+import { prepareContractCall } from "thirdweb";
 
 export default function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
@@ -35,7 +37,7 @@ export default function AaveInteractionInterface() {
 
   const { sepolia } = token_addresses;
 
-  const handleSupply = () => {
+  const handleSupply = async () => {
     if (!amount) {
       toast({
         variant: "destructive",
@@ -181,13 +183,13 @@ export default function AaveInteractionInterface() {
                 onAmountChange={setApproveAmount}
               />
 
-              <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
+              {/* <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
                 max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
-              </div>
+              </div> */}
             </div>
 
             <Button
-              className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
+              className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500 my-6"
               onClick={handleApprove}
               disabled={!approveAmount || parseFloat(approveAmount) <= 0}
             >

@@ -90,7 +90,7 @@ export const AaveStats = () => {
                   <span className="text-gray-400">Debt Base</span>
                 </div>
               </StatTooltip>
-              <span className="text-3xl font-medium text-white">
+              <span className="text-2xl font-medium text-white">
                 {data.totalDebtBase}
               </span>
             </div>
