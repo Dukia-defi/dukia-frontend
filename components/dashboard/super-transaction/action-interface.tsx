@@ -4,7 +4,6 @@ import { tokens } from "@/utils/mock";
 import { InteractionInferaceInput } from "../defi-interaction-interface";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { IOrder } from "@/lib/types";
 
 interface Props {
   action: string;
@@ -47,6 +46,7 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
             tokenPair
             selectedTokenB={selectedBToken}
             tokenBChangeHandler={setSelectedBToken}
+            onAmountChange={() => {}}
           />
         ) : (
           <InteractionInferaceInput
@@ -54,6 +54,7 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
             amount={amount}
+            onAmountChange={() => {}}
             handleInput={setAmount}
           />
         )}

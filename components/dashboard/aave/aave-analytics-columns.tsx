@@ -3,7 +3,6 @@
 import { SortableTableHeader } from "@/components/sortable-table-header";
 import { ColumnDef } from "@tanstack/react-table";
 import { AaveAnalyticsOptions } from "./aave-analytics-options";
-import { IAaveAnalytics } from "@/lib/types";
 
 export const aave_analytics_columns: ColumnDef<IAaveAnalytics>[] = [
   {
@@ -63,10 +62,11 @@ export const aave_analytics_columns: ColumnDef<IAaveAnalytics>[] = [
   },
   {
     id: "actions",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cell: ({ row }) => {
-      const asset = row.original;
+      // const asset = row.original;
 
-      return <AaveAnalyticsOptions data={asset} />;
+      return <AaveAnalyticsOptions />;
     },
   },
 ];

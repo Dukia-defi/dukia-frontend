@@ -1,4 +1,4 @@
-import { token_addresses } from "./addresses";
+// import { token_addresses } from "./addresses";
 
 interface ISidebarItem {
   title: string;
@@ -133,9 +133,9 @@ interface IDefiTabs {
 type TContractEvent = `event ${string}`;
 type TBytes = readonly `0x${string}`;
 
-type TChainName = keyof typeof token_addresses;
-type TTokenName = keyof (typeof token_addresses)[TChainName];
-type TChainIdToNameMap = Record<number, TChainName>;
+// type TChainName = keyof typeof token_addresses;
+// type TTokenName = keyof (typeof token_addresses)[TChainName];
+// type TChainIdToNameMap = Record<number, TChainName>;
 
 interface IOrder {
   action: string;

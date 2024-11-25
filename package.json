@@ -28,7 +28,8 @@
     "sonner": "^1.7.0",
     "tailwind-merge": "^2.5.4",
     "tailwindcss-animate": "^1.0.7",
-    "thirdweb": "^5.68.0"
+    "thirdweb": "^5.68.0",
+    "viem": "^2.21.50"
   },
   "devDependencies": {
     "@types/node": "^20",

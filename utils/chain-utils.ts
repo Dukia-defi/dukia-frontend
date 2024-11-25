@@ -1,5 +1,3 @@
-import { INetwork } from "@/lib/types";
-
 // Define supported chain IDs
 export const CHAIN_IDS = {
   ETHEREUM: 1,
@@ -10,7 +8,7 @@ export const CHAIN_IDS = {
 } as const;
 
 // Type for supported chain IDs
-export type SupportedChainId = typeof CHAIN_IDS[keyof typeof CHAIN_IDS];
+export type SupportedChainId = (typeof CHAIN_IDS)[keyof typeof CHAIN_IDS];
 
 // Map network IDs to chain IDs
 export const NETWORK_TO_CHAIN_ID: Record<string, SupportedChainId> = {
@@ -22,42 +20,52 @@ export const NETWORK_TO_CHAIN_ID: Record<string, SupportedChainId> = {
 };
 
 // Validate and get chain ID from network
-export function getChainId(network: INetwork | string | undefined): SupportedChainId {
+export function getChainId(
+  network: INetwork | string | undefined,
+): SupportedChainId {
   if (!network) {
     return CHAIN_IDS.ETHEREUM; // Default to Ethereum mainnet
   }
-  
-  const networkId = typeof network === 'string' ? network : network.id;
+
+  const networkId = typeof network === "string" ? network : network.id;
   const chainId = NETWORK_TO_CHAIN_ID[networkId.toLowerCase()];
-  
+
   if (!chainId) {
     throw new Error(`Unsupported network: ${networkId}`);
   }
-  
+
   return chainId;
 }
 
 // Get network details from chain ID
 export function getNetworkFromChainId(chainId: number | string): INetwork {
-  const entry = Object.entries(NETWORK_TO_CHAIN_ID).find(([_, id]) => id === Number(chainId));
-  
+  const entry = Object.entries(NETWORK_TO_CHAIN_ID).find(
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    ([_, id]) => id === Number(chainId),
+  );
+
   // if (!entry) {
   //   throw new Error(`Unsupported chain ID: ${chainId}`);
   // }
-  
+
   const networkId = entry || [];
-  
+
   // Map to network options format
   return {
-    id: networkId[0] || '',
-    name: networkId[0] ? networkId[0].charAt(0).toUpperCase() + networkId[0].slice(1).replace('_', ' ') : '',
-    icon: networkId[0] ? `/svg/${networkId[0].split('_')[0]}.svg` : '',
+    id: networkId[0] || "",
+    name: networkId[0]
+      ? networkId[0].charAt(0).toUpperCase() +
+        networkId[0].slice(1).replace("_", " ")
+      : "",
+    icon: networkId[0] ? `/svg/${networkId[0].split("_")[0]}.svg` : "",
   };
 }
 
 // Validate if a chain ID is supported
-export function isSupportedChainId(chainId: number | string | unknown): boolean {
-  if (typeof chainId === 'string' || typeof chainId === 'number') {
+export function isSupportedChainId(
+  chainId: number | string | unknown,
+): boolean {
+  if (typeof chainId === "string" || typeof chainId === "number") {
     const chainIdNumber = Number(chainId);
     return Object.values(CHAIN_IDS).includes(chainIdNumber as SupportedChainId);
   }

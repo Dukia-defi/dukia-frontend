@@ -2,7 +2,6 @@
 
 import { useContractEvents } from "thirdweb/react";
 import { ContractOptions, prepareEvent } from "thirdweb";
-import { TContractEvent } from "@/lib/types";
 
 export function useEvents({
   eventSig,

@@ -1,6 +1,5 @@
 "use client";
 
-import { INetworkSelector } from "@/lib/types";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
