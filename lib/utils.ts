@@ -1,7 +1,10 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 import { token_addresses } from "./addresses";
-import { TChainIdToNameMap, TTokenName } from "./types";
+
+type TChainName = keyof typeof token_addresses;
+type TTokenName = keyof (typeof token_addresses)[TChainName];
+type TChainIdToNameMap = Record<number, TChainName>;
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

@@ -1,12 +1,10 @@
 import { client } from "@/app/client";
 import { defineChain, getContract, prepareContractCall } from "thirdweb";
-import { useSendTransaction } from "thirdweb/react";
-import { useCallback, useState } from "react";
+import { useReadContract, useSendTransaction } from "thirdweb/react";
+import { useCallback } from "react";
 import { deployed_contracts } from "@/lib/addresses";
-// import { useContract } from "./useContract";
 
 const { sepolia } = deployed_contracts;
-
 const CONTRACT_ADDRESS = sepolia.aave;
 
 export const contract = getContract({
@@ -18,32 +16,57 @@ export const contract = getContract({
 interface TransactionResult {
   error: Error | null;
   execute: (tokenAddress: string, amount: bigint) => void;
-  isLoading: boolean;
   isPending: boolean;
+  isSuccess: boolean;
+}
+
+interface UserAccountData {
+  totalCollateralBase: bigint;
+  totalDebtBase: bigint;
+  availableBorrowsBase: bigint;
+  currentLiquidationThreshold: bigint;
+  ltv: bigint;
+  healthFactor: bigint;
 }
 
 // Main hook that handles all Aave interactions
-export const useAaveInteractions = (): {
+export const useAaveInteractions = (
+  userAddress: string,
+): {
   approveContract: TransactionResult;
   supply: TransactionResult;
   borrow: TransactionResult;
   withdraw: TransactionResult;
   repay: TransactionResult;
+  userData: {
+    data: UserAccountData | undefined;
+    isLoading: boolean;
+    error: Error | null;
+  };
 } => {
-  const { mutate: sendTransaction, error, isPending } = useSendTransaction();
-  const [loadingStates, setLoadingStates] = useState({
-    approve: false,
-    supply: false,
-    borrow: false,
-    withdraw: false,
-    repay: false,
+  const {
+    mutate: sendTransaction,
+    error,
+    isPending,
+    isSuccess,
+  } = useSendTransaction();
+
+  // User Account Data Query
+  const {
+    data: accountData,
+    isLoading: isAccountDataLoading,
+    error: accountDataError,
+  } = useReadContract({
+    contract,
+    method:
+      "function getUserAccountData(address user) view returns (uint256 totalCollateralBase, uint256 totalDebtBase, uint256 availableBorrowsBase, uint256 currentLiquidationThreshold, uint256 ltv, uint256 healthFactor)",
+    params: [userAddress],
   });
 
   // Approve Contract
   const executeApprove = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
-        setLoadingStates((prev) => ({ ...prev, approve: true }));
         const approveContract = prepareContractCall({
           contract,
           method:
@@ -54,8 +77,6 @@ export const useAaveInteractions = (): {
       } catch (err) {
         console.error("Error in approve:", err);
         throw err;
-      } finally {
-        setLoadingStates((prev) => ({ ...prev, approve: false }));
       }
     },
     [sendTransaction],
@@ -65,20 +86,15 @@ export const useAaveInteractions = (): {
   const executeSupply = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
-        setLoadingStates((prev) => ({ ...prev, supply: true }));
-        console.log("called", tokenAddress, amount);
         const supplyContract = prepareContractCall({
           contract,
-          method: "function supplyToken(address tokenAddress, uint256 amount)",
+          method: "function supply(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
         sendTransaction(supplyContract);
-        console.log("success", supplyContract);
       } catch (err) {
         console.error("Error in supply:", err);
         throw err;
-      } finally {
-        setLoadingStates((prev) => ({ ...prev, supply: false }));
       }
     },
     [sendTransaction],
@@ -88,7 +104,6 @@ export const useAaveInteractions = (): {
   const executeBorrow = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
-        setLoadingStates((prev) => ({ ...prev, borrow: true }));
         const borrowContract = prepareContractCall({
           contract,
           method:
@@ -99,8 +114,6 @@ export const useAaveInteractions = (): {
       } catch (err) {
         console.error("Error in borrow:", err);
         throw err;
-      } finally {
-        setLoadingStates((prev) => ({ ...prev, borrow: false }));
       }
     },
     [sendTransaction],
@@ -110,7 +123,6 @@ export const useAaveInteractions = (): {
   const executeWithdraw = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
-        setLoadingStates((prev) => ({ ...prev, withdraw: true }));
         const withdrawContract = prepareContractCall({
           contract,
           method: "function withdraw(address tokenAddress, uint256 amount)",
@@ -120,8 +132,6 @@ export const useAaveInteractions = (): {
       } catch (err) {
         console.error("Error in withdraw:", err);
         throw err;
-      } finally {
-        setLoadingStates((prev) => ({ ...prev, withdraw: false }));
       }
     },
     [sendTransaction],
@@ -131,7 +141,6 @@ export const useAaveInteractions = (): {
   const executeRepay = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
-        setLoadingStates((prev) => ({ ...prev, repay: true }));
         const repayContract = prepareContractCall({
           contract,
           method:
@@ -142,8 +151,6 @@ export const useAaveInteractions = (): {
       } catch (err) {
         console.error("Error in repay:", err);
         throw err;
-      } finally {
-        setLoadingStates((prev) => ({ ...prev, repay: false }));
       }
     },
     [sendTransaction],
@@ -153,32 +160,37 @@ export const useAaveInteractions = (): {
     approveContract: {
       error,
       execute: executeApprove,
-      isLoading: loadingStates.approve,
       isPending,
+      isSuccess,
     },
     supply: {
       error,
       execute: executeSupply,
-      isLoading: loadingStates.supply,
       isPending,
+      isSuccess,
     },
     borrow: {
       error,
       execute: executeBorrow,
-      isLoading: loadingStates.borrow,
       isPending,
+      isSuccess,
     },
     withdraw: {
       error,
       execute: executeWithdraw,
-      isLoading: loadingStates.withdraw,
       isPending,
+      isSuccess,
     },
     repay: {
       error,
       execute: executeRepay,
-      isLoading: loadingStates.repay,
       isPending,
+      isSuccess,
+    },
+    userData: {
+      data: accountData as UserAccountData | undefined,
+      isLoading: isAccountDataLoading,
+      error: accountDataError,
     },
   };
 };

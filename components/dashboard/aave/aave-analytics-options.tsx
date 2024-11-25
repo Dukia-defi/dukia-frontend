@@ -4,48 +4,48 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useWallet } from "@/context/wallet";
+// import { useWallet } from "@/context/wallet";
 // import { useAaveSep } from "@/hooks/useAaveSep";
-import { useAaveInteractions } from "@/hooks/useAaveInteractions";
-import { IAaveAnalytics } from "@/lib/types";
-import { handleSelectedToken } from "@/lib/utils";
+// import { useAaveInteractions } from "@/hooks/useAaveInteractions";
+// import { IAaveAnalytics } from "@/lib/types";
+// import { handleSelectedToken } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
-import { token_addresses } from "@/lib/addresses";
-import { useState } from "react";
+// import { token_addresses } from "@/lib/addresses";
+// import { useState } from "react";
 
-interface Props {
-  data: IAaveAnalytics;
-}
+// interface Props {
+//   data: IAaveAnalytics;
+// }
 
-export function AaveAnalyticsOptions({ data }: Props) {
-  const { asset } = data;
+export function AaveAnalyticsOptions() {
+  // const { asset } = data;
 
-  const { approveContract, supply } = useAaveInteractions();
+  // const { approveContract, supply } = useAaveInteractions();
 
-  const { chain } = useWallet();
+  // const { chain } = useWallet();
 
-  const [amount, setAmount] = useState<string>("");
+  // const [amount, setAmount] = useState<string>("");
 
-  const { sepolia } = token_addresses;
+  // const { sepolia } = token_addresses;
 
-  const selectedToken = handleSelectedToken({
-    chain: chain,
-    token: asset,
-  });
+  // const selectedToken = handleSelectedToken({
+  //   chain: chain,
+  //   token: asset,
+  // });
 
-  const handleSupply = async() => {
-    if (!amount) return;
+  // const handleSupply = async () => {
+  //   if (!amount) return;
 
-    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
-    const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
+  //   const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+  //   const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
 
-    try {
-      await approveContract.execute(tokenAddress, amountInWei);
-      supply.execute(tokenAddress, amountInWei);
-    } catch (error) {
-      console.error("Supply failed:", error);
-    }
-  };
+  //   try {
+  //     await approveContract.execute(tokenAddress, amountInWei);
+  //     supply.execute(tokenAddress, amountInWei);
+  //   } catch (error) {
+  //     console.error("Supply failed:", error);
+  //   }
+  // };
 
   return (
     <DropdownMenu>
@@ -54,7 +54,7 @@ export function AaveAnalyticsOptions({ data }: Props) {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent>
-        <DropdownMenuItem onClick={handleSupply}>Supply</DropdownMenuItem>
+        <DropdownMenuItem>Supply</DropdownMenuItem>
         <DropdownMenuItem>Borrow</DropdownMenuItem>
         <DropdownMenuItem>Withdraw</DropdownMenuItem>
       </DropdownMenuContent>

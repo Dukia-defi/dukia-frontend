@@ -1,7 +1,6 @@
 "use client";
 
 import { client } from "@/app/client";
-import { IWallet, INetwork, IWalletContext } from "@/lib/types";
 import { createContext, useContext, useState, useEffect } from "react";
 import {
   useActiveAccount,
@@ -9,7 +8,11 @@ import {
   useActiveWalletChain,
   useActiveWalletConnectionStatus,
 } from "thirdweb/react";
-import { getChainId, getNetworkFromChainId, CHAIN_IDS } from "@/utils/chain-utils";
+import {
+  getChainId,
+  getNetworkFromChainId,
+  CHAIN_IDS,
+} from "@/utils/chain-utils";
 
 const initialWalletState: IWallet = {
   address: "",
@@ -64,7 +67,8 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     if (address && status === "connected") {
-      setWallet((prev) => ({
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      setWallet((prev: any) => ({
         ...prev,
         address,
         balance: balance ? parseFloat(balance) : 0,
