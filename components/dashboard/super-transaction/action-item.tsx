@@ -1,5 +1,6 @@
 import { Icons } from "@/components/icons";
 import Paragraph from "@/components/ui/typography/paragraph";
+import { IOrder } from "@/lib/types";
 
 export function ActionItem({
   action,
