@@ -7,7 +7,15 @@ import { SuperTransactionOrders } from "@/components/dashboard/super-transaction
 import { SectionLabel } from "@/components/sections";
 import Heading2 from "@/components/ui/typography/heading2";
 import Heading3 from "@/components/ui/typography/heading3";
-import { IOrder } from "@/lib/types";
+import { useWallet } from "@/context/wallet";
+import useBatchExecutor from "@/hooks/useBatchExecutor";
+import { IOrder, TBytes } from "@/lib/types";
+import {
+  getCallData,
+  getDefiAddress,
+  getDefiFunction,
+  getParams,
+} from "@/lib/utils";
 import { defiActions, defiOptions } from "@/utils/mock";
 import { useEffect, useState } from "react";
 
@@ -19,6 +27,9 @@ export default function SuperTransactionPage() {
   const [selectedAction, setSelectedAction] = useState<string>("");
   const [showInput, setShowInput] = useState<boolean>(false);
   const [orders, setOrders] = useState<IOrder[]>([]);
+
+  const { executeBatch } = useBatchExecutor();
+  const { chain } = useWallet();
 
   useEffect(() => {
     const selectedActions =
@@ -50,8 +61,20 @@ export default function SuperTransactionPage() {
   };
 
   const startHandler = () => {
-    //todo integrate this function with blockchain
-    console.log(orders);
+    const processedOrder = orders.map((order) => ({
+      address: getDefiAddress({ defi: order.defi, chain }),
+      function: getCallData({
+        action: getDefiFunction({ defi: order.defi, action: order.action }),
+        params: getParams({ order, chain }) as string[],
+      }),
+    }));
+
+    const targets = processedOrder.map((order) => order.address);
+    const data = processedOrder.map((order) => order.function);
+
+    executeBatch({ targets: targets as string[], data: data as TBytes[] });
+
+    resetHandler();
   };
 
   return (

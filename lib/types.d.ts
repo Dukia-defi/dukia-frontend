@@ -1,4 +1,4 @@
-import { token_addresses } from "./addresses";
+import { deployed_contracts, token_addresses } from "./addresses";
 
 interface ISidebarItem {
   title: string;
@@ -134,6 +134,7 @@ type TBytes = readonly `0x${string}`;
 
 type TChainName = keyof typeof token_addresses;
 type TTokenName = keyof (typeof token_addresses)[TChainName];
+type TDefiName = keyof (typeof deployed_contracts)[TChainName];
 type TChainIdToNameMap = Record<number, TChainName>;
 
 interface IOrder {
@@ -143,4 +144,9 @@ interface IOrder {
   tokenA: string;
   tokenB?: string;
   tokenPair?: boolean;
+}
+
+interface IFunctionSig {
+  functionSig: string;
+  params: string[];
 }

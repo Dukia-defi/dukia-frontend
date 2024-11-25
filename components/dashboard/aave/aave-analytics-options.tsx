@@ -7,7 +7,7 @@ import {
 import { useWallet } from "@/context/wallet";
 import { useAaveSep } from "@/hooks/useAaveSep";
 import { IAaveAnalytics } from "@/lib/types";
-import { handleSelectedToken } from "@/lib/utils";
+import { getTokenAddress } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
 
 interface Props {
@@ -21,7 +21,7 @@ export function AaveAnalyticsOptions({ data }: Props) {
 
   const { chain } = useWallet();
 
-  const selectedToken = handleSelectedToken({
+  const selectedToken = getTokenAddress({
     chain: chain,
     token: asset,
   });

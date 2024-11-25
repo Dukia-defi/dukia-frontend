@@ -119,3 +119,43 @@ export const defiActions = {
   Aave: ["Supply", "Borrow", "Repay", "Withdraw"],
   Uniswap: ["Swap", "Add liquidity", "Remove liquidity"],
 };
+
+export const aaveFunctions = {
+  supply: {
+    functionSig: "supply(address,uint256)",
+    params: ["address", "uint256"],
+  },
+  borrow: {
+    functionSig: "borrow(address,uint256,uint256)",
+    params: ["address", "uint256", "uint256"],
+  },
+  repay: {
+    functionSig: "repay(address,uint256,uint256)",
+    params: ["address", "uint256", "uint256"],
+  },
+  withdraw: {
+    functionSig: "withdraw(address,uint256)",
+    params: ["address", "uint256"],
+  },
+};
+
+export const uniswapFunctions = {
+  swap: {
+    functionSig:
+      "swapExactTokensForTokens(uint256,uint256,address[],address,uint256)",
+    params: ["uint256", "uint256", "address[]", "address", "uint256"],
+  },
+  addLiquidity: {
+    functionSig: "addLiquidity(address,address,uint256,uint256,uint256)",
+    params: ["address", "address", "uint256", "uint256", "uint256"],
+  },
+  addLiquidityEth: {
+    functionSig: "addLiquidityEth(address,uint256,uint256,uint256,uint256)",
+    params: ["address", "uint256", "uint256", "uint256", "uint256"],
+  },
+  removeLiquidity: {
+    functionSig:
+      "removeLiquidity(address,address,uint256,uint256,uint256,uint256)",
+    params: ["address", "address", "uint256", "uint256", "uint256", "uint256"],
+  },
+};
