@@ -5,16 +5,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { InfoIcon } from "lucide-react";
 import { ProgressBar, StatCard, StatTooltip } from "@/components/common";
+import { useAaveInteractions } from "@/hooks/useAaveInteractions";
+import { useWallet } from "@/context/wallet";
 import { IAaveStats } from "@/lib/types";
 
 export const AaveStats = (props: IAaveStats) => {
-  // const { getUserData, supplyAsset } = useAaveSep();
+  const {} = useAaveInteractions();
 
   // const {
   //   wallet: { address },
   // } = useWallet();
 
   // const { data, isLoading, error } = getUserData(address); //roheemah use this to read data
+
+  // console.log("get data", data)
 
   // function handleSupply() {
   //   supplyAsset({ tokenAddress: "", amount: BigInt("1") }); //roheemah use this to send a transaction
