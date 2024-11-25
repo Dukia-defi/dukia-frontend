@@ -64,13 +64,14 @@ export const AppFeatures = () => {
                 />
               </div>
               <h3 className="text-2xl font-semibold">
-                Cross-Chain + Layer-2 Scaling
+                Cross-Chain + Multi Transactions
               </h3>
             </div>
             <p className="text-gray-400">
               Leverage the power of cross-chain interactions to access DeFi
-              platforms on supported chains, while enjoying Lisk’s speed and low
-              transaction costs.
+              platforms on supported chains, and carry out multiple transactions
+              on a single or multiple defi apps, allowing a more efficient and
+              cost-effective experience.
             </p>
           </motion.div>
 
