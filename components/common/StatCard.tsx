@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { InfoIcon } from "lucide-react";
 import { StatTooltip } from "./StatTooltip";
+import { IStatCard } from "@/lib/types";
 
 export const StatCard = ({
   title,

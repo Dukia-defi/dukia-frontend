@@ -4,6 +4,7 @@
 import { useSendTransaction } from "thirdweb/react";
 import { useContracts } from "./useContracts";
 import { prepareContractCall } from "thirdweb";
+import { TBytes } from "@/lib/types";
 
 export default function useBatchExecutor() {
   const { batchExecutorSep } = useContracts();

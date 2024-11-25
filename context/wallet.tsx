@@ -13,6 +13,7 @@ import {
   getNetworkFromChainId,
   CHAIN_IDS,
 } from "@/utils/chain-utils";
+import { INetwork, IWallet, IWalletContext } from "@/lib/types";
 
 const initialWalletState: IWallet = {
   address: "",

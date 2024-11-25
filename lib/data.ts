@@ -1,3 +1,5 @@
+import { IAaveAnalytics, IUniswapAnalytics } from "./types";
+
 export const dummy_aave_analytics_data: IAaveAnalytics[] = [
   // {
   //   asset: "ETH",

@@ -7,7 +7,7 @@ import {
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
 import { useState } from "react";
-import { contract, useAaveInteractions } from "@/hooks/useAaveInteractions";
+import { useAaveInteractions } from "@/hooks/useAaveInteractions";
 import { token_addresses } from "@/lib/addresses";
 import { useToast } from "@/hooks/use-toast";
 import {
@@ -17,8 +17,8 @@ import {
   ToastProvider,
 } from "@/components/ui/toast";
 import { useWallet } from "@/context/wallet";
-import { useSendTransaction } from "thirdweb/react";
-import { prepareContractCall } from "thirdweb";
+// import { useSendTransaction } from "thirdweb/react";
+// import { prepareContractCall } from "thirdweb";
 
 export default function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
@@ -189,7 +189,7 @@ export default function AaveInteractionInterface() {
             </div>
 
             <Button
-              className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500 my-6"
+              className="my-6 w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
               onClick={handleApprove}
               disabled={!approveAmount || parseFloat(approveAmount) <= 0}
             >

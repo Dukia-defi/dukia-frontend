@@ -140,7 +140,7 @@ export function getParams({ order, chain }: { order: IOrder; chain: number }) {
           convertedAmount, //todo fix this amount
           [tokenA, tokenB],
           addressZero, //todo replace with right address
-          0,
+          360,
         ];
       case "Add liquidity":
         return [

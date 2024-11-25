@@ -4,6 +4,7 @@ import { tokens } from "@/utils/mock";
 import { InteractionInferaceInput } from "../defi-interaction-interface";
 import { Dispatch, SetStateAction, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { IOrder } from "@/lib/types";
 
 interface Props {
   action: string;

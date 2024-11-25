@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
 import { InfoIcon } from "lucide-react";
 import { StatCard, StatTooltip } from "@/components/common";
+import { IUniswapStats } from "@/lib/types";
 
 export const UniswapDefiStats = (props: IUniswapStats) => {
   return (

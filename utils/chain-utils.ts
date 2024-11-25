@@ -1,3 +1,5 @@
+import { INetwork } from "@/lib/types";
+
 // Define supported chain IDs
 export const CHAIN_IDS = {
   ETHEREUM: 1,

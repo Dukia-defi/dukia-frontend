@@ -1,6 +1,7 @@
 import Paragraph from "@/components/ui/typography/paragraph";
 import { ActionItem } from "./action-item";
 import { Button } from "@/components/ui/button";
+import { IOrder } from "@/lib/types";
 
 interface Props {
   orders: IOrder[];
