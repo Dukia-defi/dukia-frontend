@@ -12,9 +12,9 @@ import { IAaveStats } from "@/lib/types";
 export const AaveStats = (props: IAaveStats) => {
   const {} = useAaveInteractions();
 
-  const {
-    wallet: { address },
-  } = useWallet();
+  // const {
+  //   wallet: { address },
+  // } = useWallet();
 
   // const { data, isLoading, error } = getUserData(address); //roheemah use this to read data
 
