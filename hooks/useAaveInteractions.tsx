@@ -17,7 +17,7 @@ interface TransactionResult {
   error: Error | null;
   execute: (tokenAddress: string, amount: bigint) => void;
   isPending: boolean;
-  isSuccess: boolean;
+  isSuccess?: boolean;
 }
 
 interface UserAccountData {
@@ -33,7 +33,7 @@ interface UserAccountData {
 export const useAaveInteractions = (
   userAddress: string,
 ): {
-  approveContract: TransactionResult;
+  approve: TransactionResult;
   supply: TransactionResult;
   borrow: TransactionResult;
   withdraw: TransactionResult;
@@ -45,10 +45,30 @@ export const useAaveInteractions = (
   };
 } => {
   const {
-    mutate: sendTransaction,
-    error,
-    isPending,
-    isSuccess,
+    mutate: sendApproveTransaction,
+    error: approveError,
+    isPending: isApprovePending,
+    isSuccess: isApproveSuccess,
+  } = useSendTransaction();
+  const {
+    mutate: sendSupplyTransaction,
+    error: supplyError,
+    isPending: isSupplyPending,
+  } = useSendTransaction();
+  const {
+    mutate: sendBorrowTransaction,
+    error: borrowError,
+    isPending: isBorrowPending,
+  } = useSendTransaction();
+  const {
+    mutate: sendWithdrawTransaction,
+    error: withdrawError,
+    isPending: isWithdrawPending,
+  } = useSendTransaction();
+  const {
+    mutate: sendRepayTransaction,
+    error: repayError,
+    isPending: isRepayPending,
   } = useSendTransaction();
 
   // User Account Data Query
@@ -67,19 +87,19 @@ export const useAaveInteractions = (
   const executeApprove = useCallback(
     (tokenAddress: string, amount: bigint) => {
       try {
-        const approveContract = prepareContractCall({
+        const approve = prepareContractCall({
           contract,
           method:
             "function approveContract(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendTransaction(approveContract);
+        sendApproveTransaction(approve);
       } catch (err) {
         console.error("Error in approve:", err);
         throw err;
       }
     },
-    [sendTransaction],
+    [sendApproveTransaction],
   );
 
   // Supply Token
@@ -91,13 +111,13 @@ export const useAaveInteractions = (
           method: "function supply(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendTransaction(supplyContract);
+        sendSupplyTransaction(supplyContract);
       } catch (err) {
         console.error("Error in supply:", err);
         throw err;
       }
     },
-    [sendTransaction],
+    [sendSupplyTransaction],
   );
 
   // Borrow
@@ -110,13 +130,13 @@ export const useAaveInteractions = (
             "function borrow(address tokenAddress, uint256 amount, uint256 interestRateMode)",
           params: [tokenAddress, amount, BigInt(2)],
         });
-        sendTransaction(borrowContract);
+        sendBorrowTransaction(borrowContract);
       } catch (err) {
         console.error("Error in borrow:", err);
         throw err;
       }
     },
-    [sendTransaction],
+    [sendBorrowTransaction],
   );
 
   // Withdraw
@@ -128,13 +148,13 @@ export const useAaveInteractions = (
           method: "function withdraw(address tokenAddress, uint256 amount)",
           params: [tokenAddress, amount],
         });
-        sendTransaction(withdrawContract);
+        sendWithdrawTransaction(withdrawContract);
       } catch (err) {
         console.error("Error in withdraw:", err);
         throw err;
       }
     },
-    [sendTransaction],
+    [sendWithdrawTransaction],
   );
 
   // Repay
@@ -147,45 +167,41 @@ export const useAaveInteractions = (
             "function repay(address tokenAddress, uint256 amount, uint256 interestRateMode)",
           params: [tokenAddress, amount, BigInt(2)],
         });
-        sendTransaction(repayContract);
+        sendRepayTransaction(repayContract);
       } catch (err) {
         console.error("Error in repay:", err);
         throw err;
       }
     },
-    [sendTransaction],
+    [sendRepayTransaction],
   );
 
   return {
-    approveContract: {
-      error,
+    approve: {
+      error: approveError,
       execute: executeApprove,
-      isPending,
-      isSuccess,
+      isPending: isApprovePending,
+      isSuccess: isApproveSuccess,
     },
     supply: {
-      error,
+      error: supplyError,
       execute: executeSupply,
-      isPending,
-      isSuccess,
+      isPending: isSupplyPending,
     },
     borrow: {
-      error,
+      error: borrowError,
       execute: executeBorrow,
-      isPending,
-      isSuccess,
+      isPending: isBorrowPending,
     },
     withdraw: {
-      error,
+      error: withdrawError,
       execute: executeWithdraw,
-      isPending,
-      isSuccess,
+      isPending: isWithdrawPending,
     },
     repay: {
-      error,
+      error: repayError,
       execute: executeRepay,
-      isPending,
-      isSuccess,
+      isPending: isRepayPending,
     },
     userData: {
       data: accountData as UserAccountData | undefined,

@@ -68,7 +68,7 @@ export const socialLinks = [
 export const aaveTabs: IDefiTabs[] = [
   {
     id: "supply",
-    label: "APPROVE & SUPPLY",
+    label: "SUPPLY",
     description: "Deposit the selected asset into Aave v3",
   },
   {
@@ -112,3 +112,10 @@ export const tokens = [
   "DAI",
   "LINK",
 ];
+
+export const defiOptions = ["Aave", "Uniswap"];
+
+export const defiActions = {
+  Aave: ["Supply", "Borrow", "Repay", "Withdraw"],
+  Uniswap: ["Swap", "Add liquidity", "Remove liquidity"],
+};

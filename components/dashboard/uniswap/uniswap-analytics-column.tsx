@@ -3,6 +3,7 @@
 import { SortableTableHeader } from "@/components/sortable-table-header";
 import { ColumnDef } from "@tanstack/react-table";
 import { UniswapAnalyticsOptions } from "./uniswap-analytics-options";
+import { IUniswapAnalytics } from "@/lib/types";
 
 export const uniswap_analytics_columns: ColumnDef<IUniswapAnalytics>[] = [
   {

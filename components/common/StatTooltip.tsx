@@ -1,3 +1,4 @@
+import { IStatTooltip } from "@/lib/types";
 import {
   Tooltip,
   TooltipContent,

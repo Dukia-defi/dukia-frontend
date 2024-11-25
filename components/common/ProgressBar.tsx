@@ -1,4 +1,5 @@
 "use client";
+import { IProgressBar } from "@/lib/types";
 import { motion } from "framer-motion";
 
 export const ProgressBar = ({ value, max = 100, gradient }: IProgressBar) => (

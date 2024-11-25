@@ -8,7 +8,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { IDefiTabs } from "@/lib/types";
 
 interface Props {
   tabs: IDefiTabs[];
@@ -22,7 +21,12 @@ interface InputProps {
   selectedToken: string;
   tokenChangeHandler: Dispatch<SetStateAction<string>>;
   onAmountChange: (amount: string) => void;
-  value: string; // Add value prop
+  value?: string; // Add value prop
+  amount: string;
+  handleInput?: Dispatch<SetStateAction<string>>;
+  tokenPair?: boolean;
+  selectedTokenB?: string;
+  tokenBChangeHandler?: Dispatch<SetStateAction<string>>;
 }
 
 export const DefiInteractionInterface = ({
@@ -98,6 +102,9 @@ export function InteractionInferaceInput({
   tokenChangeHandler,
   amount,
   onAmountChange,
+  tokenPair,
+  selectedTokenB,
+  tokenBChangeHandler,
 }: InputProps & {
   amount: string;
   onAmountChange: (value: string) => void;
@@ -132,6 +139,27 @@ export function InteractionInferaceInput({
           ))}
         </SelectContent>
       </Select>
+
+      {tokenPair && (
+        <>
+          <span>/ </span>
+          <Select
+            defaultValue={selectedTokenB}
+            onValueChange={tokenBChangeHandler}
+          >
+            <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+              <SelectValue placeholder="Token" />
+            </SelectTrigger>
+            <SelectContent>
+              {tokens.map((token) => (
+                <SelectItem key={token} value={token}>
+                  {token}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </>
+      )}
     </div>
   );
 }

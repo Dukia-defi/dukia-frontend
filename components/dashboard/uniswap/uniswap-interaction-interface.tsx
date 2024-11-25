@@ -113,7 +113,7 @@ export function UniswapInteractionInterface() {
       tabChangeFn={setActiveTab}
     >
       <div className="space-y-6">
-        <div className="relative space-y-4">
+        <div className="relative">
           <InteractionInferaceInput
             tokens={tokens}
             selectedToken={selectedAToken}

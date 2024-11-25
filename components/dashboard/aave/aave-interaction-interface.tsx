@@ -6,9 +6,16 @@ import {
   DefiInteractionInterface,
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useAaveInteractions } from "@/hooks/useAaveInteractions";
 import { token_addresses } from "@/lib/addresses";
+import { useToast } from "@/hooks/use-toast";
+import {
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider,
+} from "@/components/ui/toast";
 import { useWallet } from "@/context/wallet";
 
 export default function AaveInteractionInterface() {
@@ -16,18 +23,32 @@ export default function AaveInteractionInterface() {
   const [activeTab, setActiveTab] = useState<string>("supply");
   const [amount, setAmount] = useState<string>("");
   const [approveAmount, setApproveAmount] = useState<string>("");
+  const [approved, setApproved] = useState<boolean>(false);
+  const { toast } = useToast();
 
   const {
     wallet: { address },
   } = useWallet();
 
-  const { approveContract, supply, borrow, withdraw, repay } =
+  const { approve, supply, borrow, withdraw, repay } =
     useAaveInteractions(address);
 
   const { sepolia } = token_addresses;
 
   const handleSupply = () => {
-    if (!amount) console.log("no amount provided");
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided",
+      });
+    }
+    if (!approved)
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "Please approve this transaction first",
+      });
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
@@ -35,29 +56,44 @@ export default function AaveInteractionInterface() {
     // const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
 
     try {
+      // approve.execute(tokenAddress, amountInWei);
       supply.execute(tokenAddress, amountInWei);
     } catch (error) {
       console.error("Supply failed:", error);
     }
   };
 
-  const handleApprove = () => {
-    if (!approveAmount) console.log("no amount provided");
+  const handleApprove = async () => {
+    if (!approveAmount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided",
+      });
+    }
 
     const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 18));
     const tokenAddress =
       sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
 
     try {
-      approveContract.execute(tokenAddress, amountInWei);
-      console.log("Approve done");
+      approve.execute(tokenAddress, amountInWei);
+      // const result = await approve.execute(tokenAddress, amountInWei);
+      setApproved(true);
     } catch (error) {
-      console.error("Approve failed:", error);
+      console.log(error);
+      setApproved(false);
     }
   };
 
   const handleBorrow = () => {
-    if (!amount) console.log("no amount provided");
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided",
+      });
+    }
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
@@ -72,7 +108,13 @@ export default function AaveInteractionInterface() {
   };
 
   const handleWithdraw = () => {
-    if (!amount) console.log("no amount provided");
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided",
+      });
+    }
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
@@ -87,7 +129,13 @@ export default function AaveInteractionInterface() {
   };
 
   const handleRepay = () => {
-    if (!amount) console.log("no amount provided");
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided",
+      });
+    }
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
@@ -104,6 +152,7 @@ export default function AaveInteractionInterface() {
   const handleActions = () => {
     console.log("actions", activeTab);
     if (activeTab == "supply") {
+      // handleApprove()
       handleSupply();
     } else if (activeTab === "borrow") {
       handleBorrow();
@@ -113,13 +162,6 @@ export default function AaveInteractionInterface() {
       handleRepay();
     }
   };
-  useEffect(() => {
-    console.log(
-      "tab",
-      activeTab,
-      sepolia[selectedToken.toLowerCase() as keyof typeof sepolia],
-    );
-  });
 
   return (
     <DefiInteractionInterface
@@ -128,7 +170,7 @@ export default function AaveInteractionInterface() {
       tabChangeFn={setActiveTab}
     >
       <div className="space-y-6">
-        {activeTab == "supply" && (
+        {activeTab === "supply" && (
           <div>
             <div className="relative">
               <InteractionInferaceInput
@@ -137,8 +179,11 @@ export default function AaveInteractionInterface() {
                 tokenChangeHandler={setSelectedToken}
                 amount={approveAmount}
                 onAmountChange={setApproveAmount}
-                value={""}
               />
+
+              <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
+                max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
+              </div>
             </div>
 
             <Button
@@ -146,16 +191,26 @@ export default function AaveInteractionInterface() {
               onClick={handleApprove}
               disabled={!approveAmount || parseFloat(approveAmount) <= 0}
             >
-              {approveContract.isPending ? (
+              {approve.isPending ? (
                 <div className="flex items-center gap-2">
                   <span>Processing...</span>
                 </div>
               ) : (
-                <span>APPROVE</span>
+                <ToastProvider>
+                  <span>Approve</span>
+                  <Toast>
+                    <ToastTitle>Success</ToastTitle>
+                    <ToastDescription>
+                      Process completed successfully!
+                    </ToastDescription>
+                  </Toast>
+                </ToastProvider>
               )}
             </Button>
           </div>
         )}
+
+        {/* supply input */}
         <div className="relative">
           <InteractionInferaceInput
             tokens={tokens}
@@ -163,7 +218,6 @@ export default function AaveInteractionInterface() {
             tokenChangeHandler={setSelectedToken}
             amount={amount}
             onAmountChange={setAmount}
-            value={""}
           />
 
           <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
