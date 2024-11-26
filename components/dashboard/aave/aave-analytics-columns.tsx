@@ -63,10 +63,11 @@ export const aave_analytics_columns: ColumnDef<IAaveAnalytics>[] = [
   },
   {
     id: "actions",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cell: ({ row }) => {
-      const asset = row.original;
+      // const asset = row.original;
 
-      return <AaveAnalyticsOptions data={asset} />;
+      return <AaveAnalyticsOptions />;
     },
   },
 ];

@@ -32,19 +32,6 @@ export const Hero = () => {
     },
   };
 
-  const logoRotate = {
-    initial: { rotate: -180, opacity: 0 },
-    animate: {
-      rotate: 0,
-      opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 200,
-        damping: 20,
-      },
-    },
-  };
-
   return (
     <motion.section
       initial="initial"
@@ -61,42 +48,6 @@ export const Hero = () => {
       <div className="container relative z-10 mx-auto px-4">
         <div className="flex flex-col items-center gap-12 lg:flex-row">
           <motion.div className="flex flex-col items-center justify-center lg:w-2/3 lg:items-start">
-            <motion.div
-              className="mb-3 flex items-center gap-3 lg:mb-8"
-              variants={fadeInUp}
-            >
-              <motion.div
-                variants={logoRotate}
-                className="rounded-xl bg-gradient-to-br from-purple-500/20 to-transparent p-3 backdrop-blur-sm"
-              >
-                <Image
-                  src="/svg/acc.svg"
-                  width={0}
-                  height={0}
-                  alt="deFi"
-                  className="h-auto w-[60px] lg:w-[80px]"
-                />
-              </motion.div>
-              <motion.span
-                variants={fadeInUp}
-                className="bg-gradient-to-r from-purple-main to-purple-200 bg-clip-text text-xl font-bold uppercase text-transparent lg:text-3xl"
-              >
-                The First
-              </motion.span>
-              <motion.div
-                variants={logoRotate}
-                className="rounded-xl bg-gradient-to-br from-purple-500/20 to-transparent p-3 backdrop-blur-sm"
-              >
-                <Image
-                  src="/svg/acc.svg"
-                  width={0}
-                  height={0}
-                  alt="deFi"
-                  className="h-auto w-[60px] lg:w-[80px]"
-                />
-              </motion.div>
-            </motion.div>
-
             <motion.h1
               variants={fadeInUp}
               className="mb-6 text-center text-5xl font-bold leading-tight lg:text-start lg:text-6xl"
@@ -105,7 +56,7 @@ export const Hero = () => {
                 Connected DeFi Ecosystem
               </span>
               <br />
-              <span className="text-gray-200">For DeFi Users on Lisk</span>
+              {/* <span className="text-gray-200">For DeFi Users</span> */}
             </motion.h1>
 
             <motion.p
@@ -114,12 +65,11 @@ export const Hero = () => {
             >
               Dukia DeFi gives you access to all your favorite DeFi protocols,
               allowing you to seemlessly view and manage your positions accross
-              different chains, while you enjoy the speed and low transaction
-              costs of Lisk. Dukia DeFi also gives you more power as a DeFi user
-              by giving you detailed analytics, offering insights into different
-              asset markets, to help you make informed decisions. And after
-              making your decision, Dukia DeFi gives you access to leverage,
-              allowing you make more profit on DeFi investments.
+              different chains, and allowing complex and efficient operations.
+              Dukia DeFi also gives you more power as a DeFi user by giving you
+              detailed analytics, offering insights into different asset
+              markets, to help you make informed decisions and tools that let
+              interact with DeFi protocols efficiently.
             </motion.p>
 
             <motion.div
@@ -140,7 +90,7 @@ export const Hero = () => {
             <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 to-pink-500 opacity-20 blur-3xl filter"></div>
             <div className="relative">
               <Image
-                src="/svg/hero.svg"
+                src="/png/hero.png"
                 width={456}
                 height={456}
                 alt="deFi"

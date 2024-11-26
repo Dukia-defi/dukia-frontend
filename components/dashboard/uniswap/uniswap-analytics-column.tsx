@@ -63,10 +63,11 @@ export const uniswap_analytics_columns: ColumnDef<IUniswapAnalytics>[] = [
   },
   {
     id: "actions",
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     cell: ({ row }) => {
-      const pool = row.original;
+      // const pool = row.original;
 
-      return <UniswapAnalyticsOptions data={pool} />;
+      return <UniswapAnalyticsOptions />;
     },
   },
 ];

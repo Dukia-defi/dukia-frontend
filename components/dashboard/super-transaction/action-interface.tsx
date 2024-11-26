@@ -47,6 +47,7 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
             tokenPair
             selectedTokenB={selectedBToken}
             tokenBChangeHandler={setSelectedBToken}
+            onAmountChange={() => {}}
           />
         ) : (
           <InteractionInferaceInput
@@ -54,6 +55,7 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
             amount={amount}
+            onAmountChange={() => {}}
             handleInput={setAmount}
           />
         )}

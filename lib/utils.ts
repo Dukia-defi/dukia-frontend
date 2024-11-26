@@ -1,26 +1,34 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
-import { token_addresses } from "./addresses";
-import { TChainIdToNameMap, TTokenName } from "./types";
+import { deployed_contracts, token_addresses } from "./addresses";
+import {
+  IFunctionSig,
+  IOrder,
+  TChainIdToNameMap,
+  TDefiName,
+  TTokenName,
+} from "./types";
+import { aaveFunctions, uniswapFunctions } from "@/utils/mock";
+import { ethers } from "ethers";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export function handleSelectedToken({
+export const chainIdToName: TChainIdToNameMap = {
+  "4202": "lisk",
+  "11155111": "sepolia",
+  "42161": "arbitrum",
+  "10": "optimism",
+};
+
+export function getTokenAddress({
   chain,
   token,
 }: {
   chain: number;
   token: string;
 }): string | undefined {
-  const chainIdToName: TChainIdToNameMap = {
-    4202: "lisk",
-    11155111: "sepolia",
-    42161: "arbitrum",
-    10: "optimism",
-  };
-
   const selectedChain = chainIdToName[chain];
   console.log("chain", selectedChain);
 
@@ -38,4 +46,140 @@ export function handleSelectedToken({
   }
 
   return chainTokens[token as TTokenName];
+}
+
+export function getDefiAddress({
+  defi,
+  chain,
+}: {
+  defi: string;
+  chain: number;
+}): string | undefined {
+  const selectedChain = chainIdToName[chain];
+
+  if (!selectedChain) {
+    console.error(`Unsupported chain ID: ${chain}`);
+    return undefined;
+  }
+
+  const chainDeployments = deployed_contracts[selectedChain];
+  if (!(defi in chainDeployments)) {
+    console.error(`${defi} not found on chain '${selectedChain}'`);
+    return undefined;
+  }
+
+  return chainDeployments[defi as TDefiName];
+}
+
+export function getDefiFunction({
+  defi,
+  action,
+}: {
+  defi: string;
+  action: string;
+}): IFunctionSig | undefined {
+  const defiFunctions = {
+    aave: aaveFunctions,
+    uniswap: uniswapFunctions,
+  };
+
+  const selectedDefi = defiFunctions[defi as keyof typeof defiFunctions];
+
+  if (!selectedDefi) {
+    console.error(`Unsupported defi: ${defi}`);
+    return undefined;
+  }
+
+  const defiFunction: IFunctionSig =
+    selectedDefi[action as keyof typeof selectedDefi];
+
+  if (!(action in selectedDefi)) {
+    console.error(`${action} not supported on ${defi}`);
+    return undefined;
+  }
+
+  return defiFunction;
+}
+
+export function getCallData({
+  action,
+  params,
+}: {
+  action?: IFunctionSig;
+  params: string[];
+}): string | undefined {
+  if (!action?.functionSig) {
+    console.error(`Unsupported action: ${action}`);
+    return undefined;
+  }
+
+  const { functionSig, params: functionParams } = action;
+
+  if (functionParams.length !== params.length) {
+    console.error(`Invalid number of parameters for ${action.functionSig}`);
+    return undefined;
+  }
+
+  const iface = new ethers.Interface([functionSig]);
+  const callData = iface.encodeFunctionData(functionSig, params);
+
+  return callData;
+}
+
+export function getParams({ order, chain }: { order: IOrder; chain: number }) {
+  const convertedAmount = ethers.parseUnits(order.amount, 18); // 18 decimals
+  if (order.defi === "Uniswap") {
+    const tokenA = getTokenAddress({ chain, token: order.tokenA });
+    const tokenB = getTokenAddress({ chain, token: order.tokenB! });
+    const addressZero = ethers.ZeroAddress;
+
+    switch (order.action) {
+      case "Swap":
+        return [
+          convertedAmount,
+          convertedAmount, //todo fix this amount
+          [tokenA, tokenB],
+          addressZero, //todo replace with right address
+          360,
+        ];
+      case "Add liquidity":
+        return [
+          tokenA,
+          tokenB,
+          convertedAmount,
+          convertedAmount, //todo fix this amount
+          30,
+        ];
+      case "Remove liquidity":
+        return [
+          tokenA,
+          tokenB,
+          convertedAmount, //todo fix
+          convertedAmount, //todo fix
+          convertedAmount, //todo fix
+          30,
+        ];
+      default:
+        console.error("Unsupported action");
+        return [];
+    }
+  }
+
+  if (order.defi === "Aave") {
+    const token = getTokenAddress({ chain, token: order.tokenA });
+
+    switch (order.action) {
+      case "Supply":
+        return [token, convertedAmount];
+      case "Borrow":
+        return [token, convertedAmount, 3];
+      case "Repay":
+        return [token, convertedAmount, 3];
+      case "Withdraw":
+        return [token, convertedAmount];
+      default:
+        console.error("Unsupported action");
+        return [];
+    }
+  }
 }

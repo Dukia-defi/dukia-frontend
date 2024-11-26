@@ -22,9 +22,9 @@ interface InputProps {
   selectedToken: string;
   tokenChangeHandler: Dispatch<SetStateAction<string>>;
   onAmountChange: (amount: string) => void;
-  value: string; // Add value prop
+  value?: string; // Add value prop
   amount: string;
-  handleInput: Dispatch<SetStateAction<string>>;
+  handleInput?: Dispatch<SetStateAction<string>>;
   tokenPair?: boolean;
   selectedTokenB?: string;
   tokenBChangeHandler?: Dispatch<SetStateAction<string>>;
@@ -103,6 +103,9 @@ export function InteractionInferaceInput({
   tokenChangeHandler,
   amount,
   onAmountChange,
+  tokenPair,
+  selectedTokenB,
+  tokenBChangeHandler,
 }: InputProps & {
   amount: string;
   onAmountChange: (value: string) => void;
@@ -122,11 +125,11 @@ export function InteractionInferaceInput({
         placeholder="0"
         value={amount}
         onChange={handleInputChange}
-        className="flex-1 bg-transparent text-white outline-none"
+        className="flex-1 appearance-none border-none bg-transparent text-2xl text-gray-200 placeholder-gray-500 focus:outline-none"
       />
 
       <Select defaultValue={selectedToken} onValueChange={tokenChangeHandler}>
-        <SelectTrigger className="w-fit">
+        <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
           <SelectValue placeholder="Token" />
         </SelectTrigger>
         <SelectContent>
