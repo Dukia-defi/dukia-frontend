@@ -53,21 +53,25 @@ export const useAaveInteractions = (
     isPending: isApprovePending,
     isSuccess: isApproveSuccess,
   } = useSendTransaction();
+
   const {
     mutateAsync: sendSupplyTransaction,
     error: supplyError,
     isPending: isSupplyPending,
   } = useSendTransaction();
+
   const {
     mutate: sendBorrowTransaction,
     error: borrowError,
     isPending: isBorrowPending,
   } = useSendTransaction();
+
   const {
     mutate: sendWithdrawTransaction,
     error: withdrawError,
     isPending: isWithdrawPending,
   } = useSendTransaction();
+
   const {
     mutate: sendRepayTransaction,
     error: repayError,

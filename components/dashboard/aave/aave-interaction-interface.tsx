@@ -8,7 +8,7 @@ import {
 } from "../defi-interaction-interface";
 import { useState } from "react";
 import { useAaveInteractions } from "@/hooks/useAaveInteractions";
-import { token_addresses } from "@/lib/addresses";
+import { deployed_contracts, token_addresses } from "@/lib/addresses";
 import { useToast } from "@/hooks/use-toast";
 import {
   Toast,
@@ -17,6 +17,10 @@ import {
   ToastProvider,
 } from "@/components/ui/toast";
 import { useWallet } from "@/context/wallet";
+import { useERC20 } from "@/hooks/useERC20";
+import { getContract } from "thirdweb";
+import { client } from "@/app/client";
+import { sepolia } from "thirdweb/chains";
 // import { useSendTransaction } from "thirdweb/react";
 // import { prepareContractCall } from "thirdweb";
 
@@ -41,60 +45,83 @@ export default function AaveInteractionInterface() {
     userData: { refetch },
   } = useAaveInteractions(address);
 
-  const { sepolia } = token_addresses;
+  const { approveFn } = useERC20();
 
-  const handleSupply = async () => {
-    if (!amount) {
-      toast({
-        variant: "destructive",
-        title: "Warning",
-        description: "No amount provided",
-      });
-    }
-    if (!approved)
-      toast({
-        variant: "destructive",
-        title: "Warning",
-        description: "Please approve this transaction first",
-      });
+  const { sepolia: sepolia2 } = token_addresses;
 
-    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+  const handleSupply = () => {
     const tokenAddress =
-      sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
-    // const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
+      sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2];
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 6));
 
-    try {
-      // approve.execute(tokenAddress, amountInWei);
-      supply.execute(tokenAddress, amountInWei);
-      setTimeout(() => {
-        refetch();
-      }, 10000);
-    } catch (error) {
-      console.error("Supply failed:", error);
-    }
+    supply.execute(tokenAddress, amountInWei);
+    setTimeout(() => {
+      refetch();
+    }, 10000);
   };
 
+  /////////////////////////////////////////////////
+
+  // const handleSupply2 = async () => {
+  //   if (!amount) {
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Warning",
+  //       description: "No amount provided",
+  //     });
+  //   }
+  //   if (!approved)
+  //     toast({
+  //       variant: "destructive",
+  //       title: "Warning",
+  //       description: "Please approve this transaction first",
+  //     });
+
+  //   const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+  //   const tokenAddress =
+  //     sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
+  //   // const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
+
+  //   try {
+  //     // approve.execute(tokenAddress, amountInWei);
+  //     supply.execute(tokenAddress, amountInWei);
+  //     setTimeout(() => {
+  //       refetch();
+  //     }, 10000);
+  //   } catch (error) {
+  //     console.error("Supply failed:", error);
+  //   }
+  // };
+
   const handleApprove = async () => {
-    if (!approveAmount) {
-      toast({
-        variant: "destructive",
-        title: "Warning",
-        description: "No amount provided",
-      });
-    }
+    // if (!approveAmount) {
+    //   toast({
+    //     variant: "destructive",
+    //     title: "Warning",
+    //     description: "No amount provided",
+    //   });
+    // }
 
-    const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 18));
-    const tokenAddress =
-      sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+    // const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 18));
+    // const tokenAddress =
+    //   sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
 
-    try {
-      approve.execute(tokenAddress, amountInWei);
-      // const result = await approve.execute(tokenAddress, amountInWei);
-      setApproved(true);
-    } catch (error) {
-      console.log(error);
-      setApproved(false);
-    }
+    // try {
+    //   approve.execute(tokenAddress, amountInWei);
+    //   // const result = await approve.execute(tokenAddress, amountInWei);
+    //   setApproved(true);
+    // } catch (error) {
+    //   console.log(error);
+    //   setApproved(false);
+    // }
+    //approve contract to spend
+    console.log(approveAmount);
+    const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 6));
+
+    approveFn({
+      address: deployed_contracts.sepolia.aave,
+      amount: amountInWei,
+    });
   };
 
   const handleBorrow = () => {
@@ -108,7 +135,7 @@ export default function AaveInteractionInterface() {
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
-      sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+      sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
 
     try {
       borrow.execute(tokenAddress, amountInWei);
@@ -129,7 +156,7 @@ export default function AaveInteractionInterface() {
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
-      sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+      sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
 
     try {
       withdraw.execute(tokenAddress, amountInWei);
@@ -150,7 +177,7 @@ export default function AaveInteractionInterface() {
 
     const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
-      sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+      sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
 
     try {
       repay.execute(tokenAddress, amountInWei);
