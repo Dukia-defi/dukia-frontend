@@ -91,6 +91,7 @@ interface IWalletContext {
   network: INetwork;
   setNetwork: (network: INetwork) => void;
   networkOptions: INetwork[];
+  isUnsupportedNetwork: boolean;
   chain:
     | Readonly<
         ChainOptions & {
