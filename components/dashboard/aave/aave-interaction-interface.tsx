@@ -32,8 +32,14 @@ export default function AaveInteractionInterface() {
     wallet: { address },
   } = useWallet();
 
-  const { approve, supply, borrow, withdraw, repay } =
-    useAaveInteractions(address);
+  const {
+    approve,
+    supply,
+    borrow,
+    withdraw,
+    repay,
+    userData: { refetch },
+  } = useAaveInteractions(address);
 
   const { sepolia } = token_addresses;
 
@@ -60,6 +66,9 @@ export default function AaveInteractionInterface() {
     try {
       // approve.execute(tokenAddress, amountInWei);
       supply.execute(tokenAddress, amountInWei);
+      setTimeout(() => {
+        refetch();
+      }, 10000);
     } catch (error) {
       console.error("Supply failed:", error);
     }

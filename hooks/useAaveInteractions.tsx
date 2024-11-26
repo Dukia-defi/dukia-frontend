@@ -43,6 +43,7 @@ export const useAaveInteractions = (
     data: UserAccountData | undefined;
     isLoading: boolean;
     error: Error | null;
+    refetch: () => void;
   };
 } => {
   const { toast } = useToast();
@@ -76,8 +77,9 @@ export const useAaveInteractions = (
   // User Account Data Query
   const {
     data: accountData,
-    isLoading: isAccountDataLoading,
+    isPending: isAccountDataLoading,
     error: accountDataError,
+    refetch: refetchAccountData,
   } = useReadContract({
     contract,
     method:
@@ -105,7 +107,7 @@ export const useAaveInteractions = (
         throw err;
       }
     },
-    [sendApproveTransaction],
+    [sendApproveTransaction, toast],
   );
 
   // Supply Token
@@ -128,7 +130,7 @@ export const useAaveInteractions = (
         throw err;
       }
     },
-    [sendSupplyTransaction],
+    [sendSupplyTransaction, toast],
   );
 
   // Borrow
@@ -152,7 +154,7 @@ export const useAaveInteractions = (
         throw err;
       }
     },
-    [sendBorrowTransaction],
+    [sendBorrowTransaction, toast],
   );
 
   // Withdraw
@@ -223,6 +225,7 @@ export const useAaveInteractions = (
       data: accountData as UserAccountData | undefined,
       isLoading: isAccountDataLoading,
       error: accountDataError,
+      refetch: refetchAccountData,
     },
   };
 };
