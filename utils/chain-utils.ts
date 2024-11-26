@@ -5,7 +5,7 @@ export const CHAIN_IDS = {
   ETHEREUM: 1,
   SEPOLIA: 11155111,
   ARBITRUM: 42161,
-  LISK: 117,
+  LISK: 1135,
   LISK_SEPOLIA: 4202,
 } as const;
 
@@ -33,7 +33,7 @@ export function getChainId(
   const chainId = NETWORK_TO_CHAIN_ID[networkId.toLowerCase()];
 
   if (!chainId) {
-    throw new Error(`Unsupported network: ${networkId}`);
+    return CHAIN_IDS.ETHEREUM; // Default to Ethereum if unsupported
   }
 
   return chainId;
@@ -46,9 +46,14 @@ export function getNetworkFromChainId(chainId: number | string): INetwork {
     ([_, id]) => id === Number(chainId),
   );
 
-  // if (!entry) {
-  //   throw new Error(`Unsupported chain ID: ${chainId}`);
-  // }
+  // If no matching network is found, return an "Unsupported" network
+  if (!entry) {
+    return {
+      id: "unsupported",
+      name: "Unsupported Network",
+      icon: "/svg/warning.svg",
+    };
+  }
 
   const networkId = entry || [];
 

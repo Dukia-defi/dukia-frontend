@@ -16,7 +16,7 @@ export const token_addresses = {
   sepolia: {
     usdc: "0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238",
     usdt: "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0",
-    dai: "0x3e622317f8C93f7328350cF0B56d9eD4C620C5d6",
+    dai: "0xFF34B3d4Aee8ddCd6F9AFFFB6Fe49bD371b8a357",
     link: "0x779877A7B0D9E8603169DdbD7836e478b4624789",
   },
   lisk: {

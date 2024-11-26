@@ -2,7 +2,6 @@
 
 import { formatUnits } from "viem";
 import { useAaveInteractions } from "./useAaveInteractions";
-import { useMemo } from "react";
 
 interface FormattedUserData {
   totalCollateralBase: string;
@@ -76,10 +75,10 @@ const formatUserAccountData = (rawData: bigint[]): FormattedUserData => {
 export const useFormattedAaveData = (userAddress: string) => {
   const { userData } = useAaveInteractions(userAddress);
 
-  const formattedData: FormattedUserData | undefined = useMemo(() => {
-    if (!userData.data || !Array.isArray(userData.data)) return undefined;
-    return formatUserAccountData(userData.data as bigint[]);
-  }, [userData.data]);
+  const formattedData: FormattedUserData | undefined =
+    userData.data && Array.isArray(userData.data)
+      ? formatUserAccountData(userData.data as bigint[])
+      : undefined;
 
   return {
     data: formattedData,

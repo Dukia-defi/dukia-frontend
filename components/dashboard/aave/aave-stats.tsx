@@ -6,6 +6,7 @@ import { InfoIcon } from "lucide-react";
 import { ProgressBar, StatCard, StatTooltip } from "@/components/common";
 import { useWallet } from "@/context/wallet";
 import { useFormattedAaveData } from "@/hooks/useFormattedAaveData";
+import { AaveStatsSkeleton } from "./stats-skeleton-loader";
 
 export const AaveStats = () => {
   const {
@@ -14,7 +15,7 @@ export const AaveStats = () => {
 
   const { data, isLoading, error } = useFormattedAaveData(address);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <AaveStatsSkeleton />;
   if (error) return <div>Error loading data</div>;
   if (!data) return <div>No data available</div>;
 
