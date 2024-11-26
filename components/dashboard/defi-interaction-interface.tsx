@@ -21,6 +21,13 @@ interface InputProps {
   tokens: string[];
   selectedToken: string;
   tokenChangeHandler: Dispatch<SetStateAction<string>>;
+  onAmountChange: (amount: string) => void;
+  value: string; // Add value prop
+  amount: string;
+  handleInput: Dispatch<SetStateAction<string>>;
+  tokenPair?: boolean;
+  selectedTokenB?: string;
+  tokenBChangeHandler?: Dispatch<SetStateAction<string>>;
 }
 
 export const DefiInteractionInterface = ({
@@ -94,17 +101,32 @@ export function InteractionInferaceInput({
   tokens,
   selectedToken,
   tokenChangeHandler,
-}: InputProps) {
+  amount,
+  onAmountChange,
+}: InputProps & {
+  amount: string;
+  onAmountChange: (value: string) => void;
+}) {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    // Only allow numbers and decimals
+    if (value === "" || /^\d*\.?\d*$/.test(value)) {
+      onAmountChange(value);
+    }
+  };
+
   return (
     <div className="flex items-center rounded-lg border border-purple-500/20 bg-gray-800/50 p-3">
       <input
-        type="number"
+        type="text"
         placeholder="0"
-        className="flex-1 appearance-none border-none bg-transparent text-2xl text-gray-200 placeholder-gray-500 focus:outline-none"
+        value={amount}
+        onChange={handleInputChange}
+        className="flex-1 bg-transparent text-white outline-none"
       />
 
       <Select defaultValue={selectedToken} onValueChange={tokenChangeHandler}>
-        <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+        <SelectTrigger className="w-fit">
           <SelectValue placeholder="Token" />
         </SelectTrigger>
         <SelectContent>
@@ -115,6 +137,27 @@ export function InteractionInferaceInput({
           ))}
         </SelectContent>
       </Select>
+
+      {tokenPair && (
+        <>
+          <span>/ </span>
+          <Select
+            defaultValue={selectedTokenB}
+            onValueChange={tokenBChangeHandler}
+          >
+            <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+              <SelectValue placeholder="Token" />
+            </SelectTrigger>
+            <SelectContent>
+              {tokens.map((token) => (
+                <SelectItem key={token} value={token}>
+                  {token}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </>
+      )}
     </div>
   );
 }

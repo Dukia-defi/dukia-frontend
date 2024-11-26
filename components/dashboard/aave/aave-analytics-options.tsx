@@ -5,9 +5,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useWallet } from "@/context/wallet";
-import { useAaveSep } from "@/hooks/useAaveSep";
+// import { useAaveSep } from "@/hooks/useAaveSep";
+import { useAaveInteractions } from "@/hooks/useAaveInteractions";
+import { IAaveAnalytics } from "@/lib/types";
 import { handleSelectedToken } from "@/lib/utils";
 import { MoreVertical } from "lucide-react";
+import { token_addresses } from "@/lib/addresses";
+import { useState } from "react";
 
 interface Props {
   data: IAaveAnalytics;
@@ -16,19 +20,32 @@ interface Props {
 export function AaveAnalyticsOptions({ data }: Props) {
   const { asset } = data;
 
-  const { supplyAsset } = useAaveSep();
+  const { approve, supply } = useAaveInteractions();
 
-  const { activeChain } = useWallet();
+  const { chain } = useWallet();
+
+  const [amount, setAmount] = useState<string>("");
+
+  const { sepolia } = token_addresses;
 
   const selectedToken = handleSelectedToken({
-    chain: activeChain,
-    token: asset,
+    chain: chain || 11155111,
+    token: asset || '',
   });
 
-  function handleSupply() {
-    if (!selectedToken) console.error("Invalid token"); //handle the error
-    supplyAsset({ tokenAddress: selectedToken!, amount: BigInt("1") }); //roheemah use this to send a transaction
-  }
+  const handleSupply = async() => {
+    if (!amount) return;
+
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
+
+    try {
+      await approve.execute(tokenAddress, amountInWei);
+      supply.execute(tokenAddress, amountInWei);
+    } catch (error) {
+      console.error("Supply failed:", error);
+    }
+  };
 
   return (
     <DropdownMenu>

@@ -9,7 +9,7 @@ const liskSepolia = defineChain(4202);
 
 const {
   lisk: { ccm: liskCCM },
-  sepolia: { aave: sepAave, ccm: sepCCM , uniswap: sepUniswap },
+  sepolia: { aave: sepAave, ccm: sepCCM, batchExecutor, uniswap:sepUniswap },
 } = deployed_contracts;
 
 export function useContracts() {
@@ -25,6 +25,8 @@ export function useContracts() {
     chain: sepolia,
   });
 
+  // console.log("ave", sepAave)
+
   const aaveSepContract = getContract({
     client,
     address: sepAave,
@@ -37,5 +39,17 @@ export function useContracts() {
     chain: sepolia,
   });
 
-  return { liskCCMContract, ethSepCCMContract, aaveSepContract, uniswapSepContract };
+  const batchExecutorSep = getContract({
+    client,
+    address: batchExecutor,
+    chain: sepolia,
+  });
+
+  return {
+    liskCCMContract,
+    ethSepCCMContract,
+    aaveSepContract,
+    batchExecutorSep,
+    uniswapSepContract
+  };
 }

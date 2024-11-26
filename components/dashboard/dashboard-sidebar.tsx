@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Icons } from "../icons";
-import { Infinity } from "lucide-react";
+import { Infinity, Star } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Logo } from "../logo";
 
@@ -122,6 +122,25 @@ export function DashboardSidebar() {
                   <Link href="/dashboard/bridge">
                     <Infinity />
                     <span>Bridge</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  variant="custom"
+                  asChild
+                  className={
+                    isActive("/dashboard/super-transaction")
+                      ? "border border-purple-1 bg-purple-600/20"
+                      : ""
+                  }
+                >
+                  <Link href="/dashboard/super-transaction">
+                    <Star />
+                    <span>Super Transaction</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>

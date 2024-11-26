@@ -1,25 +1,27 @@
+import { IAaveAnalytics, IUniswapAnalytics } from "./types";
+
 export const dummy_aave_analytics_data: IAaveAnalytics[] = [
-  {
-    asset: "ETH",
-    totalSupplied: "1.46M",
-    supplyApy: "1.95%",
-    totalBorrowed: "1.27M",
-    variableApy: "2.65%",
-  },
-  {
-    asset: "WBTC",
-    totalSupplied: "1.36M",
-    supplyApy: "1.32%",
-    totalBorrowed: "451K",
-    variableApy: "1.65%",
-  },
-  {
-    asset: "weETH",
-    totalSupplied: "1.46M",
-    supplyApy: "1.95%",
-    totalBorrowed: "1.27M",
-    variableApy: "2.65%",
-  },
+  // {
+  //   asset: "ETH",
+  //   totalSupplied: "1.46M",
+  //   supplyApy: "1.95%",
+  //   totalBorrowed: "1.27M",
+  //   variableApy: "2.65%",
+  // },
+  // {
+  //   asset: "WBTC",
+  //   totalSupplied: "1.36M",
+  //   supplyApy: "1.32%",
+  //   totalBorrowed: "451K",
+  //   variableApy: "1.65%",
+  // },
+  // {
+  //   asset: "weETH",
+  //   totalSupplied: "1.46M",
+  //   supplyApy: "1.95%",
+  //   totalBorrowed: "1.27M",
+  //   variableApy: "2.65%",
+  // },
   {
     asset: "USDT",
     totalSupplied: "1.36M",
@@ -34,13 +36,13 @@ export const dummy_aave_analytics_data: IAaveAnalytics[] = [
     totalBorrowed: "1.27M",
     variableApy: "2.65%",
   },
-  {
-    asset: "AAVE",
-    totalSupplied: "1.36M",
-    supplyApy: "1.32%",
-    totalBorrowed: "451K",
-    variableApy: "1.65%",
-  },
+  // {
+  //   asset: "AAVE",
+  //   totalSupplied: "1.36M",
+  //   supplyApy: "1.32%",
+  //   totalBorrowed: "451K",
+  //   variableApy: "1.65%",
+  // },
   {
     asset: "LINK",
     totalSupplied: "1.46M",

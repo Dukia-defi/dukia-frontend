@@ -1,17 +1,172 @@
 "use client";
 
-import { aaveTabs } from "@/utils/mock";
+import { aaveTabs, tokens } from "@/utils/mock";
 import { Button } from "@/components/ui/button";
-import { tokens } from "@/utils/mock";
 import {
   DefiInteractionInterface,
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useAaveInteractions } from "@/hooks/useAaveInteractions";
+import { token_addresses } from "@/lib/addresses";
+import {useActiveAccount} from "thirdweb/react";
+import { useToast } from "@/hooks/use-toast"
+import {
+  Toast,
+  ToastDescription,
+  ToastTitle,
+  ToastProvider
+} from "@/components/ui/toast"
 
-export function AaveInteractionInterface() {
+export default function AaveInteractionInterface() {
   const [selectedToken, setSelectedToken] = useState<string>("ETH");
   const [activeTab, setActiveTab] = useState<string>("supply");
+  const [amount, setAmount] = useState<string>("");
+  const [approveAmount, setApproveAmount] = useState<string>("");
+  const [approved, setApproved] = useState<boolean>(false);
+  const activeAccount = useActiveAccount();
+  const { toast } = useToast()
+
+  const { approve, supply, borrow, withdraw, repay, getUserData } = useAaveInteractions();
+
+  const { sepolia } = token_addresses;
+
+  const handleSupply = () => {
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided"
+      })
+    };
+    if (!approved) toast({
+      variant: "destructive",
+      title: "Warning",
+      description: "Please approve this transaction first"
+    })
+
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const tokenAddress = sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+    // const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
+
+    try {
+      // approve.execute(tokenAddress, amountInWei);
+      supply.execute(tokenAddress, amountInWei);
+    } catch (error) {
+      console.error("Supply failed:", error);
+    }
+  };
+
+  const handleApprove = async () => {
+    if (!approveAmount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided"
+      })
+    };
+
+    const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 18));
+    const tokenAddress = sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+
+    try {
+      approve.execute(tokenAddress, amountInWei);
+      console.log("log", approve.isPending)
+      // const result = await approve.execute(tokenAddress, amountInWei);
+      setApproved(true);
+    } catch (error) {
+      setApproved(false)
+    }
+  }
+
+  const handleBorrow = () => {
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided"
+      })
+    };
+
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const tokenAddress = sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+
+    try {
+      borrow.execute(tokenAddress, amountInWei);
+      console.log("Approve done");
+    } catch (error) {
+      console.error("Approve failed:", error);
+    }
+  }
+
+  const handleWithdraw = () => {
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided"
+      })
+    };
+
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const tokenAddress = sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+
+    try {
+      withdraw.execute(tokenAddress, amountInWei);
+      console.log("Approve done");
+    } catch (error) {
+      console.error("Approve failed:", error);
+    }
+  }
+
+  const handleRepay = () => {
+    if (!amount) {
+      toast({
+        variant: "destructive",
+        title: "Warning",
+        description: "No amount provided"
+      })
+    };
+
+    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const tokenAddress = sepolia[selectedToken.toLowerCase() as keyof typeof sepolia] ?? "";
+
+    try {
+      repay.execute(tokenAddress, amountInWei);
+      console.log("Repay done");
+    } catch (error) {
+      console.error("Repay failed:", error);
+    }
+  }
+
+  const handleActions = () => {
+    console.log("actions", activeTab)
+    if (activeTab == 'supply') {
+      // handleApprove()
+      handleSupply()
+    } else if (activeTab === 'borrow') {
+      handleBorrow()
+    } else if (activeTab === 'withdraw') {
+      handleWithdraw()
+    } else if (activeTab === 'repay') {
+      handleRepay()
+    }
+  }
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      // if (!activeAccount?.address) 
+      console.log("no account yet", activeAccount?.address)
+      try {
+        const data = await getUserData(activeAccount?.address || "");
+        console.log("User data:", data);
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
+    };
+  
+    fetchUserData();
+  }, [activeAccount?.address, getUserData]);
 
   return (
     <DefiInteractionInterface
@@ -20,23 +175,73 @@ export function AaveInteractionInterface() {
       tabChangeFn={setActiveTab}
     >
       <div className="space-y-6">
+        {activeTab === 'supply' && 
+        <div>
+          <div className="relative">
+            <InteractionInferaceInput
+              tokens={tokens}
+              selectedToken={selectedToken}
+              tokenChangeHandler={setSelectedToken}
+              amount={approveAmount}
+              onAmountChange={setApproveAmount} value={""}
+            />
+
+            <div className="absolute -bottom-6 right-0 text-sm text-gray-400 max-w-fit">
+              max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
+            </div>
+          </div>
+
+          <Button
+            className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
+            onClick={handleApprove}
+            disabled={!approveAmount || parseFloat(approveAmount) <= 0}
+          >
+            
+              {approve.isPending ? (
+                <div className="flex items-center gap-2">
+                  <span>Processing...</span>
+                </div>
+              ) : (
+              <ToastProvider>
+                <span>Approve</span>
+                <Toast>
+                  <ToastTitle>Success</ToastTitle>
+                  <ToastDescription>
+                    Process completed successfully!
+                  </ToastDescription>
+                </Toast>
+                </ToastProvider>
+              )}
+          </Button>
+        </div>
+        }
+
+        {/* supply input */}
         <div className="relative">
           <InteractionInferaceInput
             tokens={tokens}
             selectedToken={selectedToken}
             tokenChangeHandler={setSelectedToken}
-          />
+            amount={amount}
+            onAmountChange={setAmount} value={""}          />
 
-          <div className="absolute -bottom-6 right-0 text-sm text-gray-400">
+          <div className="absolute -bottom-6 right-0 text-sm text-gray-400 max-w-fit">
             max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
           </div>
         </div>
 
         <Button
           className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
-          onClick={() => {}} // Todo: Action logic
+          onClick={handleActions}
+          disabled={!amount || parseFloat(amount) <= 0}
         >
-          {activeTab.toUpperCase()}
+          {supply.isPending || borrow.isPending || withdraw.isPending || repay.isPending ? (
+            <div className="flex items-center gap-2">
+              <span>Processing...</span>
+            </div>
+          ) : (
+            activeTab.toUpperCase()
+          )}
         </Button>
 
         {/* Additional Info */}
