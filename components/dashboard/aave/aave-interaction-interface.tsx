@@ -18,9 +18,6 @@ import {
 } from "@/components/ui/toast";
 import { useWallet } from "@/context/wallet";
 import { useERC20 } from "@/hooks/useERC20";
-import { getContract } from "thirdweb";
-import { client } from "@/app/client";
-import { sepolia } from "thirdweb/chains";
 // import { useSendTransaction } from "thirdweb/react";
 // import { prepareContractCall } from "thirdweb";
 
@@ -29,7 +26,6 @@ export default function AaveInteractionInterface() {
   const [activeTab, setActiveTab] = useState<string>("supply");
   const [amount, setAmount] = useState<string>("");
   const [approveAmount, setApproveAmount] = useState<string>("");
-  const [approved, setApproved] = useState<boolean>(false);
   const { toast } = useToast();
 
   const {

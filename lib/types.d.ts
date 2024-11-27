@@ -103,7 +103,7 @@ interface IWalletContext {
 
 interface IItemWrapper {
   title: string;
-  value: number;
+  value: number | string;
   main?: boolean;
   color: string;
 }

@@ -2,7 +2,12 @@ import { Icons } from "@/components/icons";
 import Paragraph from "@/components/ui/typography/paragraph";
 import Link from "next/link";
 
-export function AavePortfolioSummary() {
+interface Props {
+  collateral: string;
+  debt: string;
+}
+
+export function AavePortfolioSummary({ collateral, debt }: Props) {
   return (
     <Link
       href={"/dashboard/aave"}
@@ -14,8 +19,8 @@ export function AavePortfolioSummary() {
 
       <div className="flex w-full flex-col items-start justify-between px-3 py-4 md:flex-row md:items-center">
         <ItemWrapper title="Aave V3 Position" value="Account" />
-        <ItemWrapper title="Collateral" value={0} />
-        <ItemWrapper title="Debt" value={0} />
+        <ItemWrapper title="Collateral" value={collateral} />
+        <ItemWrapper title="Debt" value={debt} />
         <ItemWrapper title="Staked" value={0} />
         <ItemWrapper title="Claimable" value={0} />
         <ItemWrapper title="APY" value={0} percent />

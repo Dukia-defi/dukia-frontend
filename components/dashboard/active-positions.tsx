@@ -7,9 +7,19 @@ import { AavePortfolioSummary } from "./aave/aave-portfolio-summary";
 import { UniswapPortfolioSummary } from "./uniswap/uniswap-portfolio-summary";
 import Image from "next/image";
 import { INetwork } from "@/lib/types";
+import { FormattedUserData } from "@/hooks/useFormattedAaveData";
 
-export function ActivePositions() {
+interface Props {
+  data: FormattedUserData;
+}
+
+export function ActivePositions({ data }: Props) {
   const { network, networkOptions, setNetwork, isConnected } = useWallet();
+
+  const { totalCollateralBase, availableBorrowsBase } = data;
+
+  const supplied = parseFloat(totalCollateralBase).toFixed(2);
+  const borrowed = parseFloat(availableBorrowsBase).toFixed(2);
 
   const handleOptionClick = (selectedNetwork: INetwork) =>
     setNetwork(selectedNetwork);
@@ -33,7 +43,10 @@ export function ActivePositions() {
       <div className="p-3">
         {isConnected ? (
           <div className="space-y-3">
-            <AavePortfolioSummary />
+            <AavePortfolioSummary
+              collateral={`$${supplied}`}
+              debt={`$${borrowed}`}
+            />
             <UniswapPortfolioSummary />
           </div>
         ) : (

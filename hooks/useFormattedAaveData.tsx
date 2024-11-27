@@ -3,7 +3,7 @@
 import { formatUnits } from "viem";
 import { useAaveInteractions } from "./useAaveInteractions";
 
-interface FormattedUserData {
+export interface FormattedUserData {
   totalCollateralBase: string;
   totalDebtBase: string;
   availableBorrowsBase: string;

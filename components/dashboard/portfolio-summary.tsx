@@ -1,13 +1,19 @@
-import { IItemWrapper, IPortfolioDetails } from "@/lib/types";
+import { IItemWrapper } from "@/lib/types";
 import Heading3 from "../ui/typography/heading3";
 import Paragraph from "../ui/typography/paragraph";
+import { FormattedUserData } from "@/hooks/useFormattedAaveData";
 
 interface Props {
-  data: IPortfolioDetails;
+  data: FormattedUserData;
 }
 
 export function PortfolioSummary({ data }: Props) {
-  const { networth, supplied, claimable, staked, borrowed } = data;
+  const { totalCollateralBase, availableBorrowsBase } = data;
+
+  const supplied = parseFloat(totalCollateralBase).toFixed(2);
+  const borrowed = parseFloat(availableBorrowsBase).toFixed(2);
+
+  const networth = (parseFloat(supplied) + parseFloat(borrowed)).toFixed(2);
 
   return (
     <section className="mx-auto w-full space-y-4 rounded-md bg-gray-800 lg:w-10/12">
@@ -27,12 +33,8 @@ export function PortfolioSummary({ data }: Props) {
           value={supplied}
           color="text-yellow-300"
         />
-        <ItemWrapper
-          title="Claimable"
-          value={claimable}
-          color="text-green-300"
-        />
-        <ItemWrapper title="Staked" value={staked} color="text-blue-300" />
+        <ItemWrapper title="Claimable" value={0} color="text-green-300" />
+        <ItemWrapper title="Staked" value={0} color="text-blue-300" />
         <ItemWrapper title="Borrowed" value={borrowed} color="text-red-300" />
       </div>
     </section>
