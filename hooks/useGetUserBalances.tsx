@@ -14,9 +14,9 @@ interface Props {
 }
 
 export const useGetUserBalances = ({ selectedChain, userAddress }: Props) => {
-  const chainName = chainIdToName[selectedChain];
+  const chainName = chainIdToName[selectedChain] ?? "sepolia";
 
-  const chain = chainName === "sepolia" ? sepolia : liskSepolia;
+  const chain = chainName === "lisk" ? liskSepolia : sepolia;
 
   const usdcAddress = token_addresses[chainName as TChainName].usdc;
   const daiAddress = token_addresses[chainName as TChainName].dai;

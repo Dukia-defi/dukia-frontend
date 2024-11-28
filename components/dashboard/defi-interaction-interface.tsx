@@ -28,6 +28,7 @@ interface InputProps {
   handleInput?: Dispatch<SetStateAction<string>>;
   selectedTokenB?: string;
   tokenBChangeHandler?: Dispatch<SetStateAction<string>>;
+  tokenABalance: number;
 }
 
 export const DefiInteractionInterface = ({
@@ -106,6 +107,7 @@ export function InteractionInferaceInput({
   tokensB,
   selectedTokenB,
   tokenBChangeHandler,
+  tokenABalance,
 }: InputProps & {
   amount: string;
   onAmountChange: (value: string) => void;
@@ -128,39 +130,50 @@ export function InteractionInferaceInput({
         className="flex-1 appearance-none border-none bg-transparent text-2xl text-gray-200 placeholder-gray-500 focus:outline-none"
       />
 
-      <Select defaultValue={selectedToken} onValueChange={tokenChangeHandler}>
-        <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
-          <SelectValue placeholder="Token" />
-        </SelectTrigger>
-        <SelectContent>
-          {tokens.map((token) => (
-            <SelectItem key={token} value={token}>
-              {token}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <div className="flex items-center space-x-3">
+        <div className="w-40 rounded-md border border-purple-300 px-2 py-1">
+          <p>Max: {tokenABalance}</p>
+        </div>
 
-      {tokensB && (
-        <>
-          <span>/ </span>
+        <div className="flex items-center gap-1">
           <Select
-            defaultValue={selectedTokenB}
-            onValueChange={tokenBChangeHandler}
+            defaultValue={selectedToken}
+            onValueChange={tokenChangeHandler}
           >
             <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
               <SelectValue placeholder="Token" />
             </SelectTrigger>
             <SelectContent>
-              {tokensB.map((token) => (
+              {tokens.map((token) => (
                 <SelectItem key={token} value={token}>
                   {token}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
-        </>
-      )}
+
+          {tokensB && (
+            <div className="flex items-center gap-1">
+              <span>/</span>
+              <Select
+                defaultValue={selectedTokenB}
+                onValueChange={tokenBChangeHandler}
+              >
+                <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+                  <SelectValue placeholder="Token" />
+                </SelectTrigger>
+                <SelectContent>
+                  {tokensB.map((token) => (
+                    <SelectItem key={token} value={token}>
+                      {token}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

@@ -21,8 +21,12 @@ import { useERC20 } from "@/hooks/useERC20";
 // import { useSendTransaction } from "thirdweb/react";
 // import { prepareContractCall } from "thirdweb";
 
-export default function AaveInteractionInterface() {
-  const [selectedToken, setSelectedToken] = useState<string>("ETH");
+interface Props {
+  getTokenBalance: (token: string) => number;
+}
+
+export default function AaveInteractionInterface({ getTokenBalance }: Props) {
+  const [selectedToken, setSelectedToken] = useState<string>("USDC");
   const [activeTab, setActiveTab] = useState<string>("supply");
   const [amount, setAmount] = useState<string>("");
   const [approveAmount, setApproveAmount] = useState<string>("");
@@ -197,6 +201,8 @@ export default function AaveInteractionInterface() {
     }
   };
 
+  const tokenABalance = getTokenBalance(selectedToken);
+
   return (
     <DefiInteractionInterface
       tabs={aaveTabs}
@@ -213,6 +219,7 @@ export default function AaveInteractionInterface() {
                 tokenChangeHandler={setSelectedToken}
                 amount={approveAmount}
                 onAmountChange={setApproveAmount}
+                tokenABalance={tokenABalance}
               />
 
               {/* <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
@@ -223,7 +230,11 @@ export default function AaveInteractionInterface() {
             <Button
               className="my-6 w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
               onClick={handleApprove}
-              disabled={!approveAmount || parseFloat(approveAmount) <= 0}
+              disabled={
+                !approveAmount ||
+                parseFloat(approveAmount) <= 0 ||
+                +approveAmount > tokenABalance
+              }
             >
               {approve.isPending ? (
                 <div className="flex items-center gap-2">
@@ -252,6 +263,7 @@ export default function AaveInteractionInterface() {
             tokenChangeHandler={setSelectedToken}
             amount={amount}
             onAmountChange={setAmount}
+            tokenABalance={tokenABalance}
           />
 
           <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
@@ -262,7 +274,9 @@ export default function AaveInteractionInterface() {
         <Button
           className="w-full bg-purple-600 py-6 text-lg font-medium text-white hover:bg-purple-500"
           onClick={handleActions}
-          disabled={!amount || parseFloat(amount) <= 0}
+          disabled={
+            !amount || parseFloat(amount) <= 0 || +amount > tokenABalance
+          }
         >
           {supply.isPending ||
           borrow.isPending ||

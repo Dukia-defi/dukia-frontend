@@ -4,6 +4,7 @@ import { deployed_contracts, token_addresses } from "./addresses";
 import {
   IFunctionSig,
   IOrder,
+  IUserBalances,
   TChainIdToNameMap,
   TDefiName,
   TTokenName,
@@ -183,3 +184,30 @@ export function getParams({ order, chain }: { order: IOrder; chain: number }) {
     }
   }
 }
+
+export const getTokenBalance = ({
+  token,
+  data,
+}: {
+  token: string;
+  data: IUserBalances;
+}): number => {
+  const { dai, usdc, lsk, weth, usdt, link } = data;
+
+  switch (token.toLowerCase()) {
+    case "dai":
+      return +parseFloat(dai.displayValue).toFixed(2);
+    case "usdc":
+      return +parseFloat(usdc.displayValue).toFixed(2);
+    case "usdt":
+      return +parseFloat(usdt.displayValue).toFixed(2);
+    case "link":
+      return +parseFloat(link.displayValue).toFixed(2);
+    case "lsk":
+      return +parseFloat(lsk.displayValue).toFixed(2);
+    case "weth":
+      return +parseFloat(weth.displayValue).toFixed(2);
+    default:
+      return 0;
+  }
+};

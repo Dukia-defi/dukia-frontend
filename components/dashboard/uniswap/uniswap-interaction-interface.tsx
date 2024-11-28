@@ -11,7 +11,11 @@ import { useUniswapInteractions } from "@/hooks/useUniswapInteractions";
 import { token_addresses } from "@/lib/addresses";
 import { useWallet } from "@/context/wallet";
 
-export function UniswapInteractionInterface() {
+interface Props {
+  getTokenBalance: (token: string) => number;
+}
+
+export function UniswapInteractionInterface({ getTokenBalance }: Props) {
   const { wallet } = useWallet();
   const [selectedAToken, setSelectedAToken] = useState<string>("USDC");
   const [selectedBToken, setSelectedBToken] = useState<string>("DAI");
@@ -23,6 +27,7 @@ export function UniswapInteractionInterface() {
     useUniswapInteractions();
   const { sepolia } = token_addresses;
 
+  //todo optimize this to work with different chains
   const getTokenAddress = (tokenSymbol: string): string => {
     switch (tokenSymbol) {
       case "DAI":
@@ -102,7 +107,7 @@ export function UniswapInteractionInterface() {
   // };
 
   const isActionDisabled = (): boolean => {
-    return !amountA || parseFloat(amountA) <= 0;
+    return !amountA || parseFloat(amountA) <= 0 || +amountA > tokenABalance;
   };
   // const isActionDisabled = (): boolean => {
   //   return (
@@ -112,6 +117,8 @@ export function UniswapInteractionInterface() {
   //     parseFloat(amountB) <= 0
   //   );
   // };
+
+  const tokenABalance = getTokenBalance(selectedAToken);
 
   return (
     <DefiInteractionInterface
@@ -146,6 +153,7 @@ export function UniswapInteractionInterface() {
             selectedTokenB={selectedBToken}
             tokenBChangeHandler={setSelectedBToken}
             onAmountChange={setAmountA}
+            tokenABalance={tokenABalance}
           />
 
           {activeTab === "swap" && (

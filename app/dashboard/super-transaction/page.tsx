@@ -9,12 +9,14 @@ import Heading2 from "@/components/ui/typography/heading2";
 import Heading3 from "@/components/ui/typography/heading3";
 import { useWallet } from "@/context/wallet";
 import useBatchExecutor from "@/hooks/useBatchExecutor";
+import { useGetUserBalances } from "@/hooks/useGetUserBalances";
 import { IOrder, TBytes } from "@/lib/types";
 import {
   getCallData,
   getDefiAddress,
   getDefiFunction,
   getParams,
+  getTokenBalance,
 } from "@/lib/utils";
 import { defiActions, defiOptions } from "@/utils/mock";
 import { useEffect, useState } from "react";
@@ -29,7 +31,22 @@ export default function SuperTransactionPage() {
   const [orders, setOrders] = useState<IOrder[]>([]);
 
   const { executeBatch } = useBatchExecutor();
-  const { chain } = useWallet();
+
+  const {
+    wallet: { address },
+    chain,
+  } = useWallet();
+
+  const { data, isLoading, isError } = useGetUserBalances({
+    selectedChain: chain,
+    userAddress: address,
+  });
+
+  const getUserBalance = (token: string): number => {
+    return isLoading || isError || !data.dai
+      ? 0
+      : getTokenBalance({ token, data });
+  };
 
   useEffect(() => {
     const selectedActions =
@@ -116,6 +133,7 @@ export default function SuperTransactionPage() {
               action={selectedAction}
               actionHandler={setOrders}
               defi={selectedDefi}
+              getTokenBalance={getUserBalance}
             />
           )}
         </div>
