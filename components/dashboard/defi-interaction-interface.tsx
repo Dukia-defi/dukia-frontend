@@ -19,13 +19,13 @@ interface Props {
 
 interface InputProps {
   tokens: string[];
+  tokensB?: string[];
   selectedToken: string;
   tokenChangeHandler: Dispatch<SetStateAction<string>>;
   onAmountChange: (amount: string) => void;
   value?: string; // Add value prop
   amount: string;
   handleInput?: Dispatch<SetStateAction<string>>;
-  tokenPair?: boolean;
   selectedTokenB?: string;
   tokenBChangeHandler?: Dispatch<SetStateAction<string>>;
 }
@@ -103,7 +103,7 @@ export function InteractionInferaceInput({
   tokenChangeHandler,
   amount,
   onAmountChange,
-  tokenPair,
+  tokensB,
   selectedTokenB,
   tokenBChangeHandler,
 }: InputProps & {
@@ -141,7 +141,7 @@ export function InteractionInferaceInput({
         </SelectContent>
       </Select>
 
-      {tokenPair && (
+      {tokensB && (
         <>
           <span>/ </span>
           <Select
@@ -152,7 +152,7 @@ export function InteractionInferaceInput({
               <SelectValue placeholder="Token" />
             </SelectTrigger>
             <SelectContent>
-              {tokens.map((token) => (
+              {tokensB.map((token) => (
                 <SelectItem key={token} value={token}>
                   {token}
                 </SelectItem>

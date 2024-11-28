@@ -13,7 +13,7 @@ interface Props {
 }
 
 export function ActionInterface({ action, actionHandler, defi }: Props) {
-  const [selectedAToken, setSelectedAToken] = useState<string>("ETH");
+  const [selectedAToken, setSelectedAToken] = useState<string>("DAI");
   const [selectedBToken, setSelectedBToken] = useState<string>("USDC");
   const [amount, setAmount] = useState<string>("");
 
@@ -30,6 +30,9 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
     actionHandler((prev) => [...prev, newOrder]);
   };
 
+  const tokensA = tokens.filter((token) => token !== selectedBToken);
+  const tokensB = tokens.filter((token) => token !== selectedAToken);
+
   return (
     <div className="mx-auto my-5 w-full p-4">
       <div className="space-y-4 rounded-xl border border-purple-500/10 bg-gray-900/50 p-6 backdrop-blur-sm">
@@ -39,15 +42,15 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
 
         {defi === "Uniswap" ? (
           <InteractionInferaceInput
-            tokens={tokens}
+            tokens={tokensA}
+            tokensB={tokensB}
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
             amount={amount}
-            handleInput={setAmount}
-            tokenPair
+            // handleInput={setAmount}
             selectedTokenB={selectedBToken}
             tokenBChangeHandler={setSelectedBToken}
-            onAmountChange={() => {}}
+            onAmountChange={setAmount}
           />
         ) : (
           <InteractionInferaceInput
@@ -55,8 +58,8 @@ export function ActionInterface({ action, actionHandler, defi }: Props) {
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
             amount={amount}
-            onAmountChange={() => {}}
-            handleInput={setAmount}
+            onAmountChange={setAmount}
+            // handleInput={setAmount}
           />
         )}
 

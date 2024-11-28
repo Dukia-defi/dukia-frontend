@@ -102,16 +102,7 @@ export const uniswapTabs: IDefiTabs[] = [
   },
 ];
 
-export const tokens = [
-  "ETH",
-  "WBTC",
-  "WETH",
-  "USDT",
-  "USDC",
-  "AAVE",
-  "DAI",
-  "LINK",
-];
+export const tokens = ["USDC", "USDT", "WETH", "LISK", "DAI", "LINK"];
 
 export const defiOptions = ["Aave", "Uniswap"];
 
