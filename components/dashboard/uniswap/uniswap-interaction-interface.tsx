@@ -6,7 +6,7 @@ import {
   DefiInteractionInterface,
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUniswapInteractions } from "@/hooks/useUniswapInteractions";
 import { token_addresses } from "@/lib/addresses";
 import { useWallet } from "@/context/wallet";
@@ -44,6 +44,10 @@ export function UniswapInteractionInterface({ getTokenBalance }: Props) {
   const convertToWei = (amount: string): bigint => {
     return BigInt(parseFloat(amount) * Math.pow(10, 18));
   };
+
+  useEffect(() => {
+    setAmountB(amountA);
+  }, [amountA]);
 
   const handleClick = async () => {
     //! removed input for amountB, it should be gotten automatically based on uniswap conversion of amountA
