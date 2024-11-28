@@ -24,6 +24,6 @@ export const StatCard = ({
         <span className="text-gray-400">{title}</span>
       </div>
     </StatTooltip>
-    <span className={`text-2xl font-medium ${valueColor}`}>{value}</span>
+    <span className={`text-xl font-medium ${valueColor}`}>{value}</span>
   </motion.div>
 );
