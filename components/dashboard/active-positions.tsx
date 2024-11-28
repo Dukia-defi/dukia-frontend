@@ -28,7 +28,7 @@ export function ActivePositions({ data }: Props) {
     <motion.section
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="mx-auto mt-14 w-full space-y-4 rounded-md bg-gray-800 lg:w-10/12"
+      className="mx-auto w-full space-y-4 rounded-md bg-gray-800 lg:w-10/12"
     >
       <div className="flex items-center justify-between rounded-t-md bg-gray-700 px-8 py-4">
         <Heading3 className="text-xl">Active Positions</Heading3>
