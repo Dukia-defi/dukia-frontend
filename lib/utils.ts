@@ -9,7 +9,7 @@ import {
   TDefiName,
   TTokenName,
 } from "./types";
-import { aaveFunctions, uniswapFunctions } from "@/utils/mock";
+import { aaveFunctions, TOKEN_DECIMALS, uniswapFunctions } from "@/utils/mock";
 import { ethers } from "ethers";
 
 export function cn(...inputs: ClassValue[]) {
@@ -184,6 +184,10 @@ export function getParams({ order, chain }: { order: IOrder; chain: number }) {
     }
   }
 }
+
+export const getTokenDecimalPlaces = (tokenSymbol: string): number => {
+  return TOKEN_DECIMALS[tokenSymbol.toLowerCase()] || TOKEN_DECIMALS["default"];
+};
 
 export const getTokenBalance = ({
   token,

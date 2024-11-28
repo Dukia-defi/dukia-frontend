@@ -14,12 +14,26 @@ export const contract = getContract({
   address: CONTRACT_ADDRESS,
 });
 
-interface TransactionResult {
+interface BaseTransactionResult {
   error: Error | null;
-  execute: (tokenAddress: string, amount: bigint) => void;
   isPending: boolean;
   isSuccess?: boolean;
 }
+
+interface SimpleExecute {
+  execute: (tokenAddress: string, amount: bigint) => void;
+}
+
+interface InterestExecute {
+  execute: (
+    tokenAddress: string,
+    amount: bigint,
+    interestRateMode: bigint,
+  ) => void;
+}
+
+type TransactionResult = BaseTransactionResult & SimpleExecute;
+type TransactionResultWithInterest = BaseTransactionResult & InterestExecute;
 
 interface UserAccountData {
   totalCollateralBase: bigint;
@@ -36,9 +50,9 @@ export const useAaveInteractions = (
 ): {
   approve: TransactionResult;
   supply: TransactionResult;
-  borrow: TransactionResult;
+  borrow: TransactionResultWithInterest;
   withdraw: TransactionResult;
-  repay: TransactionResult;
+  repay: TransactionResultWithInterest;
   userData: {
     data: UserAccountData | undefined;
     isLoading: boolean;
@@ -139,17 +153,16 @@ export const useAaveInteractions = (
 
   // Borrow
   const executeBorrow = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    (tokenAddress: string, amount: bigint, interestRateMode: bigint) => {
       try {
         const borrowContract = prepareContractCall({
           contract,
           method:
             "function borrow(address tokenAddress, uint256 amount, uint256 interestRateMode)",
-          params: [tokenAddress, amount, BigInt(2)],
+          params: [tokenAddress, amount, interestRateMode],
         });
         sendBorrowTransaction(borrowContract);
       } catch (err) {
-        // console.error("Error in borrow:", err);
         toast({
           variant: "destructive",
           title: "Error",
@@ -181,13 +194,13 @@ export const useAaveInteractions = (
 
   // Repay
   const executeRepay = useCallback(
-    (tokenAddress: string, amount: bigint) => {
+    (tokenAddress: string, amount: bigint, interestRateMode: bigint) => {
       try {
         const repayContract = prepareContractCall({
           contract,
           method:
             "function repay(address tokenAddress, uint256 amount, uint256 interestRateMode)",
-          params: [tokenAddress, amount, BigInt(2)],
+          params: [tokenAddress, amount, interestRateMode],
         });
         sendRepayTransaction(repayContract);
       } catch (err) {

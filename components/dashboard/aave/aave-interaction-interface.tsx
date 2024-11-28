@@ -1,6 +1,6 @@
 "use client";
 
-import { aaveTabs, tokens } from "@/utils/mock";
+import { aaveTabs, INTEREST_RATE_MODES, tokens } from "@/utils/mock";
 import { Button } from "@/components/ui/button";
 import {
   DefiInteractionInterface,
@@ -18,8 +18,7 @@ import {
 } from "@/components/ui/toast";
 import { useWallet } from "@/context/wallet";
 import { useERC20 } from "@/hooks/useERC20";
-// import { useSendTransaction } from "thirdweb/react";
-// import { prepareContractCall } from "thirdweb";
+import { getTokenDecimalPlaces } from "@/lib/utils";
 
 interface Props {
   getTokenBalance: (token: string) => number;
@@ -52,7 +51,10 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
   const handleSupply = () => {
     const tokenAddress =
       sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2];
-    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 6));
+
+    const amountInWei = BigInt(
+      parseFloat(amount) * Math.pow(10, getTokenDecimalPlaces(selectedToken)),
+    );
 
     supply.execute(tokenAddress, amountInWei);
     setTimeout(() => {
@@ -60,67 +62,11 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
     }, 10000);
   };
 
-  /////////////////////////////////////////////////
-
-  // const handleSupply2 = async () => {
-  //   if (!amount) {
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Warning",
-  //       description: "No amount provided",
-  //     });
-  //   }
-  //   if (!approved)
-  //     toast({
-  //       variant: "destructive",
-  //       title: "Warning",
-  //       description: "Please approve this transaction first",
-  //     });
-
-  //   const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
-  //   const tokenAddress =
-  //     sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
-  //   // const tokenAddress = selectedToken === "DAI" ? sepolia.dai : sepolia.usdc;
-
-  //   try {
-  //     // approve.execute(tokenAddress, amountInWei);
-  //     supply.execute(tokenAddress, amountInWei);
-  //     setTimeout(() => {
-  //       refetch();
-  //     }, 10000);
-  //   } catch (error) {
-  //     console.error("Supply failed:", error);
-  //   }
-  // };
-
   const handleApprove = async () => {
-    // if (!approveAmount) {
-    //   toast({
-    //     variant: "destructive",
-    //     title: "Warning",
-    //     description: "No amount provided",
-    //   });
-    // }
-
-    // const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 18));
-    // const tokenAddress =
-    //   sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
-
-    // try {
-    //   approve.execute(tokenAddress, amountInWei);
-    //   // const result = await approve.execute(tokenAddress, amountInWei);
-    //   setApproved(true);
-    // } catch (error) {
-    //   console.log(error);
-    //   setApproved(false);
-    // }
-    //approve contract to spend
-    console.log(approveAmount);
-    const amountInWei = BigInt(parseFloat(approveAmount) * Math.pow(10, 6));
-
     approveFn({
-      address: deployed_contracts.sepolia.aave,
-      amount: amountInWei,
+      tokenSymbol: selectedToken,
+      spenderAddress: deployed_contracts.sepolia.aave,
+      approveAmount,
     });
   };
 
@@ -133,12 +79,17 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
       });
     }
 
-    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
       sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
 
+    const amountInWei = BigInt(
+      parseFloat(amount) * Math.pow(10, getTokenDecimalPlaces(selectedToken)),
+    );
+    const interestRateMode =
+      INTEREST_RATE_MODES[selectedToken.toLowerCase()] || 2;
+
     try {
-      borrow.execute(tokenAddress, amountInWei);
+      borrow.execute(tokenAddress, amountInWei, BigInt(interestRateMode));
       console.log("Approve done");
     } catch (error) {
       console.error("Approve failed:", error);
@@ -154,9 +105,12 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
       });
     }
 
-    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
     const tokenAddress =
       sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
+
+    const amountInWei = BigInt(
+      parseFloat(amount) * Math.pow(10, getTokenDecimalPlaces(selectedToken)),
+    );
 
     try {
       withdraw.execute(tokenAddress, amountInWei);
@@ -175,12 +129,17 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
       });
     }
 
-    const amountInWei = BigInt(parseFloat(amount) * Math.pow(10, 18));
+    const amountInWei = BigInt(
+      parseFloat(amount) * Math.pow(10, getTokenDecimalPlaces(selectedToken)),
+    );
     const tokenAddress =
       sepolia2[selectedToken.toLowerCase() as keyof typeof sepolia2] ?? "";
 
+    const interestRateMode =
+      INTEREST_RATE_MODES[selectedToken.toLowerCase()] || 2;
+
     try {
-      repay.execute(tokenAddress, amountInWei);
+      repay.execute(tokenAddress, amountInWei, BigInt(interestRateMode));
       console.log("Repay done");
     } catch (error) {
       console.error("Repay failed:", error);
@@ -188,9 +147,7 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
   };
 
   const handleActions = () => {
-    console.log("actions", activeTab);
     if (activeTab == "supply") {
-      // handleApprove()
       handleSupply();
     } else if (activeTab === "borrow") {
       handleBorrow();
@@ -221,10 +178,6 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
                 onAmountChange={setApproveAmount}
                 tokenABalance={tokenABalance}
               />
-
-              {/* <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
-                max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
-              </div> */}
             </div>
 
             <Button

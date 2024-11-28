@@ -102,7 +102,24 @@ export const uniswapTabs: IDefiTabs[] = [
   },
 ];
 
-export const tokens = ["USDC", "USDT", "WETH", "LISK", "DAI", "LINK"];
+export const tokens = ["USDT", "USDC", "WETH", "LISK", "DAI", "LINK"];
+
+export const TOKEN_DECIMALS: { [key: string]: number } = {
+  usdc: 6,
+  usdt: 6,
+  wbtc: 8,
+  // Default to 18 for all other tokens
+  default: 18,
+};
+
+export const INTEREST_RATE_MODES: { [key: string]: number } = {
+  usdc: 1, // Stable
+  usdt: 1, // Stable
+  dai: 1, // Stable
+  link: 2, // Variable
+  wbtc: 0, // none
+  aave: 0, // none
+};
 
 export const defiOptions = ["Aave", "Uniswap"];
 
