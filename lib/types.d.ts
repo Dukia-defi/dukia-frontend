@@ -92,13 +92,7 @@ interface IWalletContext {
   setNetwork: (network: INetwork) => void;
   networkOptions: INetwork[];
   isUnsupportedNetwork: boolean;
-  chain:
-    | Readonly<
-        ChainOptions & {
-          rpc: string;
-        }
-      >
-    | undefined;
+  chain: number;
 }
 
 interface IItemWrapper {
@@ -106,6 +100,7 @@ interface IItemWrapper {
   value: number | string;
   main?: boolean;
   color: string;
+  full?: boolean;
 }
 
 interface IDashHeader {
@@ -151,4 +146,13 @@ interface IOrder {
 interface IFunctionSig {
   functionSig: string;
   params: string[];
+}
+
+interface IUserBalances {
+  usdc: GetWalletBalanceResult | undefined;
+  dai: GetWalletBalanceResult | undefined;
+  lsk: GetWalletBalanceResult | undefined;
+  weth: GetWalletBalanceResult | undefined;
+  usdt: GetWalletBalanceResult | undefined;
+  link: GetWalletBalanceResult | undefined;
 }

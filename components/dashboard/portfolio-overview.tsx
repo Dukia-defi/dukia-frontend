@@ -5,23 +5,55 @@ import { ActivePositions } from "./active-positions";
 import { useWallet } from "@/context/wallet";
 import { useFormattedAaveData } from "@/hooks/useFormattedAaveData";
 import { AaveStatsSkeleton } from "./aave/stats-skeleton-loader";
+import { UserBalances } from "./user-balances";
+import { useGetUserBalances } from "@/hooks/useGetUserBalances";
 
 export function PortfolioOverview() {
   const {
     wallet: { address },
+    chain,
   } = useWallet();
 
-  const { data, isLoading, error } = useFormattedAaveData(address);
+  const {
+    data: defiData,
+    isLoading: defiLoading,
+    error: defiError,
+  } = useFormattedAaveData(address);
 
-  if (isLoading) return <AaveStatsSkeleton />;
-  if (error) return <div>Error loading data</div>;
-  if (!data) return <div>No data available</div>;
+  const {
+    data: balance,
+    isLoading: balanceLoading,
+    isError: balanceError,
+  } = useGetUserBalances({
+    selectedChain: chain,
+    userAddress: address,
+  });
 
   return (
-    <>
-      <PortfolioSummary data={data} />
+    <div className="mb-40 space-y-14">
+      {balanceLoading ? (
+        <AaveStatsSkeleton />
+      ) : balanceError ? (
+        <div>Error loading data</div>
+      ) : !balance.usdc ? (
+        <div>No data available</div>
+      ) : (
+        <UserBalances data={balance} />
+      )}
 
-      <ActivePositions data={data} />
-    </>
+      {defiLoading ? (
+        <AaveStatsSkeleton />
+      ) : defiError ? (
+        <div>Error loading data</div>
+      ) : !defiData ? (
+        <div>No data available</div>
+      ) : (
+        <>
+          <PortfolioSummary data={defiData} />
+
+          <ActivePositions data={defiData} />
+        </>
+      )}
+    </div>
   );
 }

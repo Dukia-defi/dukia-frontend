@@ -6,15 +6,19 @@ import {
   DefiInteractionInterface,
   InteractionInferaceInput,
 } from "../defi-interaction-interface";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUniswapInteractions } from "@/hooks/useUniswapInteractions";
 import { token_addresses } from "@/lib/addresses";
 import { useWallet } from "@/context/wallet";
 
-export function UniswapInteractionInterface() {
+interface Props {
+  getTokenBalance: (token: string) => number;
+}
+
+export function UniswapInteractionInterface({ getTokenBalance }: Props) {
   const { wallet } = useWallet();
   const [selectedAToken, setSelectedAToken] = useState<string>("USDC");
-  const [selectedBToken, setSelectedBToken] = useState<string>("ETH");
+  const [selectedBToken, setSelectedBToken] = useState<string>("DAI");
   const [activeTab, setActiveTab] = useState<string>("swap");
   const [amountA, setAmountA] = useState<string>("");
   const [amountB, setAmountB] = useState<string>("");
@@ -23,6 +27,7 @@ export function UniswapInteractionInterface() {
     useUniswapInteractions();
   const { sepolia } = token_addresses;
 
+  //todo optimize this to work with different chains
   const getTokenAddress = (tokenSymbol: string): string => {
     switch (tokenSymbol) {
       case "DAI":
@@ -40,7 +45,12 @@ export function UniswapInteractionInterface() {
     return BigInt(parseFloat(amount) * Math.pow(10, 18));
   };
 
+  useEffect(() => {
+    setAmountB(amountA);
+  }, [amountA]);
+
   const handleClick = async () => {
+    //! removed input for amountB, it should be gotten automatically based on uniswap conversion of amountA
     if (!amountA || !amountB) return;
 
     const amountAInWei = convertToWei(amountA);
@@ -90,21 +100,29 @@ export function UniswapInteractionInterface() {
     }
   };
 
-  const getButtonLabel = (): string => {
-    if (!amountA || !amountB) return "Enter Amount";
-    if (parseFloat(amountA) <= 0 || parseFloat(amountB) <= 0)
-      return "Invalid Amount";
-    return activeTab.toUpperCase();
-  };
+  const tokensA = tokens.filter((token) => token !== selectedBToken);
+  const tokensB = tokens.filter((token) => token !== selectedAToken);
+
+  // const getButtonLabel = (): string => {
+  //   if (!amountA || !amountB) return "Enter Amount";
+  //   if (parseFloat(amountA) <= 0 || parseFloat(amountB) <= 0)
+  //     return "Invalid Amount";
+  //   return activeTab.toUpperCase();
+  // };
 
   const isActionDisabled = (): boolean => {
-    return (
-      !amountA ||
-      !amountB ||
-      parseFloat(amountA) <= 0 ||
-      parseFloat(amountB) <= 0
-    );
+    return !amountA || parseFloat(amountA) <= 0 || +amountA > tokenABalance;
   };
+  // const isActionDisabled = (): boolean => {
+  //   return (
+  //     !amountA ||
+  //     !amountB ||
+  //     parseFloat(amountA) <= 0 ||
+  //     parseFloat(amountB) <= 0
+  //   );
+  // };
+
+  const tokenABalance = getTokenBalance(selectedAToken);
 
   return (
     <DefiInteractionInterface
@@ -114,21 +132,39 @@ export function UniswapInteractionInterface() {
     >
       <div className="space-y-6">
         <div className="relative">
-          <InteractionInferaceInput
+          {/* <InteractionInferaceInput
             tokens={tokens}
             selectedToken={selectedAToken}
             tokenChangeHandler={setSelectedAToken}
             amount={amountA}
             onAmountChange={setAmountA}
-          />
+          /> */}
 
-          <InteractionInferaceInput
+          {/* <InteractionInferaceInput
             tokens={tokens}
             selectedToken={selectedBToken}
             tokenChangeHandler={setSelectedBToken}
             amount={amountB}
             onAmountChange={setAmountB}
+          /> */}
+
+          <InteractionInferaceInput
+            tokens={tokensA}
+            tokensB={tokensB}
+            selectedToken={selectedAToken}
+            tokenChangeHandler={setSelectedAToken}
+            amount={amountA}
+            selectedTokenB={selectedBToken}
+            tokenBChangeHandler={setSelectedBToken}
+            onAmountChange={setAmountA}
+            tokenABalance={tokenABalance}
           />
+
+          {activeTab === "swap" && (
+            <div className="my-3 rounded-md border border-purple-300 p-2">
+              <p>Expected amount: {amountB}</p>
+            </div>
+          )}
         </div>
 
         <Button
@@ -136,7 +172,8 @@ export function UniswapInteractionInterface() {
           onClick={handleClick}
           disabled={isActionDisabled()}
         >
-          {getButtonLabel()}
+          {/* {getButtonLabel()} */}
+          {activeTab.toUpperCase()}
         </Button>
       </div>
     </DefiInteractionInterface>

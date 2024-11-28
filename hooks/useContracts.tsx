@@ -5,7 +5,7 @@ import { deployed_contracts } from "@/lib/addresses";
 import { defineChain, getContract } from "thirdweb";
 import { sepolia } from "thirdweb/chains";
 
-const liskSepolia = defineChain(4202);
+export const liskSepolia = defineChain(4202);
 
 const {
   lisk: { ccm: liskCCM },
@@ -24,8 +24,6 @@ export function useContracts() {
     address: sepCCM,
     chain: sepolia,
   });
-
-  // console.log("ave", sepAave)
 
   const aaveSepContract = getContract({
     client,

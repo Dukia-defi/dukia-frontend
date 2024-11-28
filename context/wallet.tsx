@@ -23,7 +23,7 @@ const initialWalletState: IWallet = {
   staked: 0,
   supplied: 0,
   claimable: 0,
-  chain: CHAIN_IDS.ETHEREUM, // Default to Ethereum
+  chain: CHAIN_IDS.SEPOLIA, // Default to Ethereum sepolia
 };
 
 const networkOptions: INetwork[] = [

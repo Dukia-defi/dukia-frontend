@@ -11,9 +11,26 @@ import { ConnectWallet } from "@/components/dashboard/connect-wallet";
 import { useWallet } from "@/context/wallet";
 import AaveInteractionInterface from "@/components/dashboard/aave/aave-interaction-interface";
 import { AaveStats } from "@/components/dashboard/aave/aave-stats";
+import { useGetUserBalances } from "@/hooks/useGetUserBalances";
+import { getTokenBalance } from "@/lib/utils";
 
 export default function AavePage() {
-  const { isConnected } = useWallet();
+  const {
+    isConnected,
+    wallet: { address },
+    chain,
+  } = useWallet();
+
+  const { data, isLoading, isError } = useGetUserBalances({
+    selectedChain: chain,
+    userAddress: address,
+  });
+
+  const getUserBalance = (token: string): number => {
+    return isLoading || isError || !data.dai
+      ? 0
+      : getTokenBalance({ token, data });
+  };
 
   return (
     <section className="mb-40">
@@ -39,7 +56,7 @@ export default function AavePage() {
           <>
             <AaveStats />
 
-            <AaveInteractionInterface />
+            <AaveInteractionInterface getTokenBalance={getUserBalance} />
 
             <DataTable
               columns={aave_analytics_columns}

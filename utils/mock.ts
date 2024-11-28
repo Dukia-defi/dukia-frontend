@@ -102,7 +102,7 @@ export const uniswapTabs: IDefiTabs[] = [
   },
 ];
 
-export const tokens = ["WBTC", "USDT", "USDC", "AAVE", "DAI", "LINK"];
+export const tokens = ["USDT", "USDC", "WETH", "LISK", "DAI", "LINK"];
 
 export const TOKEN_DECIMALS: { [key: string]: number } = {
   usdc: 6,
