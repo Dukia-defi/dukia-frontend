@@ -5,9 +5,15 @@ import Heading3 from "../ui/typography/heading3";
 import { useWallet } from "@/context/wallet";
 import { AavePortfolioSummary } from "./aave/aave-portfolio-summary";
 import { UniswapPortfolioSummary } from "./uniswap/uniswap-portfolio-summary";
-import Image from "next/image";
 import { INetwork } from "@/lib/types";
 import { FormattedUserData } from "@/hooks/useFormattedAaveData";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 interface Props {
   data: FormattedUserData;
@@ -21,8 +27,15 @@ export function ActivePositions({ data }: Props) {
   const supplied = parseFloat(totalCollateralBase).toFixed(2);
   const borrowed = parseFloat(availableBorrowsBase).toFixed(2);
 
-  const handleOptionClick = (selectedNetwork: INetwork) =>
-    setNetwork(selectedNetwork);
+  // const handleOptionClick = (selectedNetwork: INetwork) =>
+  //   setNetwork(selectedNetwork);
+
+  const handleOptionClick = (selectedNetwork: string) => {
+    const networkDetails = networkOptions.find(
+      (network) => network.id === selectedNetwork,
+    );
+    setNetwork(networkDetails!);
+  };
 
   return (
     <motion.section
@@ -66,29 +79,45 @@ function ChainFilter({
 }: {
   options: INetwork[];
   currentOption: INetwork;
-  changeOptionFn: (option: INetwork) => void;
+  changeOptionFn: (option: string) => void;
 }) {
   return (
-    <div className="flex items-center space-x-2 rounded-md bg-black-bg px-2 py-1">
-      {options?.map((option) => (
-        <motion.div
-          key={option.id}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => changeOptionFn(option)}
-          className={` ${option.id === currentOption.id ? "bg-gray-800" : ""} flex items-center gap-2 rounded-md px-2 py-1 text-lg uppercase hover:cursor-pointer hover:bg-gray-600`}
-          role="button"
-        >
-          <Image
-            src={option.icon}
-            width={0}
-            height={0}
-            alt={`${option.name} icon`}
-            className="h-5 w-5"
-          />
-          <span className="hidden md:block">{option.name}</span>
-        </motion.div>
-      ))}
-    </div>
+    // <div className="flex items-center space-x-2 rounded-md bg-black-bg px-2 py-1">
+    //   {options?.map((option) => (
+    //     <motion.div
+    //       key={option.id}
+    //       whileHover={{ scale: 1.05 }}
+    //       whileTap={{ scale: 0.95 }}
+    //       onClick={() => changeOptionFn(option)}
+    //       className={` ${option.id === currentOption.id ? "bg-gray-800" : ""} flex items-center gap-2 rounded-md px-2 py-1 text-lg uppercase hover:cursor-pointer hover:bg-gray-600`}
+    //       role="button"
+    //     >
+    //       <Image
+    //         src={option.icon}
+    //         width={0}
+    //         height={0}
+    //         alt={`${option.name} icon`}
+    //         className="h-5 w-5"
+    //       />
+    //       <span className="hidden md:block">{option.name}</span>
+    //     </motion.div>
+    //   ))}
+    // </div>
+
+    <Select
+      defaultValue={currentOption.id}
+      onValueChange={(network) => changeOptionFn(network)}
+    >
+      <SelectTrigger className="w-[100px] rounded-lg border-gray-500 bg-gray-700/50 px-4 py-2 text-gray-200">
+        <SelectValue placeholder="Network" />
+      </SelectTrigger>
+      <SelectContent>
+        {options.map((option) => (
+          <SelectItem key={option.id} value={option.id}>
+            {option.name}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   );
 }

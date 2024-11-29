@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import { Icons } from "../icons";
-import { Infinity, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { Logo } from "../logo";
 
@@ -108,7 +108,7 @@ export function DashboardSidebar() {
 
         <SidebarGroup>
           <SidebarGroupContent>
-            <SidebarMenu>
+            {/* <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   variant="custom"
@@ -125,7 +125,7 @@ export function DashboardSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
-            </SidebarMenu>
+            </SidebarMenu> */}
 
             <SidebarMenu>
               <SidebarMenuItem>

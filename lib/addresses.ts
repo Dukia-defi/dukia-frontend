@@ -8,7 +8,6 @@ export const deployed_contracts = {
   lisk: {
     ccm: "0x6193c44E7C8cE5438FEE9D2e94Ea98369Ef297af",
   },
-  arbitrum: {},
   optimism: {},
 };
 
@@ -29,27 +28,19 @@ export const token_addresses = {
     weth: "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
   },
   lisk: {
-    usdc: "",
-    usdt: "",
-    dai: "",
-    link: "",
-    lsk: "",
-    weth: "",
-  },
-  arbitrum: {
-    usdc: "",
-    usdt: "",
-    dai: "",
-    link: "",
-    lsk: "",
-    weth: "",
+    usdc: "0x0E82fDDAd51cc3ac12b69761C45bBCB9A2Bf3C83",
+    usdt: "0x2728DD8B45B788e26d12B13Db5A244e5403e7eda",
+    dai: "0x0DB2a8Aa2E2C023Cfb61c617d40162cc9F4c27aB",
+    link: "0x6934c1F62a6d28a573E2b4071a754DDd29B81E54",
+    lsk: "0x8a21CF9Ba08Ae709D64Cb25AfAA951183EC9FF6D",
+    weth: "0x4200000000000000000000000000000000000006",
   },
   optimism: {
-    usdc: "",
-    usdt: "",
-    dai: "",
-    link: "",
+    usdc: "0x5fd84259d66Cd46123540766Be93DFE6D43130D7",
+    usdt: "0xebca682b6C15d539284432eDc5b960771F0009e8",
+    dai: "0x0091f4e75a03C11cB9be8E3717219005eb780D89",
+    link: "0xE4aB69C077896252FAFBD49EFD26B5D171A32410",
     lsk: "",
-    weth: "",
+    weth: "0x74A4A85C611679B73F402B36c0F84A7D2CcdFDa3",
   },
 };

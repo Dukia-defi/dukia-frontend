@@ -19,8 +19,8 @@ export function cn(...inputs: ClassValue[]) {
 export const chainIdToName: TChainIdToNameMap = {
   "4202": "lisk",
   "11155111": "sepolia",
-  "42161": "arbitrum",
-  "10": "optimism",
+  // "42161": "arbitrum",
+  "11155420": "optimism",
 };
 
 export function getTokenAddress({

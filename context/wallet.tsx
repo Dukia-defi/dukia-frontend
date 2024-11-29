@@ -27,11 +27,16 @@ const initialWalletState: IWallet = {
 };
 
 const networkOptions: INetwork[] = [
-  { id: "ethereum", name: "Ethereum", icon: "/svg/ethereum.svg" },
+  // { id: "ethereum", name: "Ethereum", icon: "/svg/ethereum.svg" },
   { id: "sepolia", name: "Sepolia", icon: "/svg/ethereum.svg" },
-  { id: "lisk", name: "Lisk", icon: "/svg/lisk.svg" },
+  // { id: "lisk", name: "Lisk", icon: "/svg/lisk.svg" },
   { id: "lisk_sepolia", name: "Lisk Sepolia", icon: "/svg/lisk.svg" },
-  { id: "arbitrum", name: "Arbitrum", icon: "/svg/arbitrum.svg" },
+  // { id: "arbitrum", name: "Arbitrum", icon: "/svg/arbitrum.svg" },
+  {
+    id: "optimism_sepolia",
+    name: "OP Sepolia",
+    icon: "/svg/optimism.svg",
+  },
 ];
 
 const WalletContext = createContext<IWalletContext>({} as IWalletContext);
@@ -88,7 +93,7 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         staked: 500,
         supplied: 600,
         claimable: 100,
-        chain: isUnsupportedNetwork ? CHAIN_IDS.ETHEREUM : getChainId(network),
+        chain: isUnsupportedNetwork ? CHAIN_IDS.SEPOLIA : getChainId(network),
       }));
     } else {
       setWallet(initialWalletState);
@@ -106,10 +111,10 @@ export const WalletProvider = ({ children }: { children: React.ReactNode }) => {
         networkOptions,
         isUnsupportedNetwork,
         chain: isUnsupportedNetwork
-          ? CHAIN_IDS.ETHEREUM
+          ? CHAIN_IDS.SEPOLIA
           : activeChain
             ? getChainId(network)
-            : CHAIN_IDS.ETHEREUM,
+            : CHAIN_IDS.SEPOLIA,
       }}
     >
       {children}

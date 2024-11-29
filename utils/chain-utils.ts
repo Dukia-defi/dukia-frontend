@@ -2,11 +2,12 @@ import { INetwork } from "@/lib/types";
 
 // Define supported chain IDs
 export const CHAIN_IDS = {
-  ETHEREUM: 1,
+  // ETHEREUM: 1,
   SEPOLIA: 11155111,
-  ARBITRUM: 42161,
-  LISK: 1135,
+  // ARBITRUM: 42161,
+  // LISK: 1135,
   LISK_SEPOLIA: 4202,
+  OPTIMISM_SEPOLIA: 11155420,
 } as const;
 
 // Type for supported chain IDs
@@ -14,11 +15,12 @@ export type SupportedChainId = (typeof CHAIN_IDS)[keyof typeof CHAIN_IDS];
 
 // Map network IDs to chain IDs
 export const NETWORK_TO_CHAIN_ID: Record<string, SupportedChainId> = {
-  ethereum: CHAIN_IDS.ETHEREUM,
+  // ethereum: CHAIN_IDS.ETHEREUM,
   sepolia: CHAIN_IDS.SEPOLIA,
-  arbitrum: CHAIN_IDS.ARBITRUM,
-  lisk: CHAIN_IDS.LISK,
+  // arbitrum: CHAIN_IDS.ARBITRUM,
+  // lisk: CHAIN_IDS.LISK,
   lisk_sepolia: CHAIN_IDS.LISK_SEPOLIA,
+  optimism_sepolia: CHAIN_IDS.OPTIMISM_SEPOLIA,
 };
 
 // Validate and get chain ID from network
@@ -26,14 +28,14 @@ export function getChainId(
   network: INetwork | string | undefined,
 ): SupportedChainId {
   if (!network) {
-    return CHAIN_IDS.ETHEREUM; // Default to Ethereum mainnet
+    return CHAIN_IDS.SEPOLIA; // Default to Ethereum mainnet
   }
 
   const networkId = typeof network === "string" ? network : network.id;
   const chainId = NETWORK_TO_CHAIN_ID[networkId.toLowerCase()];
 
   if (!chainId) {
-    return CHAIN_IDS.ETHEREUM; // Default to Ethereum if unsupported
+    return CHAIN_IDS.SEPOLIA; // Default to Ethereum if unsupported
   }
 
   return chainId;

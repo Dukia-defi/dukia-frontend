@@ -4,7 +4,7 @@ import { client } from "@/app/client";
 import { token_addresses } from "@/lib/addresses";
 import { IUserBalances, TChainName } from "@/lib/types";
 import { chainIdToName } from "@/lib/utils";
-import { sepolia } from "thirdweb/chains";
+import { sepolia, optimismSepolia } from "thirdweb/chains";
 import { useWalletBalance } from "thirdweb/react";
 import { liskSepolia } from "./useContracts";
 
@@ -16,7 +16,12 @@ interface Props {
 export const useGetUserBalances = ({ selectedChain, userAddress }: Props) => {
   const chainName = chainIdToName[selectedChain] ?? "sepolia";
 
-  const chain = chainName === "lisk" ? liskSepolia : sepolia;
+  let chain =
+    chainName === "lisk"
+      ? liskSepolia
+      : chainName === "optimism"
+        ? optimismSepolia
+        : sepolia;
 
   const usdcAddress = token_addresses[chainName as TChainName].usdc;
   const daiAddress = token_addresses[chainName as TChainName].dai;
