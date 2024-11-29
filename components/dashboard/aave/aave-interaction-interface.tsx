@@ -219,9 +219,11 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
             tokenABalance={tokenABalance}
           />
 
-          <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
-            max {activeTab === "supply" ? "0.5 ETH" : "0 ETH"}
-          </div>
+          {activeTab == "supply" && (
+            <div className="absolute -bottom-6 right-0 max-w-fit text-sm text-gray-400">
+              Max: {tokenABalance} {selectedToken}
+            </div>
+          )}
         </div>
 
         <Button
@@ -245,10 +247,12 @@ export default function AaveInteractionInterface({ getTokenBalance }: Props) {
 
         {/* Additional Info */}
         <div className="rounded-lg bg-gray-800/30 p-4">
-          <div className="mb-2 flex justify-between text-sm">
-            <span className="text-gray-400">Available to {activeTab}</span>
-            <span className="text-gray-200">0 {selectedToken}</span>
-          </div>
+          {/* <div className="mb-2 flex justify-between text-sm">
+              <span className="text-gray-400">Available to {activeTab}</span>
+              <span className="text-gray-200">
+                {tokenABalance} {selectedToken}
+              </span>
+            </div> */}
           <div className="flex justify-between text-sm">
             <span className="text-gray-400">Current {activeTab} APY</span>
             <span className="text-purple-400">3.2%</span>

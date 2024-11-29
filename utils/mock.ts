@@ -117,8 +117,8 @@ export const INTEREST_RATE_MODES: { [key: string]: number } = {
   usdt: 1, // Stable
   dai: 1, // Stable
   link: 2, // Variable
-  wbtc: 0, // none
-  aave: 0, // none
+  weth: 2, // Variable
+  lsk: 2, // Stable
 };
 
 export const defiOptions = ["Aave", "Uniswap"];

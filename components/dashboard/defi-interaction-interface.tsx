@@ -132,7 +132,7 @@ export function InteractionInferaceInput({
 
       <div className="flex items-center space-x-3">
         <div className="w-40 rounded-md border border-purple-300 px-2 py-1">
-          <p>Max: {tokenABalance}</p>
+          <p>Bal: {tokenABalance}</p>
         </div>
 
         <div className="flex items-center gap-1">
